@@ -1,132 +1,120 @@
-// Inicialização AOS (Animate on Scroll)
+// Inicialização AOS
 AOS.init({
-    duration: 800,
+    duration: 1000,
     once: true,
-    offset: 120,
     easing: 'ease-out-cubic',
+    mirror: false
 });
 
-// Loader
-window.addEventListener('load', () => {
-    const loader = document.querySelector('.page-loader');
-    if (loader) {
-        loader.classList.add('hidden');
-        setTimeout(() => loader.style.display = 'none', 600);
-    }
+// ===== PRELOADER CINEMATOGRÁFICO =====
+document.addEventListener('DOMContentLoaded', () => {
+    const preloader = document.querySelector('.preloader');
+    const progressBar = document.querySelector('.progress-bar');
+    const progressText = document.querySelector('.progress-text');
+    
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += Math.random() * 15;
+        if (progress >= 100) {
+            progress = 100;
+            clearInterval(interval);
+            
+            setTimeout(() => {
+                preloader.classList.add('hidden');
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 800);
+            }, 500);
+        }
+        
+        progressBar.style.width = progress + '%';
+        progressText.textContent = Math.round(progress) + '%';
+    }, 200);
 });
 
-// Navbar interativa
-const navbar = document.getElementById('navbar');
-const navToggle = document.getElementById('navToggle');
-const navMenu = document.getElementById('navMenu');
-const navLinks = document.querySelectorAll('.nav-link');
+// ===== CURSOR PERSONALIZADO =====
+const cursor = document.querySelector('.custom-cursor');
+const cursorDot = document.querySelector('.cursor-dot');
 
-// Scroll event
+document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    cursorDot.style.left = e.clientX + 'px';
+    cursorDot.style.top = e.clientY + 'px';
+});
+
+document.addEventListener('mousedown', () => {
+    cursor.style.transform = 'translate(-50%, -50%) scale(0.8)';
+    cursorDot.style.transform = 'translate(-50%, -50%) scale(1.5)';
+});
+
+document.addEventListener('mouseup', () => {
+    cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+    cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+});
+
+// Hover em links
+document.querySelectorAll('a, button, .nav-toggle-label').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+        cursor.style.borderColor = 'var(--primary-glow)';
+    });
+    
+    el.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+        cursor.style.borderColor = 'var(--primary)';
+    });
+});
+
+// ===== PARALLAX NO SCROLL =====
 window.addEventListener('scroll', () => {
-    if (window.scrollY > 20) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
+    const scrolled = window.pageYOffset;
+    const parallax = document.querySelector('.parallax-bg');
+    
+    if (parallax) {
+        parallax.style.transform = `translateY(${scrolled * 0.3}px)`;
     }
     
-    // Ativar link conforme seção visível
-    const sections = document.querySelectorAll('section[id]');
-    let current = '';
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop - 200;
-        if (scrollY >= sectionTop) {
-            current = section.getAttribute('id');
-        }
-    });
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
-});
-
-// Toggle menu mobile
-navToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    navToggle.classList.toggle('active');
-});
-
-// Fechar menu ao clicar link
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        navToggle.classList.remove('active');
-    });
-});
-
-// Contador animado para estatísticas (simples)
-const statNumbers = document.querySelectorAll('.stat-number');
-const animateNumbers = () => {
-    statNumbers.forEach(stat => {
-        const target = parseInt(stat.getAttribute('data-count'));
-        if (!target) return;
-        let current = 0;
-        const increment = target / 40;
-        const updateCounter = () => {
-            if (current < target) {
-                current += increment;
-                stat.innerText = Math.ceil(current);
-                requestAnimationFrame(updateCounter);
-            } else {
-                stat.innerText = target;
-            }
-        };
-        updateCounter();
-    });
-};
-
-// Disparar contador quando a seção hero estiver visível
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            animateNumbers();
-            observer.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.5 });
-const heroStats = document.querySelector('.hero-stats');
-if (heroStats) observer.observe(heroStats);
-
-// Formulário newsletter
-const form = document.getElementById('newsletterForm');
-if (form) {
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const emailInput = form.querySelector('input[type="email"]');
-        if (emailInput.value) {
-            alert('🌱 Obrigado por se inscrever! Em breve você receberá conteúdos sobre agro sustentável.');
-            form.reset();
-        } else {
-            alert('Por favor, insira um e-mail válido.');
-        }
-    });
-}
-
-// Smooth parallax sutil no hero (opcional)
-window.addEventListener('scroll', () => {
-    const heroImg = document.querySelector('.hero-img');
-    if (heroImg) {
-        const scrolled = window.pageYOffset;
-        heroImg.style.transform = `translateY(${scrolled * 0.15}px)`;
+    // Navbar scroll effect
+    const navbar = document.querySelector('.navbar');
+    if (scrolled > 50) {
+        navbar.style.background = 'rgba(10, 26, 10, 0.9)';
+        navbar.style.padding = '10px 30px';
+    } else {
+        navbar.style.background = 'var(--glass-bg)';
+        navbar.style.padding = '15px 30px';
     }
 });
 
-// Footer subscribe
-const footerBtn = document.querySelector('.footer-subscribe button');
-if (footerBtn) {
-    footerBtn.addEventListener('click', () => {
-        const input = document.querySelector('.footer-subscribe input');
-        if (input.value.includes('@')) {
-            alert('✨ Obrigado! Você está conectado ao futuro sustentável.');
-            input.value = '';
-        } else {
-            alert('Digite um e-mail válido.');
-        }
-    });
-}
+// ===== FORM SUBMIT PREMIUM =====
+document.getElementById('premiumForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    // Efeito de sucesso
+    const btn = e.target.querySelector('button');
+    const originalText = btn.innerHTML;
+    
+    btn.innerHTML = '<i class="fas fa-check-circle"></i> INSCRITO!';
+    btn.style.background = '#00c853';
+    
+    setTimeout(() => {
+        alert('🌱✨ PARABÉNS! Você agora faz parte da revolução AGRO+VERDE! Em breve receberá conteúdos exclusivos.');
+        btn.innerHTML = originalText;
+        e.target.reset();
+    }, 1000);
+});
+
+// ===== NEWSLETTER FOOTER =====
+document.querySelector('.newsletter-input-group button')?.addEventListener('click', () => {
+    const input = document.querySelector('.newsletter-input-group input');
+    if (input.value.includes('@')) {
+        alert('📧 Obrigado! Você está conectado ao futuro sustentável!');
+        input.value = '';
+    } else {
+        alert('Por favor, insira um e-mail válido.');
+    }
+});
+
+// ===== EFEITO DE DIGITAÇÃO NO HERO (OPCIONAL) =====
+console.log('%c🌾 AGRO+VERDE - O FUTURO É AGORA! 🚀', 'font-size: 20px; color: #00c853; font-weight: bold;');
+console.log('%cDesenvolvido com 💚 para um planeta mais sustentável', 'font-size: 14px; color: #69f0ae;');
