@@ -33,15 +33,8 @@
             --sombra-azul: 0 0 30px rgba(79, 195, 247, 0.3);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Archivo', sans-serif;
@@ -54,59 +47,32 @@
 
         /* ===== CURSOR ANIMADO ===== */
         #cursor {
-            width: 15px;
-            height: 15px;
-            background: var(--verde-neon);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 99999;
-            box-shadow: 0 0 40px var(--verde-neon);
-            transition: width 0.2s, height 0.2s;
-            mix-blend-mode: screen;
-            border: 2px solid rgba(255, 255, 255, 0.5);
+            width: 15px; height: 15px; background: var(--verde-neon); border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 99999;
+            box-shadow: 0 0 40px var(--verde-neon); transition: width 0.2s, height 0.2s;
+            mix-blend-mode: screen; border: 2px solid rgba(255, 255, 255, 0.5);
         }
 
         .cursor-trail {
-            position: fixed;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--verde-neon);
-            pointer-events: none;
-            z-index: 99998;
-            opacity: 0.4;
-            box-shadow: 0 0 20px var(--verde-neon);
+            position: fixed; width: 8px; height: 8px; border-radius: 50%;
+            background: var(--verde-neon); pointer-events: none; z-index: 99998;
+            opacity: 0.4; box-shadow: 0 0 20px var(--verde-neon);
         }
 
         /* ===== PRELOADER ===== */
         .preloader {
-            position: fixed;
-            inset: 0;
-            background: var(--fundo);
-            z-index: 100000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: fixed; inset: 0; background: var(--fundo); z-index: 100000;
+            display: flex; align-items: center; justify-content: center;
             transition: opacity 0.8s, visibility 0.8s;
         }
-
-        .preloader.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .preloader-content {
-            text-align: center;
-        }
+        .preloader.hidden { opacity: 0; visibility: hidden; }
+        .preloader-content { text-align: center; }
 
         .tractor-loader {
-            font-size: 5rem;
-            color: var(--verde-neon);
+            font-size: 5rem; color: var(--verde-neon);
             animation: floatTractor 2s ease-in-out infinite;
             filter: drop-shadow(0 0 40px var(--verde-neon));
         }
-
         @keyframes floatTractor {
             0%, 100% { transform: translateY(0) rotate(0deg); }
             25% { transform: translateY(-20px) rotate(-5deg); }
@@ -114,382 +80,179 @@
         }
 
         .progress-container {
-            width: 350px;
-            height: 6px;
-            background: rgba(0, 255, 136, 0.1);
-            border-radius: 10px;
-            margin: 30px auto;
-            overflow: hidden;
+            width: 350px; height: 6px; background: rgba(0, 255, 136, 0.1);
+            border-radius: 10px; margin: 30px auto; overflow: hidden;
         }
-
         .progress-bar {
-            height: 100%;
-            width: 0%;
+            height: 100%; width: 0%;
             background: linear-gradient(90deg, var(--verde-neon), var(--dourado), var(--verde-neon));
-            background-size: 200% 100%;
-            border-radius: 10px;
-            transition: width 0.1s;
-            box-shadow: 0 0 20px var(--verde-neon);
-            animation: gradientMove 2s linear infinite;
+            background-size: 200% 100%; border-radius: 10px; transition: width 0.1s;
+            box-shadow: 0 0 20px var(--verde-neon); animation: gradientMove 2s linear infinite;
         }
-
         @keyframes gradientMove {
             0% { background-position: 0% 50%; }
             100% { background-position: 200% 50%; }
         }
 
         .progress-text {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--verde-neon);
-            text-shadow: 0 0 30px var(--verde-neon);
-            font-family: 'Clash Display', sans-serif;
+            font-size: 2.5rem; font-weight: 800; color: var(--verde-neon);
+            text-shadow: 0 0 30px var(--verde-neon); font-family: 'Clash Display', sans-serif;
         }
 
         /* ===== NAVBAR ===== */
         .navbar {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 95%;
-            max-width: 1400px;
-            background: rgba(5, 10, 5, 0.85);
-            backdrop-filter: blur(25px);
-            border: 1px solid var(--borda-vidro);
-            border-radius: 100px;
-            padding: 15px 30px;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            width: 95%; max-width: 1400px; background: rgba(5, 10, 5, 0.85);
+            backdrop-filter: blur(25px); border: 1px solid var(--borda-vidro);
+            border-radius: 100px; padding: 15px 30px; z-index: 9999;
+            display: flex; align-items: center; justify-content: space-between;
             box-shadow: var(--sombra-neon);
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
         .logo i {
-            font-size: 2.5rem;
-            color: var(--verde-neon);
-            filter: drop-shadow(0 0 20px var(--verde-neon));
-            animation: pulse 2s infinite;
+            font-size: 2.5rem; color: var(--verde-neon);
+            filter: drop-shadow(0 0 20px var(--verde-neon)); animation: pulse 2s infinite;
         }
-
         @keyframes pulse {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.8; transform: scale(1.1); }
         }
+        .logo span { font-family: 'Clash Display', sans-serif; font-size: 2rem; font-weight: 700; color: var(--texto); }
+        .logo span strong { color: var(--verde-neon); }
 
-        .logo span {
-            font-family: 'Clash Display', sans-serif;
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--texto);
-        }
-
-        .logo span strong {
-            color: var(--verde-neon);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 8px;
-            list-style: none;
-        }
-
+        .nav-links { display: flex; gap: 8px; list-style: none; }
         .nav-links a {
-            padding: 12px 24px;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 500;
-            color: var(--texto);
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            padding: 12px 24px; border-radius: 40px; text-decoration: none; font-weight: 500;
+            color: var(--texto); transition: all 0.3s; display: flex; align-items: center; gap: 8px;
         }
-
-        .nav-links a i {
-            opacity: 0.7;
-        }
-
+        .nav-links a i { opacity: 0.7; }
         .nav-links a:hover {
-            background: var(--verde-neon);
-            color: var(--fundo);
-            box-shadow: 0 0 30px var(--verde-neon);
-            transform: translateY(-3px);
+            background: var(--verde-neon); color: var(--fundo);
+            box-shadow: 0 0 30px var(--verde-neon); transform: translateY(-3px);
         }
 
-        .menu-toggle {
-            display: none;
-            font-size: 2rem;
-            color: var(--verde-neon);
-            cursor: pointer;
-        }
+        .menu-toggle { display: none; font-size: 2rem; color: var(--verde-neon); cursor: pointer; }
 
         /* ===== HERO ===== */
         .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 140px 30px 80px;
-            position: relative;
-            overflow: hidden;
+            min-height: 100vh; display: flex; align-items: center; padding: 140px 30px 80px;
+            position: relative; overflow: hidden;
             background: radial-gradient(circle at 30% 50%, rgba(0, 255, 136, 0.08), transparent 70%);
         }
-
         .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
+            content: ''; position: absolute; inset: 0;
             background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="30" r="1.5" fill="%2300ff88" opacity="0.3"/><circle cx="80" cy="70" r="2" fill="%2300ff88" opacity="0.2"/><circle cx="50" cy="20" r="1" fill="%2300ff88" opacity="0.4"/></svg>');
-            background-size: 300px;
-            opacity: 0.5;
-            animation: particlesFloat 20s linear infinite;
+            background-size: 300px; opacity: 0.5; animation: particlesFloat 20s linear infinite;
         }
-
         @keyframes particlesFloat {
             0% { transform: translateY(0); }
             100% { transform: translateY(-100px); }
         }
 
-        .hero-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 5;
-        }
+        .hero-content { max-width: 1400px; margin: 0 auto; position: relative; z-index: 5; }
 
         .hero-badge {
-            display: inline-block;
-            padding: 10px 30px;
-            background: var(--vidro);
-            backdrop-filter: blur(10px);
-            border: 2px solid var(--dourado);
-            border-radius: 60px;
-            color: var(--dourado);
-            font-weight: 700;
-            margin-bottom: 30px;
+            display: inline-block; padding: 10px 30px; background: var(--vidro);
+            backdrop-filter: blur(10px); border: 2px solid var(--dourado);
+            border-radius: 60px; color: var(--dourado); font-weight: 700; margin-bottom: 30px;
             animation: slideInLeft 0.8s ease-out, glowPulse 2s infinite;
             box-shadow: var(--sombra-dourada);
         }
-
         @keyframes glowPulse {
             0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
             50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.6); }
         }
-
         @keyframes slideInLeft {
             from { opacity: 0; transform: translateX(-50px); }
             to { opacity: 1; transform: translateX(0); }
         }
 
         .hero-title {
-            font-family: 'Clash Display', sans-serif;
-            font-size: clamp(4rem, 12vw, 8rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            position: relative;
+            font-family: 'Clash Display', sans-serif; font-size: clamp(4rem, 12vw, 8rem);
+            font-weight: 800; line-height: 1.1; margin-bottom: 30px; text-transform: uppercase; position: relative;
         }
-
         .title-line-1 {
-            display: block;
-            animation: glitchText 3s infinite, fadeInUp 1s ease-out;
+            display: block; animation: glitchText 3s infinite, fadeInUp 1s ease-out;
             text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.3), -0.05em -0.025em 0 rgba(0, 255, 0, 0.3);
         }
-
         @keyframes glitchText {
             0%, 100% { text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.3), -0.05em -0.025em 0 rgba(0, 255, 0, 0.3); }
             95% { text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.3), 0.025em 0.025em 0 rgba(0, 0, 255, 0.3); }
         }
-
-        .title-line-2 {
-            display: block;
-            animation: fadeInUp 1s ease-out 0.2s both;
-        }
+        .title-line-2 { display: block; animation: fadeInUp 1s ease-out 0.2s both; }
 
         .gradient-text {
             background: linear-gradient(135deg, var(--verde-neon) 0%, var(--dourado) 50%, var(--verde-neon) 100%);
-            background-size: 200% 100%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: gradientFlow 4s linear infinite;
-            display: inline-block;
+            background-size: 200% 100%; -webkit-background-clip: text; background-clip: text;
+            color: transparent; animation: gradientFlow 4s linear infinite; display: inline-block;
         }
-
         @keyframes gradientFlow {
             0% { background-position: 0% 50%; }
             100% { background-position: 200% 50%; }
         }
-
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .hero-description {
-            font-size: 1.4rem;
-            max-width: 700px;
-            margin-bottom: 40px;
-            animation: fadeInUp 1s ease-out 0.4s both;
-            line-height: 1.6;
+            font-size: 1.4rem; max-width: 700px; margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.4s both; line-height: 1.6;
         }
 
         .hero-stats {
-            display: flex;
-            gap: 30px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
+            display: flex; gap: 30px; margin-bottom: 40px; flex-wrap: wrap;
             animation: fadeInUp 1s ease-out 0.6s both;
         }
-
-        .hero-stat {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .hero-stat i {
-            font-size: 2.5rem;
-            color: var(--verde-neon);
-            filter: drop-shadow(0 0 15px var(--verde-neon));
-        }
-
-        .hero-stat span {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--dourado);
-        }
+        .hero-stat { display: flex; align-items: center; gap: 15px; }
+        .hero-stat i { font-size: 2.5rem; color: var(--verde-neon); filter: drop-shadow(0 0 15px var(--verde-neon)); }
+        .hero-stat span { font-size: 2rem; font-weight: 800; color: var(--dourado); }
 
         .hero-buttons {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
+            display: flex; gap: 20px; flex-wrap: wrap;
             animation: fadeInUp 1s ease-out 0.8s both;
         }
 
         .btn {
-            padding: 18px 40px;
-            border-radius: 60px;
-            font-weight: 700;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            transition: all 0.3s;
-            font-size: 1.1rem;
-            position: relative;
-            overflow: hidden;
-            border: none;
-            cursor: pointer;
+            padding: 18px 40px; border-radius: 60px; font-weight: 700; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 12px; transition: all 0.3s;
+            font-size: 1.1rem; position: relative; overflow: hidden; border: none; cursor: pointer;
         }
-
         .btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.5s, height 0.5s;
+            content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0;
+            background: rgba(255, 255, 255, 0.2); border-radius: 50%;
+            transform: translate(-50%, -50%); transition: width 0.5s, height 0.5s;
         }
+        .btn:hover::before { width: 300px; height: 300px; }
 
-        .btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
+        .btn-primary { background: var(--verde-neon); color: var(--fundo); box-shadow: 0 0 30px var(--verde-neon); }
+        .btn-primary:hover { transform: translateY(-5px); box-shadow: 0 0 50px var(--verde-neon); }
 
-        .btn-primary {
-            background: var(--verde-neon);
-            color: var(--fundo);
-            box-shadow: 0 0 30px var(--verde-neon);
-        }
+        .btn-outline { border: 2px solid var(--verde-neon); color: var(--verde-neon); background: transparent; }
+        .btn-outline:hover { background: var(--verde-neon); color: var(--fundo); }
 
-        .btn-primary:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 50px var(--verde-neon);
-        }
-
-        .btn-outline {
-            border: 2px solid var(--verde-neon);
-            color: var(--verde-neon);
-            background: transparent;
-        }
-
-        .btn-outline:hover {
-            background: var(--verde-neon);
-            color: var(--fundo);
-        }
-
-        .btn-game {
-            background: var(--dourado);
-            color: var(--fundo);
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
-        }
+        .btn-game { background: var(--dourado); color: var(--fundo); box-shadow: 0 0 30px rgba(255, 215, 0, 0.5); }
 
         /* ===== SEÇÕES ===== */
-        .section {
-            padding: 100px 30px;
-        }
+        .section { padding: 100px 30px; }
+        .container { max-width: 1400px; margin: 0 auto; }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-family: 'Clash Display', sans-serif; font-size: 3.5rem; margin-bottom: 20px; }
+        .section-header p { font-size: 1.2rem; opacity: 0.8; max-width: 700px; margin: 0 auto; }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-header h2 {
-            font-family: 'Clash Display', sans-serif;
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-        }
-
-        .section-header p {
-            font-size: 1.2rem;
-            opacity: 0.8;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* ===== CARTAS 3D ESTILO POKÉMON ===== */
+        /* ===== CARTAS 3D ===== */
         .cards-3d-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-            perspective: 2000px;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; perspective: 2000px;
         }
-
         .card-3d {
             background: linear-gradient(145deg, rgba(0, 255, 136, 0.1), rgba(10, 30, 10, 0.9));
-            backdrop-filter: blur(10px);
-            border: 2px solid var(--dourado);
-            border-radius: 30px;
-            padding: 30px 20px;
-            text-align: center;
-            transition: all 0.4s;
-            transform-style: preserve-3d;
-            transform: rotateY(0deg) rotateX(0deg);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 0 rgba(255, 215, 0, 0);
-            position: relative;
-            cursor: pointer;
-            animation: float3d 6s ease-in-out infinite;
+            backdrop-filter: blur(10px); border: 2px solid var(--dourado); border-radius: 30px;
+            padding: 30px 20px; text-align: center; transition: all 0.4s; transform-style: preserve-3d;
+            transform: rotateY(0deg) rotateX(0deg); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            position: relative; cursor: pointer; animation: float3d 6s ease-in-out infinite;
         }
-
         .card-3d:nth-child(2) { animation-delay: 0.2s; }
         .card-3d:nth-child(3) { animation-delay: 0.4s; }
         .card-3d:nth-child(4) { animation-delay: 0.6s; }
@@ -498,369 +261,109 @@
             0%, 100% { transform: rotateY(0deg) rotateX(0deg) translateY(0); }
             25% { transform: rotateY(5deg) rotateX(3deg) translateY(-10px); }
             50% { transform: rotateY(-5deg) rotateX(-3deg) translateY(0); }
-            75% { transform: rotateY(3deg) rotateX(5deg) translateY(-5px); }
+            75% { transform: rotateY(3deg) rotateX(5deg) translateY(-5deg); }
         }
-
         .card-3d:hover {
             transform: rotateY(10deg) rotateX(5deg) translateY(-15px) scale(1.05);
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(255, 215, 0, 0.5);
             border-color: var(--verde-neon);
         }
-
-        .card-3d-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 20px currentColor);
-            transform: translateZ(20px);
-        }
-
-        .card-3d h3 {
-            font-family: 'Clash Display', sans-serif;
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: var(--dourado);
-            transform: translateZ(15px);
-        }
-
-        .card-3d p {
-            opacity: 0.9;
-            margin-bottom: 20px;
-            transform: translateZ(10px);
-        }
-
-        .card-3d .hp-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 15px;
-        }
-
-        .hp-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--verde-neon), var(--dourado));
-            border-radius: 10px;
-            width: 80%;
-            transition: width 0.3s;
-        }
-
-        .card-3d .rarity {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            font-size: 1.5rem;
-            opacity: 0.8;
-        }
+        .card-3d-icon { font-size: 4rem; margin-bottom: 20px; filter: drop-shadow(0 0 20px currentColor); transform: translateZ(20px); }
+        .card-3d h3 { font-family: 'Clash Display', sans-serif; font-size: 1.8rem; margin-bottom: 15px; color: var(--dourado); transform: translateZ(15px); }
+        .card-3d p { opacity: 0.9; margin-bottom: 20px; transform: translateZ(10px); }
+        .card-3d .hp-bar { width: 100%; height: 8px; background: rgba(0, 0, 0, 0.4); border-radius: 10px; overflow: hidden; margin-top: 15px; }
+        .hp-fill { height: 100%; background: linear-gradient(90deg, var(--verde-neon), var(--dourado)); border-radius: 10px; width: 80%; transition: width 0.3s; }
+        .card-3d .rarity { position: absolute; top: 15px; left: 15px; font-size: 1.5rem; opacity: 0.8; }
 
         /* ===== GRÁFICOS ===== */
-        .charts-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-top: 40px;
-        }
-
+        .charts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 40px; }
         .chart-card {
-            background: var(--vidro);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--borda-vidro);
-            border-radius: 30px;
-            padding: 30px;
-            transition: all 0.4s;
-            animation: fadeInUp 0.8s ease-out;
+            background: var(--vidro); backdrop-filter: blur(15px); border: 1px solid var(--borda-vidro);
+            border-radius: 30px; padding: 30px; transition: all 0.4s; animation: fadeInUp 0.8s ease-out;
         }
-
-        .chart-card:hover {
-            border-color: var(--verde-neon);
-            box-shadow: var(--sombra-neon);
-            transform: translateY(-10px);
-        }
-
-        .chart-card h3 {
-            font-family: 'Clash Display', sans-serif;
-            margin-bottom: 20px;
-            color: var(--dourado);
-        }
-
-        .chart-container {
-            position: relative;
-            height: 250px;
-        }
+        .chart-card:hover { border-color: var(--verde-neon); box-shadow: var(--sombra-neon); transform: translateY(-10px); }
+        .chart-card h3 { font-family: 'Clash Display', sans-serif; margin-bottom: 20px; color: var(--dourado); }
+        .chart-container { position: relative; height: 250px; }
 
         /* ===== MÉTRICAS RÁPIDAS ===== */
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 15px;
-            margin: 40px 0;
-        }
-
+        .metrics-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 15px; margin: 40px 0; }
         .metric-card {
-            background: var(--vidro);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--borda-vidro);
-            border-radius: 20px;
-            padding: 20px;
-            text-align: center;
-            transition: all 0.3s;
-            animation: fadeInUp 0.8s ease-out;
+            background: var(--vidro); backdrop-filter: blur(10px); border: 1px solid var(--borda-vidro);
+            border-radius: 20px; padding: 20px; text-align: center; transition: all 0.3s; animation: fadeInUp 0.8s ease-out;
         }
-
-        .metric-card:hover {
-            border-color: var(--verde-neon);
-            transform: scale(1.05);
-        }
-
-        .metric-icon {
-            font-size: 2rem;
-            color: var(--verde-neon);
-            margin-bottom: 10px;
-        }
-
-        .metric-value {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--dourado);
-        }
-
-        .metric-label {
-            font-size: 0.8rem;
-            opacity: 0.7;
-        }
+        .metric-card:hover { border-color: var(--verde-neon); transform: scale(1.05); }
+        .metric-icon { font-size: 2rem; color: var(--verde-neon); margin-bottom: 10px; }
+        .metric-value { font-size: 1.8rem; font-weight: 800; color: var(--dourado); }
+        .metric-label { font-size: 0.8rem; opacity: 0.7; }
 
         /* ===== JOGOS COM CARDS 3D ===== */
         .games-3d-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            perspective: 2000px;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; perspective: 2000px;
         }
-
         .game-3d-card {
             background: linear-gradient(145deg, rgba(0, 255, 136, 0.15), rgba(10, 30, 10, 0.95));
-            backdrop-filter: blur(15px);
-            border: 3px solid var(--dourado);
-            border-radius: 40px;
-            padding: 40px 30px;
-            text-align: center;
-            transition: all 0.4s;
-            transform-style: preserve-3d;
-            transform: rotateY(0deg) rotateX(0deg);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            cursor: pointer;
-            animation: float3d 6s ease-in-out infinite;
+            backdrop-filter: blur(15px); border: 3px solid var(--dourado); border-radius: 40px;
+            padding: 40px 30px; text-align: center; transition: all 0.4s; transform-style: preserve-3d;
+            transform: rotateY(0deg) rotateX(0deg); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            cursor: pointer; animation: float3d 6s ease-in-out infinite;
         }
-
         .game-3d-card:hover {
             transform: rotateY(8deg) rotateX(4deg) translateY(-15px) scale(1.05);
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(255, 215, 0, 0.6);
             border-color: var(--verde-neon);
         }
-
-        .game-3d-icon {
-            font-size: 5rem;
-            margin-bottom: 25px;
-            filter: drop-shadow(0 0 30px var(--dourado));
-            transform: translateZ(25px);
-        }
-
-        .game-3d-card h3 {
-            font-family: 'Clash Display', sans-serif;
-            font-size: 2rem;
-            margin-bottom: 15px;
-            color: var(--dourado);
-            transform: translateZ(20px);
-        }
-
-        .game-3d-card p {
-            opacity: 0.9;
-            margin-bottom: 25px;
-            transform: translateZ(15px);
-        }
-
-        .game-3d-card .btn {
-            transform: translateZ(10px);
-        }
-
-        /* ===== HALL DA FAMA ===== */
-        .hall-fame-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-        }
-
-        .player-card {
-            background: var(--vidro);
-            backdrop-filter: blur(15px);
-            border: 2px solid var(--borda-vidro);
-            border-radius: 30px;
-            padding: 25px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            transition: all 0.4s;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .player-card:hover {
-            border-color: var(--dourado);
-            box-shadow: var(--sombra-dourada);
-            transform: translateX(10px);
-        }
-
-        .player-rank {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--dourado);
-            min-width: 60px;
-            text-align: center;
-        }
-
-        .player-avatar {
-            width: 60px;
-            height: 60px;
-            background: var(--verde-medio);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            border: 3px solid var(--verde-neon);
-        }
-
-        .player-info {
-            flex: 1;
-        }
-
-        .player-name {
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-
-        .player-score {
-            color: var(--dourado);
-            font-size: 1.1rem;
-        }
+        .game-3d-icon { font-size: 5rem; margin-bottom: 25px; filter: drop-shadow(0 0 30px var(--dourado)); transform: translateZ(25px); }
+        .game-3d-card h3 { font-family: 'Clash Display', sans-serif; font-size: 2rem; margin-bottom: 15px; color: var(--dourado); transform: translateZ(20px); }
+        .game-3d-card p { opacity: 0.9; margin-bottom: 25px; transform: translateZ(15px); }
+        .game-3d-card .btn { transform: translateZ(10px); }
 
         /* ===== WIDGET IA ===== */
-        .ia-widget {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 9998;
-        }
-
+        .ia-widget { position: fixed; bottom: 30px; right: 30px; z-index: 9998; }
         .ia-toggle {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, var(--roxo), #c084fc);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 0 40px rgba(168, 85, 247, 0.5);
-            transition: all 0.3s;
-            border: 2px solid white;
-            animation: pulseGlow 2s infinite;
+            width: 70px; height: 70px; background: linear-gradient(135deg, var(--roxo), #c084fc);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; color: white; cursor: pointer; box-shadow: 0 0 40px rgba(168, 85, 247, 0.5);
+            transition: all 0.3s; border: 2px solid white; animation: pulseGlow 2s infinite;
         }
-
         @keyframes pulseGlow {
             0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.5); }
             50% { box-shadow: 0 0 50px rgba(168, 85, 247, 0.8); }
         }
-
         .ia-chat {
-            position: absolute;
-            bottom: 90px;
-            right: 0;
-            width: 350px;
-            background: rgba(10, 20, 10, 0.98);
-            backdrop-filter: blur(30px);
-            border: 2px solid var(--roxo);
-            border-radius: 30px;
-            padding: 25px;
-            display: none;
-            box-shadow: 0 0 50px rgba(168, 85, 247, 0.3);
+            position: absolute; bottom: 90px; right: 0; width: 350px;
+            background: rgba(10, 20, 10, 0.98); backdrop-filter: blur(30px);
+            border: 2px solid var(--roxo); border-radius: 30px; padding: 25px;
+            display: none; box-shadow: 0 0 50px rgba(168, 85, 247, 0.3);
         }
-
-        .ia-chat.active {
-            display: block;
-            animation: slideUp 0.3s ease-out;
-        }
-
+        .ia-chat.active { display: block; animation: slideUp 0.3s ease-out; }
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        .ia-chat h3 {
-            color: var(--roxo);
-            margin-bottom: 20px;
-        }
-
+        .ia-chat h3 { color: var(--roxo); margin-bottom: 20px; }
         .ia-quick-btn {
-            padding: 12px 18px;
-            background: rgba(168, 85, 247, 0.1);
-            border: 1px solid rgba(168, 85, 247, 0.3);
-            border-radius: 20px;
-            color: var(--texto);
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-bottom: 10px;
+            padding: 12px 18px; background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 20px;
+            color: var(--texto); text-align: left; cursor: pointer; transition: all 0.3s; margin-bottom: 10px;
         }
-
-        .ia-quick-btn:hover {
-            background: rgba(168, 85, 247, 0.2);
-        }
-
+        .ia-quick-btn:hover { background: rgba(168, 85, 247, 0.2); }
         .ia-answer {
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 20px;
-            margin: 15px 0;
-            border-left: 3px solid var(--roxo);
-            display: none;
+            padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 20px;
+            margin: 15px 0; border-left: 3px solid var(--roxo); display: none;
         }
-
-        .ia-answer.active {
-            display: block;
-        }
-
+        .ia-answer.active { display: block; }
         .ia-link {
-            display: block;
-            text-align: center;
-            padding: 12px;
-            background: linear-gradient(135deg, var(--roxo), #c084fc);
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: 600;
+            display: block; text-align: center; padding: 12px;
+            background: linear-gradient(135deg, var(--roxo), #c084fc); color: white;
+            text-decoration: none; border-radius: 30px; font-weight: 600;
         }
 
         /* ===== FOOTER ===== */
-        .footer {
-            padding: 60px 30px 30px;
-            background: var(--fundo);
-            border-top: 1px solid var(--borda-vidro);
-        }
-
+        .footer { padding: 60px 30px 30px; background: var(--fundo); border-top: 1px solid var(--borda-vidro); }
         .footer-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1.5fr;
-            gap: 40px;
-            margin-bottom: 40px;
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 40px;
         }
-
-        .footer-credit {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid var(--borda-vidro);
-        }
+        .footer-credit { text-align: center; padding-top: 30px; border-top: 1px solid var(--borda-vidro); }
 
         /* ===== RESPONSIVO ===== */
         @media (max-width: 1200px) {
@@ -868,31 +371,20 @@
             .charts-grid { grid-template-columns: 1fr; }
             .metrics-grid { grid-template-columns: repeat(3, 1fr); }
             .games-3d-grid { grid-template-columns: repeat(2, 1fr); }
-            .hall-fame-grid { grid-template-columns: repeat(2, 1fr); }
             .footer-content { grid-template-columns: 1fr 1fr; }
         }
 
         @media (max-width: 768px) {
             .menu-toggle { display: block; }
             .nav-links {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                flex-direction: column;
-                background: rgba(5, 10, 5, 0.98);
-                backdrop-filter: blur(30px);
-                border-radius: 30px;
-                padding: 30px;
-                margin-top: 20px;
-                display: none;
+                position: absolute; top: 100%; left: 0; right: 0; flex-direction: column;
+                background: rgba(5, 10, 5, 0.98); backdrop-filter: blur(30px);
+                border-radius: 30px; padding: 30px; margin-top: 20px; display: none;
             }
             .nav-links.active { display: flex; }
-            
             .cards-3d-grid { grid-template-columns: 1fr; }
             .metrics-grid { grid-template-columns: repeat(2, 1fr); }
             .games-3d-grid { grid-template-columns: 1fr; }
-            .hall-fame-grid { grid-template-columns: 1fr; }
             .footer-content { grid-template-columns: 1fr; }
             .ia-chat { width: 300px; }
         }
@@ -911,9 +403,7 @@
 <div class="preloader" id="preloader">
     <div class="preloader-content">
         <div class="tractor-loader"><i class="fas fa-tractor"></i></div>
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar"></div>
-        </div>
+        <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
         <div class="progress-text" id="progressText">0%</div>
         <p style="margin-top: 20px; opacity: 0.7; letter-spacing: 3px;">🌱 CARREGANDO O FUTURO...</p>
     </div>
@@ -925,9 +415,7 @@
         <i class="fas fa-leaf"></i>
         <span>AGRO<strong>+</strong>VERDE</span>
     </a>
-    
     <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
-    
     <ul class="nav-links" id="navLinks">
         <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
         <li><a href="sustentabilidade.html"><i class="fas fa-globe"></i> Sustentabilidade</a></li>
@@ -940,24 +428,20 @@
 <section class="hero">
     <div class="hero-content">
         <span class="hero-badge"><i class="fas fa-trophy"></i> AGRINHO 2026 • PROJETO DESTAQUE • PREMIADO</span>
-        
         <h1 class="hero-title">
             <span class="title-line-1">AGRO FORTE</span>
             <span class="title-line-2"><span class="gradient-text">FUTURO SUSTENTÁVEL</span></span>
         </h1>
-        
         <p class="hero-description">
             🌱 Equilíbrio perfeito entre produtividade máxima e preservação ambiental.<br>
             🚀 Tecnologia de ponta que respeita a natureza e alimenta o mundo.<br>
             💚 Cultivando o amanhã com responsabilidade e inovação.
         </p>
-        
         <div class="hero-stats">
             <div class="hero-stat"><i class="fas fa-leaf"></i> <span>98%</span> menos agrotóxicos</div>
             <div class="hero-stat"><i class="fas fa-droplet"></i> <span>65%</span> economia de água</div>
             <div class="hero-stat"><i class="fas fa-tree"></i> <span>3.5M</span> árvores salvas</div>
         </div>
-        
         <div class="hero-buttons">
             <a href="sustentabilidade.html" class="btn btn-primary"><i class="fas fa-leaf"></i> Explorar soluções</a>
             <a href="tecnologias.html" class="btn btn-outline"><i class="fas fa-microchip"></i> Tecnologias</a>
@@ -965,50 +449,18 @@
     </div>
 </section>
 
-<!-- CARTAS 3D ESTILO POKÉMON - IMPACTO -->
+<!-- CARTAS 3D - IMPACTO -->
 <section class="section">
     <div class="container">
         <div class="section-header">
             <h2><span class="gradient-text">Nosso Impacto</span> 🌍</h2>
             <p>Dados reais do nosso compromisso com a sustentabilidade</p>
         </div>
-        
         <div class="cards-3d-grid">
-            <div class="card-3d">
-                <div class="rarity">⭐</div>
-                <div class="card-3d-icon" style="color: var(--verde-neon);">💧</div>
-                <h3>Água Preservada</h3>
-                <p>65% de redução no consumo de água com irrigação inteligente</p>
-                <div class="hp-bar"><div class="hp-fill" style="width: 65%"></div></div>
-                <p style="margin-top: 10px;">65 bilhões de litros/ano</p>
-            </div>
-            
-            <div class="card-3d">
-                <div class="rarity">⭐⭐</div>
-                <div class="card-3d-icon" style="color: var(--dourado);">🌱</div>
-                <h3>Agrotóxicos</h3>
-                <p>98% de redução com controle biológico de pragas</p>
-                <div class="hp-bar"><div class="hp-fill" style="width: 98%"></div></div>
-                <p style="margin-top: 10px;">+200 espécies benéficas</p>
-            </div>
-            
-            <div class="card-3d">
-                <div class="rarity">⭐⭐⭐</div>
-                <div class="card-3d-icon" style="color: var(--azul);">☀️</div>
-                <h3>Energia Limpa</h3>
-                <p>100% das operações com energia solar e biogás</p>
-                <div class="hp-bar"><div class="hp-fill" style="width: 100%"></div></div>
-                <p style="margin-top: 10px;">Zero emissões de carbono</p>
-            </div>
-            
-            <div class="card-3d">
-                <div class="rarity">🏆</div>
-                <div class="card-3d-icon" style="color: var(--roxo);">🌳</div>
-                <h3>Área Preservada</h3>
-                <p>30% da área total destinada à reserva legal</p>
-                <div class="hp-bar"><div class="hp-fill" style="width: 30%"></div></div>
-                <p style="margin-top: 10px;">3.5 milhões de árvores</p>
-            </div>
+            <div class="card-3d"><div class="rarity">⭐</div><div class="card-3d-icon" style="color: var(--verde-neon);">💧</div><h3>Água Preservada</h3><p>65% de redução no consumo de água com irrigação inteligente</p><div class="hp-bar"><div class="hp-fill" style="width: 65%"></div></div><p style="margin-top: 10px;">65 bilhões de litros/ano</p></div>
+            <div class="card-3d"><div class="rarity">⭐⭐</div><div class="card-3d-icon" style="color: var(--dourado);">🌱</div><h3>Agrotóxicos</h3><p>98% de redução com controle biológico de pragas</p><div class="hp-bar"><div class="hp-fill" style="width: 98%"></div></div><p style="margin-top: 10px;">+200 espécies benéficas</p></div>
+            <div class="card-3d"><div class="rarity">⭐⭐⭐</div><div class="card-3d-icon" style="color: var(--azul);">☀️</div><h3>Energia Limpa</h3><p>100% das operações com energia solar e biogás</p><div class="hp-bar"><div class="hp-fill" style="width: 100%"></div></div><p style="margin-top: 10px;">Zero emissões de carbono</p></div>
+            <div class="card-3d"><div class="rarity">🏆</div><div class="card-3d-icon" style="color: var(--roxo);">🌳</div><h3>Área Preservada</h3><p>30% da área total destinada à reserva legal</p><div class="hp-bar"><div class="hp-fill" style="width: 30%"></div></div><p style="margin-top: 10px;">3.5 milhões de árvores</p></div>
         </div>
     </div>
 </section>
@@ -1034,26 +486,10 @@
             <h2><span class="gradient-text">Dashboard de Sustentabilidade</span> 📊</h2>
             <p>Acompanhe nossa evolução em tempo real</p>
         </div>
-        
         <div class="charts-grid">
-            <div class="chart-card">
-                <h3><i class="fas fa-droplet"></i> Consumo de Água</h3>
-                <div class="chart-container">
-                    <canvas id="waterChart"></canvas>
-                </div>
-            </div>
-            <div class="chart-card">
-                <h3><i class="fas fa-leaf"></i> Redução de Agrotóxicos</h3>
-                <div class="chart-container">
-                    <canvas id="pesticideChart"></canvas>
-                </div>
-            </div>
-            <div class="chart-card">
-                <h3><i class="fas fa-chart-pie"></i> Uso da Terra</h3>
-                <div class="chart-container">
-                    <canvas id="landChart"></canvas>
-                </div>
-            </div>
+            <div class="chart-card"><h3><i class="fas fa-droplet"></i> Consumo de Água</h3><div class="chart-container"><canvas id="waterChart"></canvas></div></div>
+            <div class="chart-card"><h3><i class="fas fa-leaf"></i> Redução de Agrotóxicos</h3><div class="chart-container"><canvas id="pesticideChart"></canvas></div></div>
+            <div class="chart-card"><h3><i class="fas fa-chart-pie"></i> Uso da Terra</h3><div class="chart-container"><canvas id="landChart"></canvas></div></div>
         </div>
     </div>
 </section>
@@ -1065,56 +501,32 @@
             <h2><i class="fas fa-gamepad" style="color: var(--dourado);"></i> <span class="gradient-text">Jogos do Agrinho</span></h2>
             <p>Aprenda sobre agro se divertindo com nossos jogos exclusivos!</p>
         </div>
-        
         <div class="games-3d-grid">
-            <div class="game-3d-card" onclick="location.href='jogo-plantar.html'">
-                <div class="game-3d-icon">🚜</div>
-                <h3>Colheita Feliz</h3>
-                <p>Plante, cultive e colha! Gerencie sua fazenda sustentável.</p>
-                <span class="btn btn-game">JOGAR AGORA</span>
-            </div>
-            
-            <div class="game-3d-card" onclick="location.href='jogo-flappy.html'">
-                <div class="game-3d-icon">🕊️</div>
-                <h3>Flappy Plant</h3>
-                <p>Ajude a plantinha a voar e colete moedas pelo caminho!</p>
-                <span class="btn btn-game">JOGAR AGORA</span>
-            </div>
-            
-            <div class="game-3d-card" onclick="location.href='jogo-pvz.html'">
-                <div class="game-3d-icon">🧟</div>
-                <h3>Plants vs Zombies</h3>
-                <p>Defenda sua horta dos zumbis com plantas poderosas!</p>
-                <span class="btn btn-game">JOGAR AGORA</span>
-            </div>
+            <div class="game-3d-card" onclick="location.href='jogo-plantar.html'"><div class="game-3d-icon">🚜</div><h3>Colheita Feliz</h3><p>Plante, cultive e colha! Gerencie sua fazenda sustentável.</p><span class="btn btn-game">JOGAR AGORA</span></div>
+            <div class="game-3d-card" onclick="location.href='jogo-flappy.html'"><div class="game-3d-icon">🕊️</div><h3>Flappy Plant</h3><p>Ajude a plantinha a voar e colete moedas pelo caminho!</p><span class="btn btn-game">JOGAR AGORA</span></div>
+            <div class="game-3d-card" onclick="location.href='jogo-pvz.html'"><div class="game-3d-icon">🧟</div><h3>Plants vs Zombies</h3><p>Defenda sua horta dos zumbis com plantas poderosas!</p><span class="btn btn-game">JOGAR AGORA</span></div>
         </div>
     </div>
 </section>
 
-<!-- HALL DA FAMA -->
-<section class="section">
+<!-- ===== ÁREA RESTRITA (SUBSTITUI O HALL DA FAMA) ===== -->
+<section class="section" style="padding: 40px 30px;">
     <div class="container">
         <div class="section-header">
-            <h2><span class="gradient-text">Hall da Fama</span> 🏆</h2>
-            <p>Os melhores jogadores do Agrinho 2026</p>
+            <h2><i class="fas fa-lock" style="color: var(--roxo);"></i> <span class="gradient-text">Área Restrita</span></h2>
+            <p style="font-size: 1rem; opacity: 0.7;">Apenas para desenvolvedores autorizados</p>
         </div>
         
-        <div class="hall-fame-grid">
-            <div class="player-card">
-                <div class="player-rank">🥇</div>
-                <div class="player-avatar">👨‍🌾</div>
-                <div class="player-info"><div class="player-name">João Silva</div><div class="player-score">12.500 pts</div></div>
+        <div style="max-width: 400px; margin: 0 auto;">
+            <div style="display: flex; gap: 10px; background: var(--vidro); backdrop-filter: blur(15px); border: 1px solid var(--roxo); border-radius: 60px; padding: 5px;">
+                <input type="password" id="secretCode" placeholder="Digite o código secreto..." style="flex: 1; padding: 16px 20px; background: transparent; border: none; color: var(--texto); font-size: 1rem; font-family: 'Archivo', sans-serif; outline: none;">
+                <button id="verifyCodeBtn" style="padding: 16px 30px; background: linear-gradient(135deg, var(--roxo), #c084fc); color: white; border: none; border-radius: 60px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-key"></i> Acessar
+                </button>
             </div>
-            <div class="player-card">
-                <div class="player-rank">🥈</div>
-                <div class="player-avatar">👩‍🌾</div>
-                <div class="player-info"><div class="player-name">Maria Oliveira</div><div class="player-score">10.800 pts</div></div>
-            </div>
-            <div class="player-card">
-                <div class="player-rank">🥉</div>
-                <div class="player-avatar">🧑‍🌾</div>
-                <div class="player-info"><div class="player-name">Carlos Mendes</div><div class="player-score">9.450 pts</div></div>
-            </div>
+            <p style="text-align: center; margin-top: 10px; font-size: 0.8rem; opacity: 0.5;">
+                <i class="fas fa-shield-alt"></i> Área protegida por senha
+            </p>
         </div>
     </div>
 </section>
@@ -1123,35 +535,11 @@
 <footer class="footer">
     <div class="container">
         <div class="footer-content">
-            <div>
-                <h3 style="font-family: 'Clash Display', sans-serif; font-size: 2rem; margin-bottom: 20px;">AGRO<strong style="color: var(--verde-neon);">+</strong>VERDE</h3>
-                <p style="opacity: 0.8; line-height: 1.6;">Cultivando o futuro, preservando o planeta. Uma iniciativa para o Agrinho 2026.</p>
-            </div>
-            <div>
-                <h4 style="margin-bottom: 20px;">Navegação</h4>
-                <ul style="list-style: none; opacity: 0.8;">
-                    <li style="margin-bottom: 10px;"><a href="index.html" style="color: var(--texto); text-decoration: none;">Início</a></li>
-                    <li style="margin-bottom: 10px;"><a href="sustentabilidade.html" style="color: var(--texto); text-decoration: none;">Sustentabilidade</a></li>
-                    <li style="margin-bottom: 10px;"><a href="tecnologias.html" style="color: var(--texto); text-decoration: none;">Tecnologias</a></li>
-                    <li style="margin-bottom: 10px;"><a href="contato.html" style="color: var(--texto); text-decoration: none;">Contato</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 style="margin-bottom: 20px;">Jogos</h4>
-                <ul style="list-style: none; opacity: 0.8;">
-                    <li style="margin-bottom: 10px;"><a href="jogo-plantar.html" style="color: var(--texto); text-decoration: none;">Colheita Feliz</a></li>
-                    <li style="margin-bottom: 10px;"><a href="jogo-flappy.html" style="color: var(--texto); text-decoration: none;">Flappy Plant</a></li>
-                    <li style="margin-bottom: 10px;"><a href="jogo-pvz.html" style="color: var(--texto); text-decoration: none;">Plants vs Zombies</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 style="margin-bottom: 20px;">Certificações</h4>
-                <p style="opacity: 0.8;"><i class="fas fa-certificate" style="color: var(--verde-neon);"></i> ISO 14001</p>
-                <p style="opacity: 0.8;"><i class="fas fa-leaf" style="color: var(--verde-neon);"></i> Carbon Free</p>
-                <p style="opacity: 0.8;"><i class="fas fa-recycle" style="color: var(--verde-neon);"></i> ESG A+</p>
-            </div>
+            <div><h3 style="font-family: 'Clash Display', sans-serif; font-size: 2rem; margin-bottom: 20px;">AGRO<strong style="color: var(--verde-neon);">+</strong>VERDE</h3><p style="opacity: 0.8; line-height: 1.6;">Cultivando o futuro, preservando o planeta. Uma iniciativa para o Agrinho 2026.</p></div>
+            <div><h4 style="margin-bottom: 20px;">Navegação</h4><ul style="list-style: none; opacity: 0.8;"><li style="margin-bottom: 10px;"><a href="index.html" style="color: var(--texto); text-decoration: none;">Início</a></li><li style="margin-bottom: 10px;"><a href="sustentabilidade.html" style="color: var(--texto); text-decoration: none;">Sustentabilidade</a></li><li style="margin-bottom: 10px;"><a href="tecnologias.html" style="color: var(--texto); text-decoration: none;">Tecnologias</a></li><li style="margin-bottom: 10px;"><a href="contato.html" style="color: var(--texto); text-decoration: none;">Contato</a></li></ul></div>
+            <div><h4 style="margin-bottom: 20px;">Jogos</h4><ul style="list-style: none; opacity: 0.8;"><li style="margin-bottom: 10px;"><a href="jogo-plantar.html" style="color: var(--texto); text-decoration: none;">Colheita Feliz</a></li><li style="margin-bottom: 10px;"><a href="jogo-flappy.html" style="color: var(--texto); text-decoration: none;">Flappy Plant</a></li><li style="margin-bottom: 10px;"><a href="jogo-pvz.html" style="color: var(--texto); text-decoration: none;">Plants vs Zombies</a></li></ul></div>
+            <div><h4 style="margin-bottom: 20px;">Certificações</h4><p style="opacity: 0.8;"><i class="fas fa-certificate" style="color: var(--verde-neon);"></i> ISO 14001</p><p style="opacity: 0.8;"><i class="fas fa-leaf" style="color: var(--verde-neon);"></i> Carbon Free</p><p style="opacity: 0.8;"><i class="fas fa-recycle" style="color: var(--verde-neon);"></i> ESG A+</p></div>
         </div>
-        
         <div class="footer-credit">
             <p style="font-size: 1.2rem; margin-bottom: 10px;"><strong>Feito por:</strong> Cleverson Victor</p>
             <p style="font-size: 1.2rem; margin-bottom: 20px;"><strong style="color: #a855f7;">Ajuda em programação:</strong> DeepSeek</p>
@@ -1165,21 +553,16 @@
     <div class="ia-chat" id="iaChat">
         <h3><i class="fas fa-gem" style="color: var(--roxo);"></i> Ametista IA</h3>
         <p style="margin-bottom: 15px; opacity: 0.8;">Olá! Sou a Ametista, sua assistente do agro.</p>
-        
         <div class="ia-quick-questions">
             <button class="ia-quick-btn" data-question="plants">🌱 Como jogar Plants vs Zombies?</button>
             <button class="ia-quick-btn" data-question="flappy">🕊️ Como jogar Flappy Plant?</button>
             <button class="ia-quick-btn" data-question="colheita">🚜 Como jogar Colheita Feliz?</button>
             <button class="ia-quick-btn" data-question="agro">🌾 O que é agro sustentável?</button>
         </div>
-        
         <div class="ia-answer" id="iaAnswer"></div>
-        
         <a href="ia-ametista.html" class="ia-link"><i class="fas fa-comments"></i> Falar com Ametista IA</a>
     </div>
-    <div class="ia-toggle" id="iaToggle">
-        <i class="fas fa-robot"></i>
-    </div>
+    <div class="ia-toggle" id="iaToggle"><i class="fas fa-robot"></i></div>
 </div>
 
 <script>
@@ -1187,15 +570,10 @@
     const preloader = document.getElementById('preloader');
     const progressBar = document.getElementById('progressBar');
     const progressText = document.getElementById('progressText');
-    
     let progress = 0;
     const interval = setInterval(() => {
         progress += Math.floor(Math.random() * 8) + 3;
-        if (progress >= 100) {
-            progress = 100;
-            clearInterval(interval);
-            setTimeout(() => preloader.classList.add('hidden'), 400);
-        }
+        if (progress >= 100) { progress = 100; clearInterval(interval); setTimeout(() => preloader.classList.add('hidden'), 400); }
         progressBar.style.width = progress + '%';
         progressText.textContent = progress + '%';
     }, 80);
@@ -1205,11 +583,8 @@
     const trails = document.querySelectorAll('.cursor-trail');
     let mouseX = 0, mouseY = 0;
     const positions = [[], [], [], []];
-    
     for (let i = 0; i < 5; i++) positions[i] = { x: 0, y: 0 };
-    
     document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
-    
     function animateCursor() {
         positions[0].x = mouseX; positions[0].y = mouseY;
         for (let i = 1; i < positions.length; i++) {
@@ -1223,9 +598,7 @@
     animateCursor();
     
     // ===== MENU MOBILE =====
-    document.getElementById('menuToggle').addEventListener('click', () => {
-        document.getElementById('navLinks').classList.toggle('active');
-    });
+    document.getElementById('menuToggle').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('active'));
     
     // ===== CONTADORES =====
     const counters = document.querySelectorAll('.counter');
@@ -1241,63 +614,26 @@
                         current += increment;
                         counter.textContent = target >= 1000 ? Math.ceil(current).toLocaleString() : Math.ceil(current);
                         requestAnimationFrame(updateCounter);
-                    } else {
-                        counter.textContent = target >= 1000 ? target.toLocaleString() : target;
-                    }
+                    } else { counter.textContent = target >= 1000 ? target.toLocaleString() : target; }
                 };
                 updateCounter();
                 observer.unobserve(counter);
             }
         });
     }, { threshold: 0.5 });
-    
     counters.forEach(counter => observer.observe(counter));
     
     // ===== GRÁFICOS =====
-    // Gráfico de Água
     new Chart(document.getElementById('waterChart'), {
-        type: 'line',
-        data: {
-            labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2026'],
-            datasets: [{
-                label: 'Consumo de Água (milhões L)',
-                data: [120, 105, 90, 75, 60, 50, 42],
-                borderColor: '#00ff88',
-                backgroundColor: 'rgba(0, 255, 136, 0.1)',
-                tension: 0.4,
-                fill: true
-            }]
-        },
+        type: 'line', data: { labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2026'], datasets: [{ label: 'Consumo de Água (milhões L)', data: [120, 105, 90, 75, 60, 50, 42], borderColor: '#00ff88', backgroundColor: 'rgba(0, 255, 136, 0.1)', tension: 0.4, fill: true }] },
         options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#e0ffe0' } } }, scales: { x: { ticks: { color: '#e0ffe0' } }, y: { ticks: { color: '#e0ffe0' } } } }
     });
-    
-    // Gráfico de Agrotóxicos
     new Chart(document.getElementById('pesticideChart'), {
-        type: 'bar',
-        data: {
-            labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2026'],
-            datasets: [{
-                label: 'Uso de Agrotóxicos (ton)',
-                data: [50, 40, 25, 15, 8, 3, 1],
-                backgroundColor: '#ffd700',
-                borderRadius: 10
-            }]
-        },
+        type: 'bar', data: { labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2026'], datasets: [{ label: 'Uso de Agrotóxicos (ton)', data: [50, 40, 25, 15, 8, 3, 1], backgroundColor: '#ffd700', borderRadius: 10 }] },
         options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#e0ffe0' } } }, scales: { x: { ticks: { color: '#e0ffe0' } }, y: { ticks: { color: '#e0ffe0' } } } }
     });
-    
-    // Gráfico de Uso da Terra
     new Chart(document.getElementById('landChart'), {
-        type: 'doughnut',
-        data: {
-            labels: ['Área Produtiva (70%)', 'Reserva Legal (20%)', 'APP (10%)'],
-            datasets: [{
-                data: [70, 20, 10],
-                backgroundColor: ['#00ff88', '#4fc3f7', '#a855f7'],
-                borderColor: '#0a1a0a',
-                borderWidth: 3
-            }]
-        },
+        type: 'doughnut', data: { labels: ['Área Produtiva (70%)', 'Reserva Legal (20%)', 'APP (10%)'], datasets: [{ data: [70, 20, 10], backgroundColor: ['#00ff88', '#4fc3f7', '#a855f7'], borderColor: '#0a1a0a', borderWidth: 3 }] },
         options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#e0ffe0' } } } }
     });
     
@@ -1305,31 +641,30 @@
     const iaToggle = document.getElementById('iaToggle');
     const iaChat = document.getElementById('iaChat');
     const iaAnswer = document.getElementById('iaAnswer');
-    
     const answers = {
         plants: '🌱 Plants vs Zombies: Plante girassóis 🌻 para gerar sol ☀️, use atiradores 🌱 para derrotar zumbis 🧟! Complete as 5 fases para ganhar estrelas ⭐ e desbloquear upgrades!',
         flappy: '🕊️ Flappy Plant: Clique ou pressione ESPAÇO para voar! Desvie dos canos verdes. Colete moedas 💰 para comprar skins na loja!',
         colheita: '🚜 Colheita Feliz: Compre sementes 🌱, plante nos campos, espere crescer e colha 🌽! Carregue o caminhão 🚛 e entregue na cidade para ganhar moedas!',
         agro: '🌾 Agro Sustentável: É produzir alimentos respeitando o meio ambiente! Menos água 💧, zero agrotóxicos 🐞, energia limpa ☀️ e preservação de florestas 🌳!'
     };
-    
-    iaToggle.addEventListener('click', () => {
-        iaChat.classList.toggle('active');
-        iaAnswer.classList.remove('active');
-    });
-    
+    iaToggle.addEventListener('click', () => { iaChat.classList.toggle('active'); iaAnswer.classList.remove('active'); });
     document.querySelectorAll('.ia-quick-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const question = btn.dataset.question;
-            iaAnswer.textContent = answers[question];
-            iaAnswer.classList.add('active');
-        });
+        btn.addEventListener('click', () => { const question = btn.dataset.question; iaAnswer.textContent = answers[question]; iaAnswer.classList.add('active'); });
     });
-    
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.ia-widget') && iaChat.classList.contains('active')) {
-            iaChat.classList.remove('active');
+    document.addEventListener('click', (e) => { if (!e.target.closest('.ia-widget') && iaChat.classList.contains('active')) iaChat.classList.remove('active'); });
+
+    // ===== VERIFICAÇÃO DO CÓDIGO SECRETO =====
+    document.getElementById('verifyCodeBtn').addEventListener('click', function() {
+        const code = document.getElementById('secretCode').value;
+        if (code === 'ANIRAP123') {
+            window.location.href = 'anirap123.html';
+        } else {
+            alert('🔒 Boa tentativa... mas não foi dessa vez!');
+            location.reload();
         }
+    });
+    document.getElementById('secretCode').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') document.getElementById('verifyCodeBtn').click();
     });
 </script>
 </body>
