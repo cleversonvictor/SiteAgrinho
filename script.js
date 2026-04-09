@@ -2,119 +2,126 @@
 AOS.init({
     duration: 1000,
     once: true,
-    easing: 'ease-out-cubic',
-    mirror: false
+    offset: 100
 });
 
-// ===== PRELOADER CINEMATOGRÁFICO =====
-document.addEventListener('DOMContentLoaded', () => {
-    const preloader = document.querySelector('.preloader');
-    const progressBar = document.querySelector('.progress-bar');
-    const progressText = document.querySelector('.progress-text');
+// ===== LOADER GARANTIDO =====
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    const progressBar = document.querySelector('.loader-progress');
+    const percentage = document.querySelector('.loader-percentage');
     
     let progress = 0;
     const interval = setInterval(() => {
-        progress += Math.random() * 15;
+        progress += Math.floor(Math.random() * 10) + 5;
+        
         if (progress >= 100) {
             progress = 100;
             clearInterval(interval);
             
+            // Garante que o loader some MESMO
             setTimeout(() => {
-                preloader.classList.add('hidden');
+                preloader.classList.add('hide');
+                
+                // Fallback: se não sumir, força
                 setTimeout(() => {
-                    preloader.style.display = 'none';
-                }, 800);
-            }, 500);
+                    if (preloader.style.display !== 'none') {
+                        preloader.style.display = 'none';
+                    }
+                }, 1000);
+            }, 300);
         }
         
         progressBar.style.width = progress + '%';
-        progressText.textContent = Math.round(progress) + '%';
-    }, 200);
+        percentage.textContent = progress + '%';
+    }, 80);
+    
+    // SEGUNDA GARANTIA: Se algo der errado, força fechamento em 5s
+    setTimeout(() => {
+        if (preloader && !preloader.classList.contains('hide')) {
+            preloader.classList.add('hide');
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 800);
+        }
+    }, 5000);
 });
 
-// ===== CURSOR PERSONALIZADO =====
-const cursor = document.querySelector('.custom-cursor');
-const cursorDot = document.querySelector('.cursor-dot');
+// ===== CURSOR COM RASTRO =====
+const cursor = document.querySelector('.cursor');
+const trails = document.querySelectorAll('.cursor-trail');
+
+let mouseX = 0, mouseY = 0;
+let trailPositions = [
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 }
+];
 
 document.addEventListener('mousemove', (e) => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-    cursorDot.style.left = e.clientX + 'px';
-    cursorDot.style.top = e.clientY + 'px';
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
 });
 
-document.addEventListener('mousedown', () => {
-    cursor.style.transform = 'translate(-50%, -50%) scale(0.8)';
-    cursorDot.style.transform = 'translate(-50%, -50%) scale(1.5)';
-});
+// Animação suave do rastro
+function animateTrail() {
+    trailPositions[0] = { x: mouseX, y: mouseY };
+    
+    for (let i = 1; i < trailPositions.length; i++) {
+        trailPositions[i].x += (trailPositions[i-1].x - trailPositions[i].x) * 0.3;
+        trailPositions[i].y += (trailPositions[i-1].y - trailPositions[i].y) * 0.3;
+    }
+    
+    trails.forEach((trail, index) => {
+        if (trailPositions[index + 1]) {
+            trail.style.left = trailPositions[index + 1].x + 'px';
+            trail.style.top = trailPositions[index + 1].y + 'px';
+        }
+    });
+    
+    requestAnimationFrame(animateTrail);
+}
 
-document.addEventListener('mouseup', () => {
-    cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-    cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
-});
+animateTrail();
 
-// Hover em links
-document.querySelectorAll('a, button, .nav-toggle-label').forEach(el => {
+// Hover effects
+document.querySelectorAll('a, button, .nav-toggle').forEach(el => {
     el.addEventListener('mouseenter', () => {
-        cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
-        cursor.style.borderColor = 'var(--primary-glow)';
+        cursor.style.width = '20px';
+        cursor.style.height = '20px';
+        cursor.style.background = 'var(--secondary)';
     });
     
     el.addEventListener('mouseleave', () => {
-        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-        cursor.style.borderColor = 'var(--primary)';
+        cursor.style.width = '12px';
+        cursor.style.height = '12px';
+        cursor.style.background = 'var(--primary)';
     });
 });
 
-// ===== PARALLAX NO SCROLL =====
+// ===== NAVBAR SCROLL =====
 window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const parallax = document.querySelector('.parallax-bg');
-    
-    if (parallax) {
-        parallax.style.transform = `translateY(${scrolled * 0.3}px)`;
-    }
-    
-    // Navbar scroll effect
     const navbar = document.querySelector('.navbar');
-    if (scrolled > 50) {
-        navbar.style.background = 'rgba(10, 26, 10, 0.9)';
-        navbar.style.padding = '10px 30px';
+    if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
     } else {
-        navbar.style.background = 'var(--glass-bg)';
-        navbar.style.padding = '15px 30px';
+        navbar.classList.remove('scrolled');
     }
 });
 
-// ===== FORM SUBMIT PREMIUM =====
-document.getElementById('premiumForm')?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    // Efeito de sucesso
-    const btn = e.target.querySelector('button');
-    const originalText = btn.innerHTML;
-    
-    btn.innerHTML = '<i class="fas fa-check-circle"></i> INSCRITO!';
-    btn.style.background = '#00c853';
-    
-    setTimeout(() => {
-        alert('🌱✨ PARABÉNS! Você agora faz parte da revolução AGRO+VERDE! Em breve receberá conteúdos exclusivos.');
-        btn.innerHTML = originalText;
-        e.target.reset();
-    }, 1000);
-});
-
-// ===== NEWSLETTER FOOTER =====
-document.querySelector('.newsletter-input-group button')?.addEventListener('click', () => {
-    const input = document.querySelector('.newsletter-input-group input');
+// ===== FORM NEWSLETTER =====
+document.querySelector('.footer-newsletter button')?.addEventListener('click', () => {
+    const input = document.querySelector('.footer-newsletter input');
     if (input.value.includes('@')) {
-        alert('📧 Obrigado! Você está conectado ao futuro sustentável!');
+        alert('✨ INCRÍVEL! Você está conectado ao futuro sustentável!');
         input.value = '';
     } else {
-        alert('Por favor, insira um e-mail válido.');
+        alert('📧 Por favor, insira um e-mail válido.');
     }
 });
 
-// ===== EFEITO DE DIGITAÇÃO NO HERO (OPCIONAL) =====
-console.log('%c🌾 AGRO+VERDE - O FUTURO É AGORA! 🚀', 'font-size: 20px; color: #00c853; font-weight: bold;');
-console.log('%cDesenvolvido com 💚 para um planeta mais sustentável', 'font-size: 14px; color: #69f0ae;');
+console.log('%c🌱 AGRO+VERDE - REVOLUÇÃO SUSTENTÁVEL 🌱', 'font-size: 18px; color: #00ff88; font-weight: bold; text-shadow: 0 0 10px #00ff88;');
