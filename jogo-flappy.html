@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;600;700&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* ... (MANTENHA TODO O CSS EXATAMENTE COMO ESTAVA NO ARQUIVO ANTERIOR) ... */
         :root {
             --verde-neon: #00ff88;
             --verde-escuro: #0a1a0a;
@@ -141,6 +142,7 @@
             width: 100%;
             height: auto;
             cursor: pointer;
+            background: #87CEEB; /* Fundo garantido */
         }
 
         /* Painel de status */
@@ -560,571 +562,565 @@
     </div>
 
     <script>
-        // ===== CONFIGURAÇÃO =====
-        const CONFIG = {
-            GRAVITY: 0.2,
-            JUMP_FORCE: -4.8,
-            PIPE_SPEED: 2.2,
-            PIPE_WIDTH: 55,
-            PIPE_GAP: 135,
-            COIN_SPAWN_RATE: 0.3,
-            POWERUP_SPAWN_RATE: 0.02
-        };
+        (function() {
+            // ===== VERIFICAÇÃO DE SEGURANÇA PARA LOCALSTORAGE =====
+            let storageAvailable = true;
+            try {
+                localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
+            } catch(e) {
+                storageAvailable = false;
+                console.warn('LocalStorage não disponível. O progresso não será salvo.');
+            }
 
-        // Skins
-        const SKINS = {
-            default: { name: 'Plantinha', emoji: '🌱', price: 0, unlocked: true },
-            flower: { name: 'Flor', emoji: '🌸', price: 100, unlocked: false },
-            cactus: { name: 'Cacto', emoji: '🌵', price: 200, unlocked: false },
-            sunflower: { name: 'Girassol', emoji: '🌻', price: 300, unlocked: false },
-            tree: { name: 'Árvore', emoji: '🌳', price: 500, unlocked: false },
-            golden: { name: 'Dourado', emoji: '🌟', price: 1000, unlocked: false }
-        };
+            // ===== CONFIGURAÇÃO =====
+            const CONFIG = {
+                GRAVITY: 0.2,
+                JUMP_FORCE: -4.8,
+                PIPE_SPEED: 2.2,
+                PIPE_WIDTH: 55,
+                PIPE_GAP: 135,
+                COIN_SPAWN_RATE: 0.3,
+                POWERUP_SPAWN_RATE: 0.02
+            };
 
-        // ===== ESTADO DO JOGO =====
-        class FlappyPlant {
-            constructor() {
-                this.canvas = document.getElementById('gameCanvas');
-                this.ctx = this.canvas.getContext('2d');
-                
-                this.bird = {
-                    y: 300,
-                    velocity: 0,
-                    radius: 14,
-                    x: 70
-                };
-                
-                this.pipes = [];
-                this.coins = [];
-                this.powerups = [];
-                
-                this.score = 0;
-                this.coins = 0;
-                this.bestScore = localStorage.getItem('flappyBest') || 0;
-                this.totalCoins = parseInt(localStorage.getItem('flappyCoins')) || 0;
-                
-                this.gameStarted = false;
-                this.gameOver = false;
-                this.frameCount = 0;
-                
-                this.currentSkin = localStorage.getItem('flappySkin') || 'default';
-                this.unlockedSkins = JSON.parse(localStorage.getItem('flappyUnlocked')) || ['default'];
-                
-                // Power-ups
-                this.activePowerups = {
-                    shield: 0,
-                    magnet: 0,
-                    slowMotion: 0
-                };
-                
-                this.init();
-            }
-            
-            init() {
-                this.createParticles();
-                this.renderSkins();
-                this.setupEventListeners();
-                this.updateUI();
-                this.gameLoop();
-            }
-            
-            createParticles() {
-                const container = document.getElementById('particles');
-                for (let i = 0; i < 20; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'particle';
-                    particle.style.left = Math.random() * 100 + '%';
-                    particle.style.animationDelay = Math.random() * 8 + 's';
-                    particle.style.animationDuration = (6 + Math.random() * 6) + 's';
-                    container.appendChild(particle);
-                }
-            }
-            
-            renderSkins() {
-                const grid = document.getElementById('skinGrid');
-                grid.innerHTML = '';
-                
-                Object.entries(SKINS).forEach(([key, skin]) => {
-                    const isUnlocked = this.unlockedSkins.includes(key);
-                    const isSelected = this.currentSkin === key;
+            // Skins
+            const SKINS = {
+                default: { name: 'Plantinha', emoji: '🌱', price: 0, unlocked: true },
+                flower: { name: 'Flor', emoji: '🌸', price: 100, unlocked: false },
+                cactus: { name: 'Cacto', emoji: '🌵', price: 200, unlocked: false },
+                sunflower: { name: 'Girassol', emoji: '🌻', price: 300, unlocked: false },
+                tree: { name: 'Árvore', emoji: '🌳', price: 500, unlocked: false },
+                golden: { name: 'Dourado', emoji: '🌟', price: 1000, unlocked: false }
+            };
+
+            // ===== ESTADO DO JOGO =====
+            class FlappyPlant {
+                constructor() {
+                    this.canvas = document.getElementById('gameCanvas');
+                    this.ctx = this.canvas.getContext('2d');
                     
-                    const item = document.createElement('div');
-                    item.className = `skin-item ${isSelected ? 'selected' : ''} ${!isUnlocked ? 'locked' : ''}`;
-                    item.innerHTML = `
-                        <div class="skin-emoji">${skin.emoji}</div>
-                        <div class="skin-name">${skin.name}</div>
-                        <div class="skin-price">${isUnlocked ? '✅ Desbloqueado' : `💰 ${skin.price}`}</div>
-                    `;
+                    this.bird = { y: 300, velocity: 0, radius: 14, x: 70 };
+                    this.pipes = [];
+                    this.coins = [];
+                    this.powerups = [];
                     
-                    item.addEventListener('click', () => {
-                        if (isUnlocked) {
-                            this.currentSkin = key;
-                            localStorage.setItem('flappySkin', key);
-                            this.renderSkins();
-                            this.showNotification(`🌱 Skin ${skin.name} equipada!`, 'success');
-                        } else if (this.totalCoins >= skin.price) {
-                            this.totalCoins -= skin.price;
-                            this.unlockedSkins.push(key);
-                            localStorage.setItem('flappyCoins', this.totalCoins);
-                            localStorage.setItem('flappyUnlocked', JSON.stringify(this.unlockedSkins));
-                            this.currentSkin = key;
-                            localStorage.setItem('flappySkin', key);
-                            this.renderSkins();
-                            this.updateUI();
-                            this.showNotification(`🎉 ${skin.name} desbloqueada!`, 'success');
-                        } else {
-                            this.showNotification(`❌ Moedas insuficientes!`, 'error');
-                        }
-                    });
+                    this.score = 0;
+                    this.totalCoins = 0;
+                    this.bestScore = 0;
                     
-                    grid.appendChild(item);
-                });
-                
-                document.getElementById('shopCoins').textContent = this.totalCoins;
-            }
-            
-            jump() {
-                if (!this.gameStarted && !this.gameOver) {
-                    this.gameStarted = true;
+                    // Carrega dados salvos com segurança
+                    if (storageAvailable) {
+                        this.bestScore = parseInt(localStorage.getItem('flappyBest')) || 0;
+                        this.totalCoins = parseInt(localStorage.getItem('flappyCoins')) || 0;
+                    }
+                    
+                    this.gameStarted = false;
+                    this.gameOver = false;
+                    this.frameCount = 0;
+                    
+                    this.currentSkin = (storageAvailable && localStorage.getItem('flappySkin')) || 'default';
+                    this.unlockedSkins = ['default'];
+                    if (storageAvailable) {
+                        try {
+                            const saved = localStorage.getItem('flappyUnlocked');
+                            if (saved) this.unlockedSkins = JSON.parse(saved);
+                        } catch(e) { this.unlockedSkins = ['default']; }
+                    }
+                    
+                    this.activePowerups = { shield: 0, magnet: 0, slowMotion: 0 };
+                    
+                    this.init();
                 }
-                if (!this.gameOver) {
-                    this.bird.velocity = CONFIG.JUMP_FORCE;
+                
+                init() {
+                    this.createParticles();
+                    this.renderSkins();
+                    this.setupEventListeners();
+                    this.updateUI();
+                    
+                    // Garante que o overlay de game over está escondido
+                    document.getElementById('gameoverOverlay').style.display = 'none';
+                    
+                    // Inicia o loop do jogo
+                    this.gameLoop();
                 }
-            }
-            
-            update() {
-                if (!this.gameStarted || this.gameOver) return;
                 
-                this.frameCount++;
-                
-                // Física
-                const gravity = this.activePowerups.slowMotion > 0 ? CONFIG.GRAVITY * 0.5 : CONFIG.GRAVITY;
-                this.bird.velocity += gravity;
-                this.bird.y += this.bird.velocity;
-                
-                // Limites
-                if (this.bird.y + this.bird.radius >= this.canvas.height - 20) {
-                    if (this.activePowerups.shield > 0) {
-                        this.activePowerups.shield = 0;
-                        this.bird.y = this.canvas.height - 20 - this.bird.radius;
-                        this.bird.velocity = 0;
-                        this.showNotification('🛡️ Escudo protegeu você!', 'success');
-                    } else {
-                        this.endGame();
+                createParticles() {
+                    const container = document.getElementById('particles');
+                    if (!container) return;
+                    for (let i = 0; i < 20; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
+                        particle.style.left = Math.random() * 100 + '%';
+                        particle.style.animationDelay = Math.random() * 8 + 's';
+                        particle.style.animationDuration = (6 + Math.random() * 6) + 's';
+                        container.appendChild(particle);
                     }
                 }
-                if (this.bird.y - this.bird.radius <= 0) {
-                    this.endGame();
-                }
                 
-                // Spawn de canos
-                if (this.frameCount % 90 === 0) {
-                    this.pipes.push({
-                        x: this.canvas.width,
-                        top: Math.random() * (this.canvas.height - CONFIG.PIPE_GAP - 100) + 50,
-                        bottom: 0,
-                        passed: false
-                    });
-                }
-                
-                // Spawn de moedas
-                if (Math.random() < CONFIG.COIN_SPAWN_RATE) {
-                    this.coins.push({
-                        x: this.canvas.width,
-                        y: Math.random() * (this.canvas.height - 100) + 50,
-                        collected: false
-                    });
-                }
-                
-                // Spawn de power-ups
-                if (Math.random() < CONFIG.POWERUP_SPAWN_RATE) {
-                    const types = ['shield', 'magnet', 'slowMotion'];
-                    this.powerups.push({
-                        x: this.canvas.width,
-                        y: Math.random() * (this.canvas.height - 100) + 50,
-                        type: types[Math.floor(Math.random() * types.length)],
-                        collected: false
-                    });
-                }
-                
-                // Atualiza canos
-                const speed = this.activePowerups.slowMotion > 0 ? CONFIG.PIPE_SPEED * 0.5 : CONFIG.PIPE_SPEED;
-                this.pipes = this.pipes.filter(pipe => {
-                    pipe.x -= speed;
+                renderSkins() {
+                    const grid = document.getElementById('skinGrid');
+                    if (!grid) return;
+                    grid.innerHTML = '';
                     
-                    // Colisão
-                    if (this.checkCollision(pipe)) {
+                    Object.entries(SKINS).forEach(([key, skin]) => {
+                        const isUnlocked = this.unlockedSkins.includes(key);
+                        const isSelected = this.currentSkin === key;
+                        
+                        const item = document.createElement('div');
+                        item.className = `skin-item ${isSelected ? 'selected' : ''} ${!isUnlocked ? 'locked' : ''}`;
+                        item.innerHTML = `
+                            <div class="skin-emoji">${skin.emoji}</div>
+                            <div class="skin-name">${skin.name}</div>
+                            <div class="skin-price">${isUnlocked ? '✅ Desbloqueado' : `💰 ${skin.price}`}</div>
+                        `;
+                        
+                        item.addEventListener('click', () => {
+                            if (isUnlocked) {
+                                this.currentSkin = key;
+                                if (storageAvailable) localStorage.setItem('flappySkin', key);
+                                this.renderSkins();
+                                this.showNotification(`🌱 Skin ${skin.name} equipada!`, 'success');
+                            } else if (this.totalCoins >= skin.price) {
+                                this.totalCoins -= skin.price;
+                                this.unlockedSkins.push(key);
+                                if (storageAvailable) {
+                                    localStorage.setItem('flappyCoins', this.totalCoins);
+                                    localStorage.setItem('flappyUnlocked', JSON.stringify(this.unlockedSkins));
+                                }
+                                this.currentSkin = key;
+                                if (storageAvailable) localStorage.setItem('flappySkin', key);
+                                this.renderSkins();
+                                this.updateUI();
+                                this.showNotification(`🎉 ${skin.name} desbloqueada!`, 'success');
+                            } else {
+                                this.showNotification(`❌ Moedas insuficientes!`, 'error');
+                            }
+                        });
+                        
+                        grid.appendChild(item);
+                    });
+                    
+                    const shopCoins = document.getElementById('shopCoins');
+                    if (shopCoins) shopCoins.textContent = this.totalCoins;
+                }
+                
+                jump() {
+                    if (!this.gameStarted && !this.gameOver) {
+                        this.gameStarted = true;
+                    }
+                    if (!this.gameOver) {
+                        this.bird.velocity = CONFIG.JUMP_FORCE;
+                    }
+                }
+                
+                update() {
+                    if (!this.gameStarted || this.gameOver) return;
+                    
+                    this.frameCount++;
+                    
+                    const gravity = this.activePowerups.slowMotion > 0 ? CONFIG.GRAVITY * 0.5 : CONFIG.GRAVITY;
+                    this.bird.velocity += gravity;
+                    this.bird.y += this.bird.velocity;
+                    
+                    if (this.bird.y + this.bird.radius >= this.canvas.height - 20) {
                         if (this.activePowerups.shield > 0) {
                             this.activePowerups.shield = 0;
-                            return false;
+                            this.bird.y = this.canvas.height - 20 - this.bird.radius;
+                            this.bird.velocity = 0;
+                            this.showNotification('🛡️ Escudo protegeu você!', 'success');
                         } else {
                             this.endGame();
                         }
                     }
-                    
-                    // Pontuação
-                    if (!pipe.passed && pipe.x + CONFIG.PIPE_WIDTH < this.bird.x) {
-                        pipe.passed = true;
-                        this.score++;
-                        this.updateUI();
+                    if (this.bird.y - this.bird.radius <= 0) {
+                        this.endGame();
                     }
                     
-                    return pipe.x + CONFIG.PIPE_WIDTH > 0;
-                });
-                
-                // Atualiza moedas
-                this.coins = this.coins.filter(coin => {
-                    coin.x -= speed;
-                    
-                    // Coleta (com ímã)
-                    const magnetRange = this.activePowerups.magnet > 0 ? 80 : 20;
-                    if (!coin.collected && Math.abs(coin.x - this.bird.x) < magnetRange && 
-                        Math.abs(coin.y - this.bird.y) < magnetRange) {
-                        coin.collected = true;
-                        this.totalCoins += 10;
-                        this.updateUI();
-                        return false;
+                    if (this.frameCount % 90 === 0) {
+                        this.pipes.push({
+                            x: this.canvas.width,
+                            top: Math.random() * (this.canvas.height - CONFIG.PIPE_GAP - 100) + 50,
+                            bottom: 0,
+                            passed: false
+                        });
                     }
                     
-                    return coin.x > -20;
-                });
-                
-                // Atualiza power-ups
-                this.powerups = this.powerups.filter(powerup => {
-                    powerup.x -= speed;
-                    
-                    if (!powerup.collected && this.checkPowerupCollision(powerup)) {
-                        powerup.collected = true;
-                        this.activePowerups[powerup.type] = 300; // 5 segundos
-                        this.showNotification(`✨ ${this.getPowerupName(powerup.type)} ativado!`, 'success');
-                        return false;
+                    if (Math.random() < CONFIG.COIN_SPAWN_RATE) {
+                        this.coins.push({
+                            x: this.canvas.width,
+                            y: Math.random() * (this.canvas.height - 100) + 50,
+                            collected: false
+                        });
                     }
                     
-                    return powerup.x > -20;
-                });
-                
-                // Atualiza timers de power-ups
-                Object.keys(this.activePowerups).forEach(key => {
-                    if (this.activePowerups[key] > 0) {
-                        this.activePowerups[key]--;
+                    if (Math.random() < CONFIG.POWERUP_SPAWN_RATE) {
+                        const types = ['shield', 'magnet', 'slowMotion'];
+                        this.powerups.push({
+                            x: this.canvas.width,
+                            y: Math.random() * (this.canvas.height - 100) + 50,
+                            type: types[Math.floor(Math.random() * types.length)],
+                            collected: false
+                        });
                     }
-                });
-                
-                this.updatePowerupsDisplay();
-            }
-            
-            checkCollision(pipe) {
-                if (this.bird.x + this.bird.radius > pipe.x && 
-                    this.bird.x - this.bird.radius < pipe.x + CONFIG.PIPE_WIDTH) {
-                    const bottomPipe = pipe.top + CONFIG.PIPE_GAP;
-                    if (this.bird.y - this.bird.radius < pipe.top || 
-                        this.bird.y + this.bird.radius > bottomPipe) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-            
-            checkPowerupCollision(powerup) {
-                return Math.abs(powerup.x - this.bird.x) < 25 && 
-                       Math.abs(powerup.y - this.bird.y) < 25;
-            }
-            
-            getPowerupName(type) {
-                const names = { shield: 'Escudo', magnet: 'Ímã de Moedas', slowMotion: 'Câmera Lenta' };
-                return names[type] || type;
-            }
-            
-            draw() {
-                // Fundo dinâmico
-                const hour = new Date().getHours();
-                const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
-                
-                if (hour >= 6 && hour < 18) {
-                    gradient.addColorStop(0, '#87CEEB');
-                    gradient.addColorStop(1, '#98D8C8');
-                } else {
-                    gradient.addColorStop(0, '#1a1a3e');
-                    gradient.addColorStop(1, '#2d2d6b');
-                }
-                
-                this.ctx.fillStyle = gradient;
-                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-                
-                // Nuvens/Estrelas
-                if (hour >= 6 && hour < 18) {
-                    this.drawClouds();
-                } else {
-                    this.drawStars();
+                    
+                    const speed = this.activePowerups.slowMotion > 0 ? CONFIG.PIPE_SPEED * 0.5 : CONFIG.PIPE_SPEED;
+                    this.pipes = this.pipes.filter(pipe => {
+                        pipe.x -= speed;
+                        
+                        if (this.checkCollision(pipe)) {
+                            if (this.activePowerups.shield > 0) {
+                                this.activePowerups.shield = 0;
+                                return false;
+                            } else {
+                                this.endGame();
+                            }
+                        }
+                        
+                        if (!pipe.passed && pipe.x + CONFIG.PIPE_WIDTH < this.bird.x) {
+                            pipe.passed = true;
+                            this.score++;
+                            this.updateUI();
+                        }
+                        
+                        return pipe.x + CONFIG.PIPE_WIDTH > 0;
+                    });
+                    
+                    this.coins = this.coins.filter(coin => {
+                        coin.x -= speed;
+                        
+                        const magnetRange = this.activePowerups.magnet > 0 ? 80 : 20;
+                        if (!coin.collected && Math.abs(coin.x - this.bird.x) < magnetRange && 
+                            Math.abs(coin.y - this.bird.y) < magnetRange) {
+                            coin.collected = true;
+                            this.totalCoins += 10;
+                            this.updateUI();
+                            return false;
+                        }
+                        
+                        return coin.x > -20;
+                    });
+                    
+                    this.powerups = this.powerups.filter(powerup => {
+                        powerup.x -= speed;
+                        
+                        if (!powerup.collected && this.checkPowerupCollision(powerup)) {
+                            powerup.collected = true;
+                            this.activePowerups[powerup.type] = 300;
+                            this.showNotification(`✨ ${this.getPowerupName(powerup.type)} ativado!`, 'success');
+                            return false;
+                        }
+                        
+                        return powerup.x > -20;
+                    });
+                    
+                    Object.keys(this.activePowerups).forEach(key => {
+                        if (this.activePowerups[key] > 0) {
+                            this.activePowerups[key]--;
+                        }
+                    });
+                    
+                    this.updatePowerupsDisplay();
                 }
                 
-                // Canos
-                this.pipes.forEach(pipe => {
-                    const bottomPipe = pipe.top + CONFIG.PIPE_GAP;
-                    
-                    // Cano superior
-                    this.ctx.fillStyle = '#2e7d32';
-                    this.ctx.fillRect(pipe.x, 0, CONFIG.PIPE_WIDTH, pipe.top);
-                    this.ctx.fillStyle = '#1b5e20';
-                    this.ctx.fillRect(pipe.x - 4, pipe.top - 25, CONFIG.PIPE_WIDTH + 8, 25);
-                    
-                    // Cano inferior
-                    this.ctx.fillStyle = '#2e7d32';
-                    this.ctx.fillRect(pipe.x, bottomPipe, CONFIG.PIPE_WIDTH, this.canvas.height - bottomPipe);
-                    this.ctx.fillStyle = '#1b5e20';
-                    this.ctx.fillRect(pipe.x - 4, bottomPipe, CONFIG.PIPE_WIDTH + 8, 25);
-                });
+                checkCollision(pipe) {
+                    if (this.bird.x + this.bird.radius > pipe.x && 
+                        this.bird.x - this.bird.radius < pipe.x + CONFIG.PIPE_WIDTH) {
+                        const bottomPipe = pipe.top + CONFIG.PIPE_GAP;
+                        if (this.bird.y - this.bird.radius < pipe.top || 
+                            this.bird.y + this.bird.radius > bottomPipe) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
                 
-                // Moedas
-                this.coins.forEach(coin => {
-                    this.ctx.fillStyle = '#ffd700';
-                    this.ctx.shadowColor = '#ffd700';
-                    this.ctx.shadowBlur = 15;
-                    this.ctx.beginPath();
-                    this.ctx.arc(coin.x, coin.y, 8, 0, Math.PI * 2);
-                    this.ctx.fill();
-                    this.ctx.fillStyle = '#fff7b0';
-                    this.ctx.beginPath();
-                    this.ctx.arc(coin.x - 2, coin.y - 2, 3, 0, Math.PI * 2);
-                    this.ctx.fill();
-                });
+                checkPowerupCollision(powerup) {
+                    return Math.abs(powerup.x - this.bird.x) < 25 && 
+                           Math.abs(powerup.y - this.bird.y) < 25;
+                }
                 
-                // Power-ups
-                this.powerups.forEach(powerup => {
-                    const colors = { shield: '#4fc3f7', magnet: '#ce93d8', slowMotion: '#ffab91' };
-                    const icons = { shield: '🛡️', magnet: '🧲', slowMotion: '⏱️' };
+                getPowerupName(type) {
+                    const names = { shield: 'Escudo', magnet: 'Ímã de Moedas', slowMotion: 'Câmera Lenta' };
+                    return names[type] || type;
+                }
+                
+                draw() {
+                    const hour = new Date().getHours();
+                    const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
                     
-                    this.ctx.shadowBlur = 20;
-                    this.ctx.shadowColor = colors[powerup.type];
-                    this.ctx.fillStyle = colors[powerup.type];
+                    if (hour >= 6 && hour < 18) {
+                        gradient.addColorStop(0, '#87CEEB');
+                        gradient.addColorStop(1, '#98D8C8');
+                    } else {
+                        gradient.addColorStop(0, '#1a1a3e');
+                        gradient.addColorStop(1, '#2d2d6b');
+                    }
+                    
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                    
+                    if (hour >= 6 && hour < 18) {
+                        this.drawClouds();
+                    } else {
+                        this.drawStars();
+                    }
+                    
+                    this.pipes.forEach(pipe => {
+                        const bottomPipe = pipe.top + CONFIG.PIPE_GAP;
+                        
+                        this.ctx.fillStyle = '#2e7d32';
+                        this.ctx.fillRect(pipe.x, 0, CONFIG.PIPE_WIDTH, pipe.top);
+                        this.ctx.fillStyle = '#1b5e20';
+                        this.ctx.fillRect(pipe.x - 4, pipe.top - 25, CONFIG.PIPE_WIDTH + 8, 25);
+                        
+                        this.ctx.fillStyle = '#2e7d32';
+                        this.ctx.fillRect(pipe.x, bottomPipe, CONFIG.PIPE_WIDTH, this.canvas.height - bottomPipe);
+                        this.ctx.fillStyle = '#1b5e20';
+                        this.ctx.fillRect(pipe.x - 4, bottomPipe, CONFIG.PIPE_WIDTH + 8, 25);
+                    });
+                    
+                    this.coins.forEach(coin => {
+                        this.ctx.fillStyle = '#ffd700';
+                        this.ctx.shadowColor = '#ffd700';
+                        this.ctx.shadowBlur = 15;
+                        this.ctx.beginPath();
+                        this.ctx.arc(coin.x, coin.y, 8, 0, Math.PI * 2);
+                        this.ctx.fill();
+                        this.ctx.fillStyle = '#fff7b0';
+                        this.ctx.beginPath();
+                        this.ctx.arc(coin.x - 2, coin.y - 2, 3, 0, Math.PI * 2);
+                        this.ctx.fill();
+                    });
+                    
+                    this.powerups.forEach(powerup => {
+                        const colors = { shield: '#4fc3f7', magnet: '#ce93d8', slowMotion: '#ffab91' };
+                        const icons = { shield: '🛡️', magnet: '🧲', slowMotion: '⏱️' };
+                        
+                        this.ctx.shadowBlur = 20;
+                        this.ctx.shadowColor = colors[powerup.type];
+                        this.ctx.fillStyle = colors[powerup.type];
+                        this.ctx.beginPath();
+                        this.ctx.arc(powerup.x, powerup.y, 12, 0, Math.PI * 2);
+                        this.ctx.fill();
+                        
+                        this.ctx.shadowBlur = 0;
+                        this.ctx.font = '16px Arial';
+                        this.ctx.textAlign = 'center';
+                        this.ctx.textBaseline = 'middle';
+                        this.ctx.fillText(icons[powerup.type], powerup.x, powerup.y);
+                    });
+                    
+                    this.ctx.fillStyle = '#8B7355';
+                    this.ctx.fillRect(0, this.canvas.height - 20, this.canvas.width, 20);
+                    this.ctx.fillStyle = '#4caf50';
+                    for (let i = 0; i < this.canvas.width; i += 15) {
+                        this.ctx.fillRect(i + (this.frameCount % 15), this.canvas.height - 25, 8, 10);
+                    }
+                    
+                    this.ctx.shadowBlur = this.activePowerups.shield > 0 ? 30 : 20;
+                    this.ctx.shadowColor = this.activePowerups.shield > 0 ? '#4fc3f7' : '#00ff88';
+                    
+                    if (this.activePowerups.shield > 0) {
+                        this.ctx.strokeStyle = '#4fc3f7';
+                        this.ctx.lineWidth = 3;
+                        this.ctx.beginPath();
+                        this.ctx.arc(this.bird.x, this.bird.y, this.bird.radius + 5, 0, Math.PI * 2);
+                        this.ctx.stroke();
+                    }
+                    
+                    this.ctx.fillStyle = '#00ff88';
                     this.ctx.beginPath();
-                    this.ctx.arc(powerup.x, powerup.y, 12, 0, Math.PI * 2);
+                    this.ctx.arc(this.bird.x, this.bird.y, this.bird.radius, 0, Math.PI * 2);
                     this.ctx.fill();
                     
                     this.ctx.shadowBlur = 0;
-                    this.ctx.font = '16px Arial';
+                    this.ctx.font = '20px Arial';
                     this.ctx.textAlign = 'center';
                     this.ctx.textBaseline = 'middle';
-                    this.ctx.fillText(icons[powerup.type], powerup.x, powerup.y);
-                });
-                
-                // Chão
-                this.ctx.fillStyle = '#8B7355';
-                this.ctx.fillRect(0, this.canvas.height - 20, this.canvas.width, 20);
-                this.ctx.fillStyle = '#4caf50';
-                for (let i = 0; i < this.canvas.width; i += 15) {
-                    this.ctx.fillRect(i + (this.frameCount % 15), this.canvas.height - 25, 8, 10);
-                }
-                
-                // Pássaro (Plantinha)
-                this.ctx.shadowBlur = this.activePowerups.shield > 0 ? 30 : 20;
-                this.ctx.shadowColor = this.activePowerups.shield > 0 ? '#4fc3f7' : '#00ff88';
-                
-                // Escudo
-                if (this.activePowerups.shield > 0) {
-                    this.ctx.strokeStyle = '#4fc3f7';
-                    this.ctx.lineWidth = 3;
+                    this.ctx.fillText(SKINS[this.currentSkin].emoji, this.bird.x, this.bird.y);
+                    
+                    this.ctx.fillStyle = 'white';
                     this.ctx.beginPath();
-                    this.ctx.arc(this.bird.x, this.bird.y, this.bird.radius + 5, 0, Math.PI * 2);
-                    this.ctx.stroke();
-                }
-                
-                // Corpo
-                this.ctx.fillStyle = '#00ff88';
-                this.ctx.beginPath();
-                this.ctx.arc(this.bird.x, this.bird.y, this.bird.radius, 0, Math.PI * 2);
-                this.ctx.fill();
-                
-                // Skin
-                this.ctx.shadowBlur = 0;
-                this.ctx.font = '20px Arial';
-                this.ctx.textAlign = 'center';
-                this.ctx.textBaseline = 'middle';
-                this.ctx.fillText(SKINS[this.currentSkin].emoji, this.bird.x, this.bird.y);
-                
-                // Olhos
-                this.ctx.fillStyle = 'white';
-                this.ctx.beginPath();
-                this.ctx.arc(this.bird.x - 5, this.bird.y - 4, 4, 0, Math.PI * 2);
-                this.ctx.fill();
-                this.ctx.beginPath();
-                this.ctx.arc(this.bird.x + 5, this.bird.y - 4, 4, 0, Math.PI * 2);
-                this.ctx.fill();
-                
-                this.ctx.fillStyle = '#1a1a1a';
-                this.ctx.beginPath();
-                this.ctx.arc(this.bird.x - 5, this.bird.y - 5, 2, 0, Math.PI * 2);
-                this.ctx.fill();
-                this.ctx.beginPath();
-                this.ctx.arc(this.bird.x + 5, this.bird.y - 5, 2, 0, Math.PI * 2);
-                this.ctx.fill();
-                
-                // Bico
-                this.ctx.fillStyle = '#ffa500';
-                this.ctx.beginPath();
-                this.ctx.moveTo(this.bird.x + 8, this.bird.y - 2);
-                this.ctx.lineTo(this.bird.x + 18, this.bird.y);
-                this.ctx.lineTo(this.bird.x + 8, this.bird.y + 2);
-                this.ctx.fill();
-                
-                // Tela inicial
-                if (!this.gameStarted && !this.gameOver) {
-                    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-                    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-                    this.ctx.fillStyle = '#00ff88';
-                    this.ctx.font = 'bold 22px Archivo';
-                    this.ctx.textAlign = 'center';
-                    this.ctx.fillText('🌱 CLIQUE PARA JOGAR 🌱', this.canvas.width / 2, this.canvas.height / 2);
-                    this.ctx.font = '16px Archivo';
-                    this.ctx.fillStyle = '#ccc';
-                    this.ctx.fillText('Toque na tela ou pressione ESPAÇO', this.canvas.width / 2, this.canvas.height / 2 + 40);
-                }
-                
-                // Score
-                if (this.gameStarted && !this.gameOver) {
+                    this.ctx.arc(this.bird.x - 5, this.bird.y - 4, 4, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    this.ctx.beginPath();
+                    this.ctx.arc(this.bird.x + 5, this.bird.y - 4, 4, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    
                     this.ctx.fillStyle = '#1a1a1a';
-                    this.ctx.font = 'bold 35px Clash Display';
-                    this.ctx.textAlign = 'center';
-                    this.ctx.fillText(this.score, this.canvas.width / 2, 50);
-                    this.ctx.fillStyle = '#00ff88';
-                    this.ctx.fillText(this.score, this.canvas.width / 2 - 2, 48);
-                }
-            }
-            
-            drawClouds() {
-                this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-                this.ctx.beginPath();
-                this.ctx.arc(50 + (this.frameCount * 0.2) % 200, 70, 20, 0, Math.PI * 2);
-                this.ctx.arc(80 + (this.frameCount * 0.2) % 200, 60, 18, 0, Math.PI * 2);
-                this.ctx.fill();
-            }
-            
-            drawStars() {
-                this.ctx.fillStyle = 'white';
-                for (let i = 0; i < 10; i++) {
                     this.ctx.beginPath();
-                    this.ctx.arc((i * 40 + this.frameCount) % this.canvas.width, (i * 30) % 100, 2, 0, Math.PI * 2);
+                    this.ctx.arc(this.bird.x - 5, this.bird.y - 5, 2, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    this.ctx.beginPath();
+                    this.ctx.arc(this.bird.x + 5, this.bird.y - 5, 2, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    
+                    this.ctx.fillStyle = '#ffa500';
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(this.bird.x + 8, this.bird.y - 2);
+                    this.ctx.lineTo(this.bird.x + 18, this.bird.y);
+                    this.ctx.lineTo(this.bird.x + 8, this.bird.y + 2);
+                    this.ctx.fill();
+                    
+                    if (!this.gameStarted && !this.gameOver) {
+                        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+                        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                        this.ctx.fillStyle = '#00ff88';
+                        this.ctx.font = 'bold 22px Archivo';
+                        this.ctx.textAlign = 'center';
+                        this.ctx.fillText('🌱 CLIQUE PARA JOGAR 🌱', this.canvas.width / 2, this.canvas.height / 2);
+                        this.ctx.font = '16px Archivo';
+                        this.ctx.fillStyle = '#ccc';
+                        this.ctx.fillText('Toque na tela ou pressione ESPAÇO', this.canvas.width / 2, this.canvas.height / 2 + 40);
+                    }
+                    
+                    if (this.gameStarted && !this.gameOver) {
+                        this.ctx.fillStyle = '#1a1a1a';
+                        this.ctx.font = 'bold 35px Clash Display';
+                        this.ctx.textAlign = 'center';
+                        this.ctx.fillText(this.score, this.canvas.width / 2, 50);
+                        this.ctx.fillStyle = '#00ff88';
+                        this.ctx.fillText(this.score, this.canvas.width / 2 - 2, 48);
+                    }
+                }
+                
+                drawClouds() {
+                    this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                    this.ctx.beginPath();
+                    this.ctx.arc(50 + (this.frameCount * 0.2) % 200, 70, 20, 0, Math.PI * 2);
+                    this.ctx.arc(80 + (this.frameCount * 0.2) % 200, 60, 18, 0, Math.PI * 2);
                     this.ctx.fill();
                 }
-            }
-            
-            endGame() {
-                this.gameOver = true;
-                this.gameStarted = false;
                 
-                if (this.score > this.bestScore) {
-                    this.bestScore = this.score;
-                    localStorage.setItem('flappyBest', this.bestScore);
-                    document.getElementById('newRecordBadge').style.display = 'block';
+                drawStars() {
+                    this.ctx.fillStyle = 'white';
+                    for (let i = 0; i < 10; i++) {
+                        this.ctx.beginPath();
+                        this.ctx.arc((i * 40 + this.frameCount) % this.canvas.width, (i * 30) % 100, 2, 0, Math.PI * 2);
+                        this.ctx.fill();
+                    }
                 }
                 
-                localStorage.setItem('flappyCoins', this.totalCoins);
-                
-                document.getElementById('finalScore').textContent = this.score;
-                document.getElementById('finalCoins').textContent = this.totalCoins;
-                document.getElementById('gameoverOverlay').style.display = 'flex';
-                
-                this.updateUI();
-            }
-            
-            restart() {
-                this.bird = { y: 300, velocity: 0, radius: 14, x: 70 };
-                this.pipes = [];
-                this.coins = [];
-                this.powerups = [];
-                this.score = 0;
-                this.gameOver = false;
-                this.gameStarted = false;
-                this.frameCount = 0;
-                this.activePowerups = { shield: 0, magnet: 0, slowMotion: 0 };
-                
-                document.getElementById('gameoverOverlay').style.display = 'none';
-                document.getElementById('newRecordBadge').style.display = 'none';
-                this.updateUI();
-            }
-            
-            updateUI() {
-                document.getElementById('scoreDisplay').textContent = this.score;
-                document.getElementById('coinsDisplay').textContent = this.totalCoins;
-                document.getElementById('bestScoreMini').textContent = this.bestScore;
-                document.getElementById('shopCoins').textContent = this.totalCoins;
-            }
-            
-            updatePowerupsDisplay() {
-                const container = document.getElementById('powerupsActive');
-                container.innerHTML = '';
-                
-                Object.entries(this.activePowerups).forEach(([type, time]) => {
-                    if (time > 0) {
-                        const badge = document.createElement('div');
-                        badge.className = 'powerup-badge';
-                        const icons = { shield: '🛡️', magnet: '🧲', slowMotion: '⏱️' };
-                        badge.innerHTML = `${icons[type]} ${this.getPowerupName(type)} <span class="powerup-timer">${Math.ceil(time / 60)}s</span>`;
-                        container.appendChild(badge);
+                endGame() {
+                    this.gameOver = true;
+                    this.gameStarted = false;
+                    
+                    if (this.score > this.bestScore) {
+                        this.bestScore = this.score;
+                        if (storageAvailable) localStorage.setItem('flappyBest', this.bestScore);
+                        document.getElementById('newRecordBadge').style.display = 'block';
                     }
-                });
+                    
+                    if (storageAvailable) localStorage.setItem('flappyCoins', this.totalCoins);
+                    
+                    document.getElementById('finalScore').textContent = this.score;
+                    document.getElementById('finalCoins').textContent = this.totalCoins;
+                    document.getElementById('gameoverOverlay').style.display = 'flex';
+                    
+                    this.updateUI();
+                }
+                
+                restart() {
+                    this.bird = { y: 300, velocity: 0, radius: 14, x: 70 };
+                    this.pipes = [];
+                    this.coins = [];
+                    this.powerups = [];
+                    this.score = 0;
+                    this.gameOver = false;
+                    this.gameStarted = false;
+                    this.frameCount = 0;
+                    this.activePowerups = { shield: 0, magnet: 0, slowMotion: 0 };
+                    
+                    document.getElementById('gameoverOverlay').style.display = 'none';
+                    document.getElementById('newRecordBadge').style.display = 'none';
+                    this.updateUI();
+                }
+                
+                updateUI() {
+                    document.getElementById('scoreDisplay').textContent = this.score;
+                    document.getElementById('coinsDisplay').textContent = this.totalCoins;
+                    document.getElementById('bestScoreMini').textContent = this.bestScore;
+                    const shopCoins = document.getElementById('shopCoins');
+                    if (shopCoins) shopCoins.textContent = this.totalCoins;
+                }
+                
+                updatePowerupsDisplay() {
+                    const container = document.getElementById('powerupsActive');
+                    if (!container) return;
+                    container.innerHTML = '';
+                    
+                    Object.entries(this.activePowerups).forEach(([type, time]) => {
+                        if (time > 0) {
+                            const badge = document.createElement('div');
+                            badge.className = 'powerup-badge';
+                            const icons = { shield: '🛡️', magnet: '🧲', slowMotion: '⏱️' };
+                            badge.innerHTML = `${icons[type]} ${this.getPowerupName(type)} <span class="powerup-timer">${Math.ceil(time / 60)}s</span>`;
+                            container.appendChild(badge);
+                        }
+                    });
+                }
+                
+                showNotification(text, type = 'info') {
+                    const existing = document.querySelector('.notification');
+                    if (existing) existing.remove();
+                    
+                    const notification = document.createElement('div');
+                    notification.className = 'notification';
+                    notification.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'times-circle' : 'info-circle'}"></i> ${text}`;
+                    
+                    document.body.appendChild(notification);
+                    
+                    setTimeout(() => {
+                        notification.style.opacity = '0';
+                        notification.style.transform = 'translate(-50%, 20px)';
+                        notification.style.transition = 'all 0.3s';
+                        setTimeout(() => notification.remove(), 300);
+                    }, 2000);
+                }
+                
+                gameLoop() {
+                    this.update();
+                    this.draw();
+                    requestAnimationFrame(() => this.gameLoop());
+                }
+                
+                setupEventListeners() {
+                    this.canvas.addEventListener('click', () => this.jump());
+                    document.addEventListener('keydown', (e) => {
+                        if (e.code === 'Space') {
+                            e.preventDefault();
+                            this.jump();
+                        }
+                    });
+                    
+                    document.getElementById('startBtn').addEventListener('click', () => this.jump());
+                    document.getElementById('restartBtn').addEventListener('click', () => this.restart());
+                    document.getElementById('restartFromOver').addEventListener('click', () => this.restart());
+                    
+                    document.getElementById('shopBtn').addEventListener('click', () => {
+                        document.getElementById('shopModal').classList.add('active');
+                        this.renderSkins();
+                    });
+                    
+                    document.getElementById('closeShop').addEventListener('click', () => {
+                        document.getElementById('shopModal').classList.remove('active');
+                    });
+                    
+                    window.addEventListener('keydown', (e) => {
+                        if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'ArrowDown') {
+                            e.preventDefault();
+                        }
+                    });
+                }
             }
             
-            showNotification(text, type = 'info') {
-                const existing = document.querySelector('.notification');
-                if (existing) existing.remove();
-                
-                const notification = document.createElement('div');
-                notification.className = 'notification';
-                notification.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'times-circle' : 'info-circle'}"></i> ${text}`;
-                
-                document.body.appendChild(notification);
-                
-                setTimeout(() => {
-                    notification.style.opacity = '0';
-                    notification.style.transform = 'translate(-50%, 20px)';
-                    notification.style.transition = 'all 0.3s';
-                    setTimeout(() => notification.remove(), 300);
-                }, 2000);
-            }
-            
-            gameLoop() {
-                this.update();
-                this.draw();
-                requestAnimationFrame(() => this.gameLoop());
-            }
-            
-            setupEventListeners() {
-                // Controles
-                this.canvas.addEventListener('click', () => this.jump());
-                document.addEventListener('keydown', (e) => {
-                    if (e.code === 'Space') {
-                        e.preventDefault();
-                        this.jump();
-                    }
-                });
-                
-                // Botões
-                document.getElementById('startBtn').addEventListener('click', () => this.jump());
-                document.getElementById('restartBtn').addEventListener('click', () => this.restart());
-                document.getElementById('restartFromOver').addEventListener('click', () => this.restart());
-                
-                // Loja
-                document.getElementById('shopBtn').addEventListener('click', () => {
-                    document.getElementById('shopModal').classList.add('active');
-                    this.renderSkins();
-                });
-                
-                document.getElementById('closeShop').addEventListener('click', () => {
-                    document.getElementById('shopModal').classList.remove('active');
-                });
-                
-                // Previne scroll com espaço
-                window.addEventListener('keydown', (e) => {
-                    if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'ArrowDown') {
-                        e.preventDefault();
-                    }
-                });
-            }
-        }
-        
-        // Inicializa o jogo
-        const game = new FlappyPlant();
+            // Inicializa o jogo quando a página carregar
+            window.addEventListener('load', () => {
+                new FlappyPlant();
+            });
+        })();
     </script>
 </body>
 </html>
