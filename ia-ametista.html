@@ -1,1 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ametista IA | AGRO+VERDE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Archivo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --verde-neon: #00ff88;
+            --fundo: #050a05;
+            --texto: #e0ffe0;
+            --vidro: rgba(0, 255, 136, 0.05);
+            --borda-vidro: rgba(0, 255, 136, 0.15);
+            --roxo: #a855f7;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Archivo', sans-serif;
+            background: linear-gradient(135deg, var(--fundo) 0%, #020502 100%);
+            color: var(--texto);
+            min-height: 100vh;
+        }
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95%;
+            max-width: 1400px;
+            background: rgba(5, 10, 5, 0.85);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--borda-vidro);
+            border-radius: 100px;
+            padding: 15px 30px;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        .logo i { font-size: 2.2rem; color: var(--verde-neon); }
+        .logo span {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--texto);
+        }
+        .logo span strong { color: var(--verde-neon); }
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+        }
+        .nav-links a {
+            padding: 12px 22px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 500;
+            color: var(--texto);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            background: var(--roxo);
+            color: white;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 120px 30px 60px;
+        }
+        h1 {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .chat-container {
+            background: var(--vidro);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--roxo);
+            border-radius: 40px;
+            padding: 30px;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .message {
+            display: flex;
+            gap: 12px;
+            max-width: 80%;
+        }
+        .message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .message.bot .message-avatar {
+            background: var(--roxo);
+            color: white;
+        }
+        .message.user .message-avatar {
+            background: var(--verde-neon);
+            color: var(--fundo);
+        }
+        .message-content {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 20px;
+            border-radius: 20px;
+            border: 1px solid var(--borda-vidro);
+        }
+        .message.bot .message-content {
+            border-color: var(--roxo);
+        }
+        .chat-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--borda-vidro);
+            border-radius: 60px;
+            color: var(--texto);
+            font-size: 1rem;
+        }
+        .chat-input button {
+            padding: 16px 30px;
+            background: var(--roxo);
+            color: white;
+            border: none;
+            border-radius: 60px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .footer {
+            padding: 40px 30px;
+            border-top: 1px solid var(--borda-vidro);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fas fa-leaf"></i>
+            <span>AGRO<strong>+</strong>VERDE</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
+            <li><a href="sustentabilidade.html"><i class="fas fa-globe"></i> Sustentabilidade</a></li>
+            <li><a href="tecnologias.html"><i class="fas fa-microchip"></i> Tecnologias</a></li>
+            <li><a href="contato.html"><i class="fas fa-envelope"></i> Contato</a></li>
+            <li><a href="ia-ametista.html" class="active"><i class="fas fa-robot"></i> Ametista IA</a></li>
+        </ul>
+    </nav>
 
+    <div class="container">
+        <h1><i class="fas fa-gem" style="color: var(--roxo);"></i> Ametista IA</h1>
+        <p style="text-align: center; margin-bottom: 30px;">Sua assistente virtual especializada em agricultura sustentável</p>
+        
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                    <div class="message-content">
+                        Olá! Sou a Ametista IA, sua assistente especializada em agro sustentável. Como posso ajudar você hoje? 🌱
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-input">
+                <input type="text" id="userInput" placeholder="Digite sua pergunta sobre agro..." />
+                <button id="sendBtn"><i class="fas fa-paper-plane"></i> Enviar</button>
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
+            <span style="background: var(--vidro); padding: 8px 16px; border-radius: 40px;"><i class="fas fa-seedling"></i> Como plantar milho?</span>
+            <span style="background: var(--vidro); padding: 8px 16px; border-radius: 40px;"><i class="fas fa-bug"></i> Controle de pragas</span>
+            <span style="background: var(--vidro); padding: 8px 16px; border-radius: 40px;"><i class="fas fa-droplet"></i> Economia de água</span>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p style="font-size: 1.5rem; font-family: 'Clash Display';">AGRO<strong style="color: var(--verde-neon);">+</strong>VERDE</p>
+        <p style="margin: 20px 0;"><strong>Feito por:</strong> Cleverson Victor | <strong style="color: #a855f7;">Ajuda:</strong> DeepSeek</p>
+        <p>© 2026 · Agrinho 2026</p>
+    </footer>
+
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+        
+        // Base de conhecimento da Ametista IA
+        const knowledgeBase = {
+            'plantar': 'Para plantar, escolha sementes de qualidade, prepare o solo com adubo orgânico, mantenha a umidade adequada e respeite o espaçamento entre plantas.',
+            'milho': 'O milho precisa de solo bem drenado, bastante sol e espaçamento de 20-30cm entre plantas. A colheita ocorre em 90-120 dias.',
+            'água': 'A irrigação por gotejamento economiza até 65% de água. Regue no início da manhã ou final da tarde para evitar evaporação.',
+            'praga': 'Use controle biológico com joaninhas e crisopídeos. Plante ervas aromáticas como manjericão e hortelã para repelir pragas naturalmente.',
+            'sustentável': 'Agricultura sustentável integra práticas como plantio direto, rotação de culturas, compostagem e preservação de nascentes.',
+            'adubo': 'Compostagem caseira com restos de frutas, verduras e folhas secas produz excelente adubo orgânico em 2-3 meses.',
+            'solo': 'Um solo saudável tem cor escura, cheiro de terra, minhocas e boa drenagem. Evite compactação e use cobertura morta.',
+            'ajuda': 'Posso ajudar com dicas sobre plantio, irrigação, controle de pragas, adubação orgânica, sustentabilidade e muito mais!'
+        };
+        
+        function getBotResponse(message) {
+            const msg = message.toLowerCase();
+            
+            // Verifica palavras-chave
+            for (const [key, response] of Object.entries(knowledgeBase)) {
+                if (msg.includes(key)) {
+                    return response;
+                }
+            }
+            
+            // Respostas padrão
+            const defaultResponses = [
+                '🌱 Interessante! Conte-me mais sobre sua dúvida específica sobre agricultura.',
+                '🚜 Posso ajudar com dicas de plantio, irrigação ou controle de pragas. O que gostaria de saber?',
+                '💧 Você sabia que a irrigação por gotejamento economiza até 65% de água?',
+                '🌽 Que tal aprender sobre cultivo de milho, feijão ou hortaliças?',
+                '🦋 O controle biológico é uma ótima alternativa aos agrotóxicos!',
+                '🌍 A agricultura sustentável é o futuro! Como posso ajudar nessa jornada?'
+            ];
+            
+            return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+        }
+        
+        function addMessage(text, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">
+                    <i class="fas fa-${isUser ? 'user' : 'robot'}"></i>
+                </div>
+                <div class="message-content">${text}</div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function handleSend() {
+            const text = userInput.value.trim();
+            if (!text) return;
+            
+            // Verifica conteúdo inapropriado
+            const inappropriateWords = ['sexo', 'nazismo', 'pornô', 'putaria', '18+', 'morte', 'matar', 'ódio'];
+            if (inappropriateWords.some(word => text.toLowerCase().includes(word))) {
+                addMessage('❌ Desculpe, só posso falar sobre agricultura sustentável. Vamos manter o foco no agro! 🌱', false);
+                userInput.value = '';
+                return;
+            }
+            
+            addMessage(text, true);
+            userInput.value = '';
+            
+            setTimeout(() => {
+                const response = getBotResponse(text);
+                addMessage(response, false);
+            }, 800);
+        }
+        
+        sendBtn.addEventListener('click', handleSend);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSend();
+        });
+        
+        // Sugestões clicáveis
+        document.querySelectorAll('[style*="background: var(--vidro)"]').forEach(el => {
+            el.addEventListener('click', () => {
+                userInput.value = el.textContent.trim();
+                handleSend();
+            });
+        });
+    </script>
+</body>
+</html>
