@@ -2,21 +2,31 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colheita Feliz | AGRO+VERDE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;600;700&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>🌾 Colheita Feliz | AGRO+VERDE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;600;700&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
             --verde-neon: #00ff88;
-            --fundo: #050a05;
-            --texto: #e0ffe0;
+            --verde-escuro: #0a1a0a;
+            --verde-medio: #1a3a1a;
             --dourado: #ffd700;
+            --marrom: #8B4513;
+            --azul-ceu: #87CEEB;
+            --texto: #e0ffe0;
+            --fundo: #050a05;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Archivo', sans-serif;
-            background: linear-gradient(135deg, #0a1a0a, #020502);
+            background: linear-gradient(135deg, var(--fundo) 0%, #020502 100%);
             color: var(--texto);
             min-height: 100vh;
             display: flex;
@@ -24,44 +34,148 @@
             justify-content: center;
             padding: 20px;
         }
-        .game-wrapper {
-            max-width: 900px;
+
+        .game-container {
+            max-width: 1200px;
             width: 100%;
             background: rgba(0, 255, 136, 0.03);
-            backdrop-filter: blur(15px);
-            border: 2px solid var(--verde-neon);
-            border-radius: 40px;
+            backdrop-filter: blur(20px);
+            border: 3px solid var(--verde-neon);
+            border-radius: 50px;
             padding: 30px;
+            box-shadow: 0 0 80px rgba(0, 255, 136, 0.3);
         }
-        h1 {
-            font-family: 'Clash Display', sans-serif;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .stats {
+
+        /* Header */
+        .game-header {
             display: flex;
-            justify-content: space-around;
-            margin-bottom: 30px;
-            padding: 15px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 60px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 20px;
         }
-        .stat {
+
+        .game-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .game-title i {
+            font-size: 2.5rem;
+            color: var(--verde-neon);
+            filter: drop-shadow(0 0 20px var(--verde-neon));
+        }
+
+        .game-title h1 {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--verde-neon), var(--dourado));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .level-badge {
             display: flex;
             align-items: center;
             gap: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 25px;
+            border-radius: 60px;
+            border: 2px solid var(--dourado);
         }
-        .stat i { color: var(--dourado); font-size: 1.5rem; }
+
+        .level-badge i {
+            color: var(--dourado);
+            font-size: 1.5rem;
+        }
+
+        .level-badge span {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dourado);
+        }
+
+        /* Stats */
+        .stats-panel {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-box {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 20px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s;
+        }
+
+        .stat-box:hover {
+            border-color: var(--verde-neon);
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .stat-icon {
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--verde-neon);
+        }
+
+        .stat-info {
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dourado);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        /* Área principal */
+        .game-area {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        /* Fazenda */
+        .farm-section {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 30px;
+            padding: 25px;
+            border: 1px solid rgba(0, 255, 136, 0.15);
+        }
+
         .farm-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
-            margin-bottom: 30px;
         }
-        .plot {
+
+        .farm-plot {
             aspect-ratio: 1;
-            background: #1a3a1a;
-            border: 2px solid #2a5a2a;
+            background: linear-gradient(145deg, #2d5a1e, #1a3d0f);
             border-radius: 20px;
             display: flex;
             flex-direction: column;
@@ -69,181 +183,987 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s;
+            border: 3px solid #4a7c2e;
+            box-shadow: inset 0 -5px 0 rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .farm-plot:hover {
+            transform: translateY(-5px);
+            border-color: var(--verde-neon);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3), inset 0 -5px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .farm-plot.empty {
+            background: linear-gradient(145deg, #5a3d2e, #3d2a1e);
+            border-color: #8B6914;
+        }
+
+        .farm-plot.planted {
+            background: linear-gradient(145deg, #3a7a2e, #2d5a1e);
+        }
+
+        .farm-plot.ready {
+            background: linear-gradient(145deg, #5a9e3e, #4a8a2e);
+            border-color: var(--dourado);
+            animation: pulse-glow 1.5s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.5), inset 0 -5px 0 rgba(0, 0, 0, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.8), inset 0 -5px 0 rgba(0, 0, 0, 0.3); }
+        }
+
+        .plot-emoji {
             font-size: 2.5rem;
+            filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.3));
         }
-        .plot:hover { border-color: var(--verde-neon); }
-        .plot.planted { background: #2a5a2a; }
-        .plot.ready { background: #3a7a3a; border-color: var(--dourado); animation: pulse 1.5s infinite; }
-        @keyframes pulse {
-            0%,100% { box-shadow: 0 0 10px var(--dourado); }
-            50% { box-shadow: 0 0 30px var(--dourado); }
-        }
+
         .growth-bar {
-            width: 80%;
-            height: 6px;
-            background: #333;
-            border-radius: 3px;
-            margin-top: 8px;
+            position: absolute;
+            bottom: 8px;
+            left: 10px;
+            right: 10px;
+            height: 5px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 5px;
+            overflow: hidden;
         }
+
         .growth-fill {
             height: 100%;
-            background: var(--verde-neon);
-            border-radius: 3px;
-            width: 0%;
+            background: linear-gradient(90deg, var(--verde-neon), var(--dourado));
+            border-radius: 5px;
+            transition: width 0.5s;
+            box-shadow: 0 0 10px var(--verde-neon);
         }
-        .buttons {
+
+        .crop-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            color: var(--dourado);
+        }
+
+        /* Painel lateral */
+        .side-panel {
             display: flex;
-            gap: 15px;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .panel-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 25px;
+            padding: 20px;
+            border: 1px solid rgba(0, 255, 136, 0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .panel-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: var(--verde-neon);
+            font-weight: 600;
+        }
+
+        /* Sementes */
+        .seeds-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .seed-item {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .seed-item:hover {
+            border-color: var(--verde-neon);
+            transform: scale(1.05);
+        }
+
+        .seed-item.selected {
+            border-color: var(--dourado);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .seed-item.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+            filter: grayscale(0.5);
+        }
+
+        .seed-emoji {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .seed-name {
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .seed-price {
+            font-size: 0.7rem;
+            color: var(--dourado);
+        }
+
+        .lock-icon {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            color: var(--dourado);
+            font-size: 0.8rem;
+        }
+
+        /* Caminhão */
+        .truck-section {
+            margin-top: 10px;
+        }
+
+        .truck-visual {
+            display: flex;
+            align-items: center;
             justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .truck-icon {
+            font-size: 3rem;
+            color: var(--dourado);
+        }
+
+        .truck-capacity {
+            flex: 1;
+        }
+
+        .capacity-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .capacity-bar {
+            height: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .capacity-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--verde-neon), var(--dourado));
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+
+        /* Missão */
+        .mission-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), transparent);
+            border-radius: 15px;
+            padding: 12px;
+            margin-top: 10px;
+        }
+
+        .mission-title {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+
+        .mission-text {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .mission-progress {
+            height: 5px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .mission-fill {
+            height: 100%;
+            background: var(--dourado);
+            border-radius: 5px;
+            transition: width 0.3s;
+        }
+
+        /* Botões */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
             flex-wrap: wrap;
         }
+
         .btn {
-            padding: 14px 28px;
+            padding: 14px 24px;
             border-radius: 60px;
-            font-weight: 600;
+            font-weight: 700;
             border: none;
             cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
             font-size: 1rem;
+            font-family: 'Archivo', sans-serif;
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--verde-neon), #00cc6a);
+            color: var(--fundo);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 50px rgba(0, 255, 136, 0.5);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--dourado), #ffaa00);
+            color: var(--fundo);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-warning:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+        }
+
+        .btn-warning:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--verde-neon);
+            border: 2px solid var(--verde-neon);
+        }
+
+        .btn-secondary:hover {
+            background: var(--verde-neon);
+            color: var(--fundo);
+        }
+
+        /* Notificação */
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 20, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--verde-neon);
+            border-radius: 60px;
+            padding: 16px 30px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 15px;
+            font-weight: 600;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            animation: slideUp 0.3s ease-out;
         }
-        .btn-primary { background: var(--verde-neon); color: #000; }
-        .btn-warning { background: var(--dourado); color: #000; }
-        .btn-secondary { background: transparent; border: 1px solid var(--verde-neon); color: var(--verde-neon); }
-        .truck-area {
-            margin-top: 20px;
-            padding: 15px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translate(-50%, 20px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
         }
+
+        .notification i {
+            color: var(--verde-neon);
+            font-size: 1.3rem;
+        }
+
+        /* Voltar */
         .back-link {
-            display: block;
-            text-align: center;
+            display: inline-block;
             margin-top: 20px;
-            color: var(--texto);
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--verde-neon);
+        }
+
+        /* Efeito de colheita */
+        .harvest-effect {
+            position: fixed;
+            pointer-events: none;
+            z-index: 999;
+            animation: floatUp 1s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-100px) scale(0.5); }
+        }
+
+        /* Responsivo */
+        @media (max-width: 900px) {
+            .game-area {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-panel {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .game-title h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .game-container {
+                padding: 20px;
+            }
+            
+            .stats-panel {
+                grid-template-columns: 1fr;
+            }
+            
+            .farm-grid {
+                gap: 10px;
+            }
+            
+            .plot-emoji {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="game-wrapper">
-        <h1><i class="fas fa-tractor"></i> COLHEITA FELIZ</h1>
-        
-        <div class="stats">
-            <div class="stat"><i class="fas fa-coins"></i> <span id="money">💰 100</span></div>
-            <div class="stat"><i class="fas fa-seedling"></i> <span id="seeds">🌱 5</span></div>
-            <div class="stat"><i class="fas fa-apple-alt"></i> <span id="harvest">🌽 0</span></div>
+    <div class="game-container">
+        <!-- Header -->
+        <div class="game-header">
+            <div class="game-title">
+                <i class="fas fa-tractor"></i>
+                <h1>COLHEITA FELIZ</h1>
+            </div>
+            <div class="level-badge">
+                <i class="fas fa-star"></i>
+                <span id="levelDisplay">Nível 1</span>
+            </div>
         </div>
-        
-        <div class="farm-grid" id="farmGrid"></div>
-        
-        <div class="buttons">
-            <button class="btn btn-primary" id="buySeedBtn"><i class="fas fa-shopping-cart"></i> Comprar Semente (30💰)</button>
-            <button class="btn btn-warning" id="loadTruckBtn"><i class="fas fa-truck-loading"></i> Carregar Caminhão</button>
+
+        <!-- Stats -->
+        <div class="stats-panel">
+            <div class="stat-box">
+                <div class="stat-icon"><i class="fas fa-coins"></i></div>
+                <div class="stat-info">
+                    <div class="stat-value" id="moneyDisplay">500</div>
+                    <div class="stat-label">Moedas</div>
+                </div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon"><i class="fas fa-seedling"></i></div>
+                <div class="stat-info">
+                    <div class="stat-value" id="seedsCount">5</div>
+                    <div class="stat-label">Sementes</div>
+                </div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon"><i class="fas fa-apple-alt"></i></div>
+                <div class="stat-info">
+                    <div class="stat-value" id="harvestCount">0</div>
+                    <div class="stat-label">Colhidos</div>
+                </div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                <div class="stat-info">
+                    <div class="stat-value" id="totalEarned">0</div>
+                    <div class="stat-label">Total ganho</div>
+                </div>
+            </div>
         </div>
-        
-        <div class="truck-area">
-            <span><i class="fas fa-truck"></i> Caminhão: <span id="truckLoad">0/10</span></span>
-            <button class="btn btn-secondary" id="deliverBtn"><i class="fas fa-city"></i> Entregar (50💰/un)</button>
+
+        <!-- Área principal -->
+        <div class="game-area">
+            <!-- Fazenda -->
+            <div class="farm-section">
+                <div class="farm-grid" id="farmGrid"></div>
+            </div>
+
+            <!-- Painel lateral -->
+            <div class="side-panel">
+                <!-- Sementes -->
+                <div class="panel-card">
+                    <div class="panel-title">
+                        <i class="fas fa-seedling"></i>
+                        <span>SEMENTES</span>
+                    </div>
+                    <div class="seeds-grid" id="seedsGrid"></div>
+                </div>
+
+                <!-- Caminhão -->
+                <div class="panel-card">
+                    <div class="panel-title">
+                        <i class="fas fa-truck"></i>
+                        <span>CAMINHÃO</span>
+                    </div>
+                    <div class="truck-section">
+                        <div class="truck-visual">
+                            <div class="truck-icon">🚛</div>
+                            <div class="truck-capacity">
+                                <div class="capacity-text">
+                                    <span id="truckLoadText">0 / 20</span>
+                                    <span id="truckValue">💰 0</span>
+                                </div>
+                                <div class="capacity-bar">
+                                    <div class="capacity-fill" id="capacityFill" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-warning" id="loadTruckBtn">
+                            <i class="fas fa-arrow-up"></i> Carregar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Missão -->
+                <div class="panel-card">
+                    <div class="panel-title">
+                        <i class="fas fa-scroll"></i>
+                        <span>MISSÃO DIÁRIA</span>
+                    </div>
+                    <div class="mission-box">
+                        <div class="mission-title">OBJETIVO</div>
+                        <div class="mission-text" id="missionText">Colha 10 milhos</div>
+                        <div class="mission-progress">
+                            <div class="mission-fill" id="missionFill" style="width: 0%"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                            <span id="missionProgress">0/10</span>
+                            <span style="color: var(--dourado);" id="missionReward">🏆 +200💰</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Voltar ao site</a>
+
+        <!-- Botões de ação -->
+        <div class="action-buttons">
+            <button class="btn btn-primary" id="deliverBtn">
+                <i class="fas fa-city"></i> Entregar para Cidade
+            </button>
+            <button class="btn btn-secondary" id="resetBtn">
+                <i class="fas fa-rotate"></i> Reiniciar
+            </button>
+        </div>
+
+        <!-- Link voltar -->
+        <div style="text-align: center;">
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Voltar ao site</a>
+        </div>
     </div>
 
     <script>
-        let money = 100, seeds = 5, harvested = 0, truckLoad = 0;
-        const plots = [
-            { planted: false, growth: 0, ready: false },
-            { planted: false, growth: 0, ready: false },
-            { planted: false, growth: 0, ready: false },
-            { planted: false, growth: 0, ready: false },
-            { planted: false, growth: 0, ready: false },
-            { planted: false, growth: 0, ready: false }
-        ];
-        
-        function renderFarm() {
-            const grid = document.getElementById('farmGrid');
-            grid.innerHTML = plots.map((plot, i) => {
-                let emoji = '🟫';
-                let growthBar = '';
-                if (plot.ready) emoji = '🌽';
-                else if (plot.planted) {
-                    emoji = plot.growth < 33 ? '🌱' : plot.growth < 66 ? '🌿' : '🌾';
-                    growthBar = `<div class="growth-bar"><div class="growth-fill" style="width:${plot.growth}%"></div></div>`;
+        // ===== CONFIGURAÇÃO DAS CULTURAS =====
+        const CROPS = {
+            corn: {
+                name: 'Milho',
+                emoji: '🌽',
+                seedEmoji: '🌱',
+                price: 30,
+                sellPrice: 50,
+                growthTime: 8,
+                unlockLevel: 1,
+                color: '#ffd700'
+            },
+            wheat: {
+                name: 'Trigo',
+                emoji: '🌾',
+                seedEmoji: '🌱',
+                price: 20,
+                sellPrice: 35,
+                growthTime: 6,
+                unlockLevel: 2,
+                color: '#f4a460'
+            },
+            soy: {
+                name: 'Soja',
+                emoji: '🫘',
+                seedEmoji: '🌱',
+                price: 40,
+                sellPrice: 70,
+                growthTime: 10,
+                unlockLevel: 3,
+                color: '#8B7355'
+            },
+            sunflower: {
+                name: 'Girassol',
+                emoji: '🌻',
+                seedEmoji: '🌱',
+                price: 50,
+                sellPrice: 90,
+                growthTime: 12,
+                unlockLevel: 4,
+                color: '#FFD700'
+            }
+        };
+
+        // ===== ESTADO DO JOGO =====
+        class FarmingGame {
+            constructor() {
+                this.money = 500;
+                this.seeds = { corn: 5, wheat: 0, soy: 0, sunflower: 0 };
+                this.harvested = { corn: 0, wheat: 0, soy: 0, sunflower: 0 };
+                this.truckLoad = {};
+                this.truckCapacity = 20;
+                this.level = 1;
+                this.exp = 0;
+                this.totalEarned = 0;
+                this.selectedCrop = 'corn';
+                
+                this.plots = [];
+                for (let i = 0; i < 9; i++) {
+                    this.plots.push({
+                        crop: null,
+                        planted: false,
+                        growth: 0,
+                        ready: false,
+                        growthInterval: null
+                    });
                 }
-                return `<div class="plot ${plot.planted ? 'planted' : ''} ${plot.ready ? 'ready' : ''}" onclick="handlePlot(${i})">${emoji}${growthBar}</div>`;
-            }).join('');
-        }
-        
-        function updateUI() {
-            document.getElementById('money').textContent = `💰 ${money}`;
-            document.getElementById('seeds').textContent = `🌱 ${seeds}`;
-            document.getElementById('harvest').textContent = `🌽 ${harvested}`;
-            document.getElementById('truckLoad').textContent = `${truckLoad}/10`;
-        }
-        
-        function handlePlot(i) {
-            const plot = plots[i];
-            if (plot.ready) {
-                harvested += 1;
-                plot.planted = plot.ready = false;
-                plot.growth = 0;
-                renderFarm();
-                updateUI();
-            } else if (!plot.planted && seeds > 0) {
-                seeds--;
+                
+                this.mission = {
+                    type: 'corn',
+                    target: 10,
+                    current: 0,
+                    reward: 200
+                };
+                
+                this.init();
+            }
+            
+            init() {
+                this.renderFarm();
+                this.renderSeeds();
+                this.updateUI();
+                this.startGrowthLoop();
+                this.setupEventListeners();
+                this.showNotification('🌱 Bem-vindo à Colheita Feliz! Plante e colha!', 'success');
+            }
+            
+            renderFarm() {
+                const grid = document.getElementById('farmGrid');
+                grid.innerHTML = '';
+                
+                this.plots.forEach((plot, index) => {
+                    const cell = document.createElement('div');
+                    cell.className = 'farm-plot';
+                    
+                    if (!plot.planted) {
+                        cell.classList.add('empty');
+                    } else if (plot.planted && !plot.ready) {
+                        cell.classList.add('planted');
+                    } else if (plot.ready) {
+                        cell.classList.add('ready');
+                    }
+                    
+                    const emoji = document.createElement('div');
+                    emoji.className = 'plot-emoji';
+                    
+                    if (plot.ready) {
+                        emoji.textContent = CROPS[plot.crop]?.emoji || '🌽';
+                    } else if (plot.planted) {
+                        emoji.textContent = plot.growth < 33 ? '🌱' : plot.growth < 66 ? '🌿' : '🌾';
+                    } else {
+                        emoji.textContent = '🟫';
+                    }
+                    
+                    cell.appendChild(emoji);
+                    
+                    if (plot.planted && !plot.ready) {
+                        const growthBar = document.createElement('div');
+                        growthBar.className = 'growth-bar';
+                        const growthFill = document.createElement('div');
+                        growthFill.className = 'growth-fill';
+                        growthFill.style.width = plot.growth + '%';
+                        growthBar.appendChild(growthFill);
+                        cell.appendChild(growthBar);
+                    }
+                    
+                    if (plot.crop && plot.planted) {
+                        const badge = document.createElement('div');
+                        badge.className = 'crop-badge';
+                        badge.textContent = CROPS[plot.crop]?.name || '';
+                        cell.appendChild(badge);
+                    }
+                    
+                    cell.addEventListener('click', () => this.handlePlotClick(index));
+                    grid.appendChild(cell);
+                });
+            }
+            
+            renderSeeds() {
+                const grid = document.getElementById('seedsGrid');
+                grid.innerHTML = '';
+                
+                Object.entries(CROPS).forEach(([key, crop]) => {
+                    const isUnlocked = this.level >= crop.unlockLevel;
+                    const seedCount = this.seeds[key] || 0;
+                    
+                    const seedItem = document.createElement('div');
+                    seedItem.className = `seed-item ${this.selectedCrop === key ? 'selected' : ''} ${!isUnlocked ? 'locked' : ''}`;
+                    
+                    seedItem.innerHTML = `
+                        <div class="seed-emoji">${crop.emoji}</div>
+                        <div class="seed-name">${crop.name}</div>
+                        <div class="seed-price">💰 ${crop.price} | 🌱 ${seedCount}</div>
+                        ${!isUnlocked ? '<div class="lock-icon"><i class="fas fa-lock"></i></div>' : ''}
+                    `;
+                    
+                    if (isUnlocked) {
+                        seedItem.addEventListener('click', () => {
+                            this.selectedCrop = key;
+                            this.renderSeeds();
+                            this.showNotification(`🌱 ${crop.name} selecionado!`, 'info');
+                        });
+                    }
+                    
+                    grid.appendChild(seedItem);
+                });
+            }
+            
+            handlePlotClick(index) {
+                const plot = this.plots[index];
+                
+                if (plot.ready) {
+                    this.harvestPlot(index);
+                } else if (!plot.planted) {
+                    this.plantSeed(index);
+                } else {
+                    const crop = CROPS[plot.crop];
+                    this.showNotification(`⏳ ${crop.name} crescendo... ${Math.round(plot.growth)}%`, 'info');
+                }
+            }
+            
+            plantSeed(index) {
+                const plot = this.plots[index];
+                const cropKey = this.selectedCrop;
+                const crop = CROPS[cropKey];
+                
+                if (plot.planted) {
+                    this.showNotification('❌ Este campo já está plantado!', 'error');
+                    return;
+                }
+                
+                if (!this.seeds[cropKey] || this.seeds[cropKey] <= 0) {
+                    this.showNotification(`❌ Sem sementes de ${crop.name}! Compre mais.`, 'error');
+                    return;
+                }
+                
+                this.seeds[cropKey]--;
+                plot.crop = cropKey;
                 plot.planted = true;
                 plot.growth = 0;
-                renderFarm();
-                updateUI();
-            } else if (plot.planted && !plot.ready) {
-                alert(`🌱 Crescimento: ${Math.round(plot.growth)}%`);
-            } else if (seeds <= 0) {
-                alert('❌ Sem sementes! Compre mais.');
+                plot.ready = false;
+                
+                this.renderFarm();
+                this.updateUI();
+                this.showNotification(`🌱 ${crop.name} plantado!`, 'success');
+            }
+            
+            harvestPlot(index) {
+                const plot = this.plots[index];
+                const cropKey = plot.crop;
+                const crop = CROPS[cropKey];
+                
+                if (!plot.ready) {
+                    this.showNotification('❌ Ainda não está pronto para colher!', 'error');
+                    return;
+                }
+                
+                const harvestAmount = 1 + Math.floor(this.level / 3);
+                
+                this.harvested[cropKey] = (this.harvested[cropKey] || 0) + harvestAmount;
+                plot.planted = false;
+                plot.crop = null;
+                plot.growth = 0;
+                plot.ready = false;
+                
+                // Atualiza missão
+                if (this.mission.type === cropKey) {
+                    this.mission.current = Math.min(this.mission.target, this.mission.current + harvestAmount);
+                    this.checkMissionComplete();
+                }
+                
+                // Efeito visual
+                this.showHarvestEffect(index, crop.emoji);
+                
+                this.renderFarm();
+                this.updateUI();
+                this.showNotification(`🌾 Colheu ${harvestAmount} ${crop.name}!`, 'success');
+            }
+            
+            showHarvestEffect(index, emoji) {
+                const plot = document.querySelectorAll('.farm-plot')[index];
+                const rect = plot.getBoundingClientRect();
+                
+                const effect = document.createElement('div');
+                effect.className = 'harvest-effect';
+                effect.textContent = emoji;
+                effect.style.left = rect.left + rect.width / 2 + 'px';
+                effect.style.top = rect.top + 'px';
+                effect.style.fontSize = '3rem';
+                effect.style.position = 'fixed';
+                
+                document.body.appendChild(effect);
+                setTimeout(() => effect.remove(), 1000);
+            }
+            
+            loadTruck() {
+                let totalLoaded = 0;
+                const currentLoad = Object.values(this.truckLoad).reduce((a, b) => a + b, 0);
+                const spaceLeft = this.truckCapacity - currentLoad;
+                
+                if (spaceLeft <= 0) {
+                    this.showNotification('❌ Caminhão cheio! Entregue para a cidade.', 'error');
+                    return;
+                }
+                
+                Object.entries(this.harvested).forEach(([cropKey, amount]) => {
+                    if (amount > 0 && spaceLeft > totalLoaded) {
+                        const loadAmount = Math.min(amount, spaceLeft - totalLoaded);
+                        this.harvested[cropKey] -= loadAmount;
+                        this.truckLoad[cropKey] = (this.truckLoad[cropKey] || 0) + loadAmount;
+                        totalLoaded += loadAmount;
+                    }
+                });
+                
+                if (totalLoaded === 0) {
+                    this.showNotification('❌ Nada para carregar!', 'error');
+                    return;
+                }
+                
+                this.updateUI();
+                this.showNotification(`🚛 ${totalLoaded} itens carregados no caminhão!`, 'success');
+            }
+            
+            deliverToCity() {
+                const totalItems = Object.values(this.truckLoad).reduce((a, b) => a + b, 0);
+                
+                if (totalItems === 0) {
+                    this.showNotification('❌ Caminhão vazio! Carregue primeiro.', 'error');
+                    return;
+                }
+                
+                let earnings = 0;
+                Object.entries(this.truckLoad).forEach(([cropKey, amount]) => {
+                    if (amount > 0) {
+                        earnings += amount * CROPS[cropKey].sellPrice;
+                    }
+                });
+                
+                this.money += earnings;
+                this.totalEarned += earnings;
+                this.truckLoad = {};
+                
+                // Ganha EXP
+                this.exp += totalItems * 5;
+                this.checkLevelUp();
+                
+                this.updateUI();
+                this.showNotification(`🏆 Entrega realizada! +${earnings}💰`, 'success');
+                
+                // Animação de dinheiro
+                this.showMoneyEffect(earnings);
+            }
+            
+            showMoneyEffect(amount) {
+                const effect = document.createElement('div');
+                effect.className = 'harvest-effect';
+                effect.innerHTML = `💰 +${amount}`;
+                effect.style.left = '50%';
+                effect.style.top = '40%';
+                effect.style.fontSize = '2rem';
+                effect.style.fontWeight = 'bold';
+                effect.style.color = '#ffd700';
+                effect.style.textShadow = '0 0 20px #ffd700';
+                
+                document.body.appendChild(effect);
+                setTimeout(() => effect.remove(), 1500);
+            }
+            
+            buySeeds(cropKey) {
+                const crop = CROPS[cropKey];
+                
+                if (this.level < crop.unlockLevel) {
+                    this.showNotification(`🔒 Disponível no nível ${crop.unlockLevel}!`, 'error');
+                    return;
+                }
+                
+                if (this.money < crop.price) {
+                    this.showNotification('❌ Dinheiro insuficiente!', 'error');
+                    return;
+                }
+                
+                this.money -= crop.price;
+                this.seeds[cropKey] = (this.seeds[cropKey] || 0) + 3;
+                
+                this.renderSeeds();
+                this.updateUI();
+                this.showNotification(`🌱 3 sementes de ${crop.name} compradas!`, 'success');
+            }
+            
+            startGrowthLoop() {
+                setInterval(() => {
+                    let anyGrowth = false;
+                    
+                    this.plots.forEach(plot => {
+                        if (plot.planted && !plot.ready && plot.crop) {
+                            const growthRate = (2 + this.level) * (CROPS[plot.crop].growthTime / 8);
+                            plot.growth = Math.min(100, plot.growth + growthRate);
+                            
+                            if (plot.growth >= 100) {
+                                plot.ready = true;
+                                this.showNotification(`🌽 ${CROPS[plot.crop].name} pronto para colher!`, 'success');
+                            }
+                            
+                            anyGrowth = true;
+                        }
+                    });
+                    
+                    if (anyGrowth) {
+                        this.renderFarm();
+                    }
+                }, 1000);
+            }
+            
+            checkLevelUp() {
+                const nextLevelExp = this.level * 500;
+                
+                if (this.exp >= nextLevelExp) {
+                    this.level++;
+                    this.exp -= nextLevelExp;
+                    this.truckCapacity += 5;
+                    
+                    document.getElementById('levelDisplay').textContent = `Nível ${this.level}`;
+                    this.renderSeeds();
+                    this.showNotification(`🎉 LEVEL UP! Agora você é nível ${this.level}!`, 'success');
+                }
+            }
+            
+            checkMissionComplete() {
+                const progress = (this.mission.current / this.mission.target) * 100;
+                document.getElementById('missionFill').style.width = progress + '%';
+                document.getElementById('missionProgress').textContent = `${this.mission.current}/${this.mission.target}`;
+                
+                if (this.mission.current >= this.mission.target) {
+                    this.money += this.mission.reward;
+                    this.totalEarned += this.mission.reward;
+                    
+                    // Nova missão
+                    const crops = ['corn', 'wheat', 'soy', 'sunflower'];
+                    const randomCrop = crops[Math.floor(Math.random() * crops.length)];
+                    this.mission = {
+                        type: randomCrop,
+                        target: 10 + this.level * 5,
+                        current: 0,
+                        reward: 200 + this.level * 50
+                    };
+                    
+                    document.getElementById('missionText').textContent = `Colha ${this.mission.target} ${CROPS[randomCrop].name}`;
+                    document.getElementById('missionReward').textContent = `🏆 +${this.mission.reward}💰`;
+                    document.getElementById('missionFill').style.width = '0%';
+                    document.getElementById('missionProgress').textContent = `0/${this.mission.target}`;
+                    
+                    this.updateUI();
+                    this.showNotification(`🎯 Missão completa! +${this.mission.reward}💰`, 'success');
+                }
+            }
+            
+            updateUI() {
+                document.getElementById('moneyDisplay').textContent = this.money;
+                
+                const totalSeeds = Object.values(this.seeds).reduce((a, b) => a + b, 0);
+                document.getElementById('seedsCount').textContent = totalSeeds;
+                
+                const totalHarvested = Object.values(this.harvested).reduce((a, b) => a + b, 0);
+                document.getElementById('harvestCount').textContent = totalHarvested;
+                
+                document.getElementById('totalEarned').textContent = this.totalEarned;
+                
+                const truckTotal = Object.values(this.truckLoad).reduce((a, b) => a + b, 0);
+                const truckValue = Object.entries(this.truckLoad).reduce((total, [crop, amount]) => {
+                    return total + (amount * CROPS[crop].sellPrice);
+                }, 0);
+                
+                document.getElementById('truckLoadText').textContent = `${truckTotal} / ${this.truckCapacity}`;
+                document.getElementById('truckValue').textContent = `💰 ${truckValue}`;
+                document.getElementById('capacityFill').style.width = (truckTotal / this.truckCapacity) * 100 + '%';
+            }
+            
+            showNotification(text, type = 'info') {
+                const existing = document.querySelector('.notification');
+                if (existing) existing.remove();
+                
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                
+                const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : '💡';
+                notification.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'times-circle' : 'info-circle'}"></i> ${icon} ${text}`;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    notification.style.transform = 'translate(-50%, 20px)';
+                    notification.style.transition = 'all 0.3s';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+            
+            setupEventListeners() {
+                document.getElementById('loadTruckBtn').addEventListener('click', () => this.loadTruck());
+                document.getElementById('deliverBtn').addEventListener('click', () => this.deliverToCity());
+                document.getElementById('resetBtn').addEventListener('click', () => {
+                    if (confirm('Reiniciar o jogo? Todo progresso será perdido.')) {
+                        location.reload();
+                    }
+                });
+                
+                // Botão de comprar sementes (adicionado dinamicamente)
+                const buyBtn = document.createElement('button');
+                buyBtn.className = 'btn btn-secondary';
+                buyBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> Comprar Sementes';
+                buyBtn.style.marginTop = '10px';
+                buyBtn.addEventListener('click', () => this.buySeeds(this.selectedCrop));
+                
+                document.querySelector('.seeds-grid').parentElement.appendChild(buyBtn);
             }
         }
         
-        setInterval(() => {
-            plots.forEach(p => {
-                if (p.planted && !p.ready) {
-                    p.growth = Math.min(100, p.growth + 3);
-                    if (p.growth >= 100) p.ready = true;
-                }
-            });
-            renderFarm();
-        }, 1000);
-        
-        document.getElementById('buySeedBtn').addEventListener('click', () => {
-            if (money >= 30) {
-                money -= 30;
-                seeds += 3;
-                updateUI();
-            } else alert('❌ Dinheiro insuficiente!');
-        });
-        
-        document.getElementById('loadTruckBtn').addEventListener('click', () => {
-            if (harvested <= 0) return alert('❌ Nada para carregar!');
-            const space = 10 - truckLoad;
-            const load = Math.min(harvested, space);
-            if (load <= 0) return alert('❌ Caminhão cheio!');
-            harvested -= load;
-            truckLoad += load;
-            updateUI();
-        });
-        
-        document.getElementById('deliverBtn').addEventListener('click', () => {
-            if (truckLoad <= 0) return alert('❌ Caminhão vazio!');
-            money += truckLoad * 50;
-            truckLoad = 0;
-            updateUI();
-            alert(`🏆 Entrega realizada! +${truckLoad * 50}💰`);
-        });
-        
-        renderFarm();
-        updateUI();
+        // Inicializa o jogo
+        const game = new FarmingGame();
     </script>
 </body>
 </html>
