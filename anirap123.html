@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔒 ÁREA VIP | UNKNOWN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;600;700&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --verde-neon: #00ff88;
+            --fundo: #050a05;
+            --texto: #e0ffe0;
+            --roxo: #a855f7;
+            --dourado: #ffd700;
+            --vermelho: #ff4444;
+            --azul: #4fc3f7;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Archivo', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 100%);
+            color: var(--texto);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            perspective: 1000px;
+        }
+        
+        .vip-container {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(168, 85, 247, 0.05);
+            backdrop-filter: blur(20px);
+            border: 3px solid var(--roxo);
+            border-radius: 40px;
+            padding: 30px;
+            box-shadow: 0 0 100px rgba(168, 85, 247, 0.5);
+            transform-style: preserve-3d;
+            animation: float3d 6s ease-in-out infinite;
+        }
+        
+        @keyframes float3d {
+            0%, 100% { transform: rotateX(0deg) rotateY(0deg) translateY(0); }
+            25% { transform: rotateX(3deg) rotateY(5deg) translateY(-10px); }
+            50% { transform: rotateX(-2deg) rotateY(-3deg) translateY(0); }
+            75% { transform: rotateX(2deg) rotateY(4deg) translateY(-5deg); }
+        }
+        
+        .vip-header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .vip-badge {
+            display: inline-block;
+            padding: 10px 30px;
+            background: linear-gradient(135deg, var(--dourado), #ffaa00);
+            color: #000;
+            font-weight: 800;
+            font-size: 1.5rem;
+            border-radius: 60px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+            animation: glitch 3s infinite;
+        }
+        
+        @keyframes glitch {
+            0%, 100% { transform: skew(0deg); }
+            95% { transform: skew(2deg); }
+            96% { transform: skew(-2deg); }
+            97% { transform: skew(0deg); }
+        }
+        
+        h1 {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 4rem;
+            background: linear-gradient(135deg, var(--dourado), var(--roxo), var(--azul));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 50px rgba(168, 85, 247, 0.5);
+            animation: textGlow 2s infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            from { text-shadow: 0 0 30px rgba(168, 85, 247, 0.3); }
+            to { text-shadow: 0 0 60px rgba(168, 85, 247, 0.8); }
+        }
+        
+        /* ===== JOGO 3D ===== */
+        .game-3d-container {
+            perspective: 1000px;
+            margin: 30px 0;
+        }
+        
+        #gameCanvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            border: 3px solid var(--roxo);
+            box-shadow: 0 0 80px rgba(168, 85, 247, 0.4);
+            cursor: pointer;
+            transform-style: preserve-3d;
+            animation: canvasFloat 4s ease-in-out infinite;
+        }
+        
+        @keyframes canvasFloat {
+            0%, 100% { transform: translateY(0) rotateX(0deg); }
+            50% { transform: translateY(-10px) rotateX(2deg); }
+        }
+        
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 40px;
+            border: 1px solid var(--roxo);
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--dourado);
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        .game-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 16px 30px;
+            border-radius: 60px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--roxo), #c084fc);
+            color: white;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 60px rgba(168, 85, 247, 0.8);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, var(--dourado), #ffaa00);
+            color: #000;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, var(--vermelho), #cc0000);
+            color: white;
+        }
+        
+        /* ===== ÁREA DE SENHAS ===== */
+        .password-section {
+            margin-top: 40px;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 30px;
+            border: 1px solid var(--roxo);
+        }
+        
+        .password-title {
+            color: var(--dourado);
+            margin-bottom: 15px;
+            font-size: 1rem;
+            text-align: center;
+            opacity: 0.7;
+        }
+        
+        .password-input-group {
+            display: flex;
+            gap: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .password-input {
+            flex: 1;
+            padding: 14px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--roxo);
+            border-radius: 40px;
+            color: var(--texto);
+            font-size: 1rem;
+            font-family: 'Archivo', sans-serif;
+            outline: none;
+        }
+        
+        .password-input:focus {
+            border-color: var(--dourado);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            color: var(--roxo);
+        }
+    </style>
+</head>
+<body>
+    <div class="vip-container">
+        <div class="vip-header">
+            <div class="vip-badge">
+                <i class="fas fa-crown"></i> ÁREA VIP <i class="fas fa-crown"></i>
+            </div>
+            <h1>UNKNOWN GAME</h1>
+            <p style="opacity: 0.5; margin-top: 10px; font-size: 0.9rem;">
+                <i class="fas fa-question-circle"></i> ???
+            </p>
+        </div>
+        
+        <!-- JOGO 3D -->
+        <div class="game-3d-container">
+            <canvas id="gameCanvas" width="800" height="400"></canvas>
+        </div>
+        
+        <!-- ESTATÍSTICAS -->
+        <div class="game-stats">
+            <div class="stat">
+                <div class="stat-value" id="score">0</div>
+                <div class="stat-label">SCORE</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="level">1</div>
+                <div class="stat-label">NÍVEL</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="lives">❤️❤️❤️</div>
+                <div class="stat-label">VIDAS</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="enemies">0</div>
+                <div class="stat-label">INIMIGOS</div>
+            </div>
+        </div>
+        
+        <!-- CONTROLES -->
+        <div class="game-controls">
+            <button class="btn btn-primary" id="startBtn">
+                <i class="fas fa-play"></i> INICIAR
+            </button>
+            <button class="btn btn-warning" id="shootBtn">
+                <i class="fas fa-bolt"></i> ATIRAR
+            </button>
+            <button class="btn btn-danger" id="resetBtn">
+                <i class="fas fa-rotate"></i> RESET
+            </button>
+        </div>
+        
+        <p style="text-align: center; margin-top: 15px; opacity: 0.4; font-size: 0.8rem;">
+            <i class="fas fa-keyboard"></i> SETAS: mover • ESPAÇO: atirar • CLIQUE: teleportar
+        </p>
+        
+        <!-- ÁREA DE SENHAS -->
+        <div class="password-section">
+            <div class="password-title">
+                <i class="fas fa-lock"></i> CÓDIGO SECRETO <i class="fas fa-lock"></i>
+            </div>
+            <div class="password-input-group">
+                <input type="password" id="secretPassword" class="password-input" placeholder="Digite a senha...">
+                <button class="btn btn-primary" id="verifyPasswordBtn" style="padding: 14px 25px;">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+        
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Voltar ao site principal
+        </a>
+    </div>
+    
+    <script>
+        // ===== JOGO 3D =====
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let gameStarted = false;
+        let score = 0;
+        let level = 1;
+        let lives = 3;
+        
+        let player = { x: 400, y: 350, width: 40, height: 40 };
+        let enemies = [];
+        let projectiles = [];
+        let particles = [];
+        let keys = {};
+        
+        function spawnEnemies() {
+            enemies = [];
+            for (let i = 0; i < 5 + level * 2; i++) {
+                enemies.push({
+                    x: Math.random() * 700 + 50,
+                    y: Math.random() * 200 + 30,
+                    width: 35,
+                    height: 35,
+                    speedX: (Math.random() - 0.5) * 2.5,
+                    speedY: (Math.random() - 0.5) * 1.5,
+                    color: `hsl(${Math.random() * 60 + 280}, 70%, 55%)`
+                });
+            }
+            document.getElementById('enemies').textContent = enemies.length;
+        }
+        
+        function shoot() {
+            if (!gameStarted) return;
+            projectiles.push({
+                x: player.x,
+                y: player.y,
+                width: 6,
+                height: 12,
+                speed: -6,
+                color: '#ffd700'
+            });
+        }
+        
+        function update() {
+            if (!gameStarted) return;
+            
+            if (keys['ArrowLeft'] && player.x > 30) player.x -= 5;
+            if (keys['ArrowRight'] && player.x < 770) player.x += 5;
+            if (keys['ArrowUp'] && player.y > 200) player.y -= 5;
+            if (keys['ArrowDown'] && player.y < 370) player.y += 5;
+            
+            enemies.forEach(enemy => {
+                enemy.x += enemy.speedX;
+                enemy.y += enemy.speedY;
+                
+                if (enemy.x < 20 || enemy.x > 760) enemy.speedX *= -1;
+                if (enemy.y < 20 || enemy.y > 380) enemy.speedY *= -1;
+            });
+            
+            projectiles = projectiles.filter(p => {
+                p.y += p.speed;
+                let hit = false;
+                enemies = enemies.filter(enemy => {
+                    if (!hit && Math.abs(p.x - enemy.x) < 30 && Math.abs(p.y - enemy.y) < 30) {
+                        hit = true;
+                        score += 10;
+                        for (let i = 0; i < 6; i++) {
+                            particles.push({
+                                x: enemy.x, y: enemy.y,
+                                vx: (Math.random() - 0.5) * 4,
+                                vy: (Math.random() - 0.5) * 4,
+                                life: 15,
+                                color: enemy.color
+                            });
+                        }
+                        return false;
+                    }
+                    return true;
+                });
+                if (hit) {
+                    document.getElementById('enemies').textContent = enemies.length;
+                    return false;
+                }
+                return p.y > 0 && p.y < 400;
+            });
+            
+            particles = particles.filter(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life--;
+                return p.life > 0;
+            });
+            
+            enemies.forEach(enemy => {
+                if (Math.abs(player.x - enemy.x) < 35 && Math.abs(player.y - enemy.y) < 35) {
+                    lives--;
+                    enemy.x = Math.random() * 700 + 50;
+                    enemy.y = 30;
+                    if (lives <= 0) gameStarted = false;
+                }
+            });
+            
+            if (enemies.length === 0) {
+                level++;
+                spawnEnemies();
+            }
+            
+            updateUI();
+        }
+        
+        function draw() {
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, '#1a0a2e');
+            gradient.addColorStop(0.5, '#0a1a2e');
+            gradient.addColorStop(1, '#0a0a0a');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 800, 400);
+            
+            ctx.strokeStyle = 'rgba(168, 85, 247, 0.15)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < 800; i += 40) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i + 15, 400);
+                ctx.stroke();
+            }
+            
+            enemies.forEach(enemy => {
+                ctx.shadowColor = enemy.color;
+                ctx.shadowBlur = 15;
+                ctx.fillStyle = enemy.color;
+                ctx.beginPath();
+                ctx.ellipse(enemy.x, enemy.y, enemy.width/2, enemy.height/2, 0, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.shadowBlur = 0;
+                ctx.fillStyle = 'white';
+                ctx.beginPath();
+                ctx.arc(enemy.x - 7, enemy.y - 4, 4, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(enemy.x + 7, enemy.y - 4, 4, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#ff0000';
+                ctx.beginPath();
+                ctx.arc(enemy.x - 7, enemy.y - 4, 2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(enemy.x + 7, enemy.y - 4, 2, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            
+            projectiles.forEach(p => {
+                ctx.shadowColor = p.color;
+                ctx.shadowBlur = 12;
+                ctx.fillStyle = p.color;
+                ctx.fillRect(p.x - 3, p.y - 6, 6, 12);
+            });
+            
+            ctx.shadowColor = '#00ff88';
+            ctx.shadowBlur = 25;
+            ctx.fillStyle = '#00ff88';
+            ctx.beginPath();
+            ctx.moveTo(player.x, player.y - 18);
+            ctx.lineTo(player.x - 18, player.y + 12);
+            ctx.lineTo(player.x - 8, player.y + 8);
+            ctx.lineTo(player.x - 8, player.y + 18);
+            ctx.lineTo(player.x, player.y + 12);
+            ctx.lineTo(player.x + 8, player.y + 18);
+            ctx.lineTo(player.x + 8, player.y + 8);
+            ctx.lineTo(player.x + 18, player.y + 12);
+            ctx.closePath();
+            ctx.fill();
+            
+            ctx.shadowBlur = 15;
+            ctx.fillStyle = '#4fc3f7';
+            ctx.beginPath();
+            ctx.arc(player.x, player.y - 3, 7, 0, Math.PI * 2);
+            ctx.fill();
+            
+            particles.forEach(p => {
+                ctx.shadowColor = p.color;
+                ctx.shadowBlur = 12;
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            
+            ctx.shadowBlur = 0;
+            
+            if (!gameStarted && lives === 0) {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                ctx.fillRect(0, 0, 800, 400);
+                ctx.fillStyle = '#ff4444';
+                ctx.font = 'bold 40px Clash Display';
+                ctx.textAlign = 'center';
+                ctx.fillText('GAME OVER', 400, 200);
+            } else if (!gameStarted && lives > 0) {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+                ctx.fillRect(0, 0, 800, 400);
+                ctx.fillStyle = '#00ff88';
+                ctx.font = 'bold 30px Clash Display';
+                ctx.textAlign = 'center';
+                ctx.fillText('CLIQUE EM INICIAR', 400, 200);
+            }
+        }
+        
+        function updateUI() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('level').textContent = level;
+            document.getElementById('lives').textContent = '❤️'.repeat(lives) + '🖤'.repeat(3 - lives);
+        }
+        
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+        
+        document.addEventListener('keydown', (e) => {
+            keys[e.key] = true;
+            if (e.key === ' ') { e.preventDefault(); shoot(); }
+        });
+        
+        document.addEventListener('keyup', (e) => { keys[e.key] = false; });
+        
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            player.x = Math.max(30, Math.min(770, e.clientX - rect.left));
+            player.y = Math.max(200, Math.min(370, e.clientY - rect.top));
+        });
+        
+        document.getElementById('startBtn').addEventListener('click', () => {
+            if (!gameStarted) {
+                gameStarted = true;
+                score = 0;
+                level = 1;
+                lives = 3;
+                player.x = 400;
+                player.y = 350;
+                projectiles = [];
+                particles = [];
+                spawnEnemies();
+                updateUI();
+            }
+        });
+        
+        document.getElementById('shootBtn').addEventListener('click', shoot);
+        
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            gameStarted = false;
+            score = 0;
+            level = 1;
+            lives = 3;
+            player.x = 400;
+            player.y = 350;
+            enemies = [];
+            projectiles = [];
+            particles = [];
+            document.getElementById('enemies').textContent = '0';
+            updateUI();
+        });
+        
+        window.addEventListener('keydown', (e) => { if (e.key === ' ') e.preventDefault(); });
+        
+        updateUI();
+        gameLoop();
+        
+        // ===== VERIFICAÇÃO DA SENHA "elpis" =====
+        document.getElementById('verifyPasswordBtn').addEventListener('click', function() {
+            const password = document.getElementById('secretPassword').value;
+            if (password === 'elpis') {
+                window.location.href = 'elpis.html';
+            } else {
+                alert('🔒 Senha incorreta!');
+            }
+        });
+        
+        document.getElementById('secretPassword').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('verifyPasswordBtn').click();
+            }
+        });
+    </script>
+</body>
+</html>
