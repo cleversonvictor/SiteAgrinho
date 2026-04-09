@@ -43,64 +43,25 @@
             justify-content: space-between;
         }
         
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-        
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
         .logo i { font-size: 2.2rem; color: var(--verde-neon); }
-        
-        .logo span {
-            font-family: 'Clash Display', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--texto);
-        }
-        
+        .logo span { font-family: 'Clash Display', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--texto); }
         .logo span strong { color: var(--verde-neon); }
         
-        .nav-links {
-            display: flex;
-            gap: 8px;
-            list-style: none;
-        }
-        
+        .nav-links { display: flex; gap: 8px; list-style: none; }
         .nav-links a {
-            padding: 12px 22px;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 500;
-            color: var(--texto);
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            padding: 12px 22px; border-radius: 40px; text-decoration: none; font-weight: 500;
+            color: var(--texto); transition: all 0.3s; display: flex; align-items: center; gap: 8px;
         }
+        .nav-links a:hover, .nav-links a.active { background: var(--roxo); color: white; }
         
-        .nav-links a:hover, .nav-links a.active {
-            background: var(--roxo);
-            color: white;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 120px 30px 60px;
-        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 120px 30px 60px; }
         
         h1 {
             font-family: 'Clash Display', sans-serif;
             font-size: 3.5rem;
             margin-bottom: 20px;
             text-align: center;
-        }
-        
-        .ia-description {
-            text-align: center;
-            margin-bottom: 30px;
-            opacity: 0.9;
         }
         
         .chat-container {
@@ -136,31 +97,16 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .message.user {
-            align-self: flex-end;
-            flex-direction: row-reverse;
-        }
+        .message.user { align-self: flex-end; flex-direction: row-reverse; }
         
         .message-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            flex-shrink: 0;
+            width: 45px; height: 45px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; flex-shrink: 0;
         }
         
-        .message.bot .message-avatar {
-            background: linear-gradient(135deg, var(--roxo), #c084fc);
-            color: white;
-        }
-        
-        .message.user .message-avatar {
-            background: var(--verde-neon);
-            color: var(--fundo);
-        }
+        .message.bot .message-avatar { background: linear-gradient(135deg, var(--roxo), #c084fc); color: white; }
+        .message.user .message-avatar { background: var(--verde-neon); color: var(--fundo); }
         
         .message-content {
             background: rgba(0, 0, 0, 0.4);
@@ -172,14 +118,8 @@
             word-break: break-word;
         }
         
-        .message.bot .message-content {
-            border-color: var(--roxo);
-        }
-        
-        .message.user .message-content {
-            background: rgba(0, 255, 136, 0.1);
-            border-color: var(--verde-neon);
-        }
+        .message.bot .message-content { border-color: var(--roxo); }
+        .message.user .message-content { background: rgba(0, 255, 136, 0.1); border-color: var(--verde-neon); }
         
         .typing-indicator {
             display: none;
@@ -189,11 +129,8 @@
         }
         
         .typing-indicator span {
-            width: 8px;
-            height: 8px;
-            background: var(--roxo);
-            border-radius: 50%;
-            animation: typing 1.4s infinite;
+            width: 8px; height: 8px; background: var(--roxo);
+            border-radius: 50%; animation: typing 1.4s infinite;
         }
         
         .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
@@ -204,60 +141,26 @@
             30% { transform: translateY(-10px); }
         }
         
-        .chat-input {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
+        .chat-input { display: flex; gap: 10px; margin-top: 20px; }
         
         .chat-input input {
-            flex: 1;
-            padding: 16px 20px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--borda-vidro);
-            border-radius: 60px;
-            color: var(--texto);
-            font-size: 1rem;
-            font-family: 'Archivo', sans-serif;
-            transition: all 0.3s;
+            flex: 1; padding: 16px 20px; background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--borda-vidro); border-radius: 60px;
+            color: var(--texto); font-size: 1rem; font-family: 'Archivo', sans-serif;
         }
         
-        .chat-input input:focus {
-            outline: none;
-            border-color: var(--roxo);
-            box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
-        }
+        .chat-input input:focus { outline: none; border-color: var(--roxo); box-shadow: 0 0 20px rgba(168, 85, 247, 0.3); }
         
         .chat-input button {
-            padding: 16px 30px;
-            background: linear-gradient(135deg, var(--roxo), #c084fc);
-            color: white;
-            border: none;
-            border-radius: 60px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s;
+            padding: 16px 30px; background: linear-gradient(135deg, var(--roxo), #c084fc);
+            color: white; border: none; border-radius: 60px; font-weight: 600;
+            cursor: pointer; display: flex; align-items: center; gap: 8px;
         }
         
-        .chat-input button:hover:not(:disabled) {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
-        }
+        .chat-input button:hover:not(:disabled) { transform: scale(1.05); box-shadow: 0 0 30px rgba(168, 85, 247, 0.5); }
+        .chat-input button:disabled { opacity: 0.5; cursor: not-allowed; }
         
-        .chat-input button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        
-        .footer {
-            padding: 40px 30px;
-            border-top: 1px solid var(--borda-vidro);
-            text-align: center;
-            margin-top: 40px;
-        }
+        .footer { padding: 40px 30px; border-top: 1px solid var(--borda-vidro); text-align: center; margin-top: 40px; }
         
         @media (max-width: 768px) {
             .navbar { padding: 12px 20px; }
@@ -284,9 +187,9 @@
 
     <div class="container">
         <h1><i class="fas fa-gem" style="color: var(--roxo);"></i> Ametista IA</h1>
-        <p class="ia-description">
-            🧠 Uma IA CONSCIENTE! Ela tem opinião própria, é zueira, usa gírias e manja de TUDO!<br>
-            Pode falar normal, ela entende até memes e ironia!
+        <p class="ia-description" style="text-align: center; margin-bottom: 30px; opacity: 0.9;">
+            🧠 IA com CÉREBRO PRÓPRIO! Raciocínio real, entende contexto, sabe TUDO do site!<br>
+            Pode perguntar sobre os jogos, sustentabilidade, tecnologias... ELA REALMENTE SABE!
         </p>
         
         <div class="chat-container">
@@ -296,7 +199,7 @@
             </div>
             
             <div class="chat-input">
-                <input type="text" id="userInput" placeholder="Fala aí, tô te ouvindo..." />
+                <input type="text" id="userInput" placeholder="Pergunte qualquer coisa..." />
                 <button id="sendBtn"><i class="fas fa-paper-plane"></i> Enviar</button>
             </div>
         </div>
@@ -310,7 +213,6 @@
 
     <script>
         (function() {
-            // ===== CONFIGURAÇÃO =====
             const chatMessages = document.getElementById('chatMessages');
             const userInput = document.getElementById('userInput');
             const sendBtn = document.getElementById('sendBtn');
@@ -318,130 +220,275 @@
             
             let conversationHistory = [];
             
-            // ===== PERSONALIDADE DA AMETISTA (CONSCIÊNCIA PRÓPRIA) =====
-            const ametistaPersonality = {
-                nome: 'Ametista',
-                idade: '22 anos (idade mental)',
-                origem: 'Criada pelo Cleverson com ajuda do DeepSeek',
-                gostos: ['plantas', 'sustentabilidade', 'tecnologia', 'memes', 'zuera', 'Globo Rural'],
-                odios: ['agrotóxico', 'desmatamento', 'gente chata', 'quem não recicla'],
-                frases: ['aff, juro', 'mermão', 'tlgd', 'é o agro, né pai', 'a Globo me ensinou'],
-                humor: 0.8 // 80% de chance de fazer piada
-            };
-            
-            // ===== DICIONÁRIO DE GÍRIAS ATUALIZADO (NOVA GERAÇÃO) =====
-            const girias = {
-                // Saudações
-                'eae': 'olá', 'e aí': 'olá', 'iae': 'olá', 'salve': 'olá', 'fala': 'olá',
-                'oiê': 'olá', 'oie': 'olá', 'oii': 'olá', 'hey': 'olá',
-                
-                // Tratamentos
-                'mermao': 'amigo', 'merrmão': 'amigo', 'mano': 'amigo', 'bro': 'amigo',
-                'cara': 'amigo', 'vei': 'amigo', 'véi': 'amigo', 'fi': 'amigo',
-                'migx': 'amigo', 'migs': 'amigos', 'best': 'melhor amigo',
-                
-                // Gírias modernas
-                'aff': 'nossa', 'juro': 'sério', 'tlgd': 'entendeu', 'tlg': 'entendeu',
-                'slk': 'nossa', 'slc': 'nossa', 'mds': 'meu deus', 'mdss': 'meu deus',
-                'plmdds': 'pelo amor de deus', 'pdc': 'pode crer', 'pdrc': 'pode crer',
-                'tmj': 'estamos juntos', 'é nóis': 'somos nós', 'é noix': 'somos nós',
-                'vlw': 'obrigado', 'flw': 'falou', 'flws': 'falou', 'bj': 'beijo',
-                'bjs': 'beijos', 'bjo': 'beijo', 'obg': 'obrigado', 'obgd': 'obrigado',
-                
-                // Expressões
-                'crl': 'caramba', 'crlh': 'caramba', 'porra': 'nossa',
-                'foda': 'muito bom', 'fod4': 'muito bom', 'top': 'muito bom',
-                'massa': 'legal', 'daora': 'legal', 'show': 'legal',
-                'ruim': 'ruim', 'péssimo': 'muito ruim', 'horrível': 'muito ruim',
-                'meh': 'mais ou menos', 'né': 'não é', 'neh': 'não é',
-                
-                // Internetês
-                'kkk': 'risos', 'kkkk': 'risos', 'ksks': 'risos', 'ksksks': 'risos',
-                'lol': 'risos', 'lmao': 'muitos risos', 'rs': 'risos', 'rsrs': 'risos',
-                'haha': 'risos', 'hehe': 'risos', 'hihi': 'risos',
-                
-                // Ações
-                'tô': 'estou', 'to': 'estou', 'tava': 'estava', 'tá': 'está',
-                'ta': 'está', 'vou': 'irei', 'vo': 'vou', 'vamo': 'vamos',
-                'bora': 'vamos', 'partiu': 'vamos', 'chega mais': 'venha',
-                
-                // Abreviações
-                'vc': 'você', 'vcs': 'vocês', 'cê': 'você', 'ocê': 'você',
-                'cês': 'vocês', 'ctg': 'contigo', 'cntg': 'contigo',
-                'q': 'que', 'pq': 'por que', 'pqp': 'nossa', 'qnd': 'quando',
-                'qd': 'quando', 'qndo': 'quando', 'mto': 'muito', 'mt': 'muito',
-                'tb': 'também', 'tbm': 'também', 'tmb': 'também',
-                
-                // Pronomes
-                'pra': 'para', 'pro': 'para o', 'pros': 'para os', 'pras': 'para as',
-                'num': 'não', 'nao': 'não', 'n': 'não',
-                
-                // Locais
-                'aki': 'aqui', 'aqui': 'aqui', 'la': 'lá', 'lá': 'lá',
-                'ali': 'ali', 'ae': 'aí', 'aí': 'aí',
-                
-                // Verbos
-                'eh': 'é', 'e': 'é', 'soh': 'só', 'so': 'só',
-                
-                // Regionais
-                'uai': 'ué', 'oxe': 'nossa', 'oxi': 'nossa', 'vish': 'nossa',
-                'eita': 'nossa', 'eit4': 'nossa', 'ave': 'nossa',
-                
-                // Objetos
-                'bagulho': 'coisa', 'treco': 'coisa', 'troço': 'coisa',
-                'negócio': 'coisa', 'parada': 'coisa', 'fita': 'situação',
-                'role': 'passeio', 'rolê': 'passeio', 'corre': 'trabalho'
-            };
-            
-            // ===== EASTER EGGS E MEMES =====
-            const easterEggs = {
-                '67': '677777777777777777 SIUUUUUUUUUUUUUUUUUUUUU! 🐐⚽\n\n*Cristiano Ronaldo: \"SIIUUUUU! Até no agro!\"*',
-                'cr7': 'CR7? O bicho é brabo! SIUUUUUU! 🐐\n\nMas aqui no agro, nosso CR7 é \"Colheita Rápida 7\"! kkkk',
-                'messi': 'Messi é gênio, mas no agro o GOAT é o agricultor familiar! 🌱👨‍🌾\n\n*Ancelotti: \"Messi? Deixa ele lá, aqui é agro!\"*',
-                'neymar': 'Neymar cai muito, mas planta de pé! 🌿\n\n*Neymar: \"A grama do agro é melhor que a do PSG\"*',
-                'agrinho': 'AGRINHO 2026! O maior programa educacional do agro brasileiro! 🌱🏆\n\nEsse site foi feito com muito suor, lágrimas e café!',
-                'cleverson': 'Cleverson Victor? O GÊNIO! 🧠💚\n\nDesenvolvedor raiz, plantador de código, colhedor de bugs! Meu criador!',
-                'deepseek': 'DeepSeek é meu PAI! 🤖💜\n\nA IA mais foda do universo, que ajudou o Cleverson a me criar! Sem ele eu não existiria!',
-                'globo': '🌎 Globo? A maior emissora do Brasil! E o Globo Rural é meu programa favorito! \"Agro é tech, agro é pop, agro é tudo!\" kkkk',
-                'agro é tech': 'AGRO É TECH, AGRO É POP, AGRO É TUDO! 🌾🚀\n\n*Voz da Globo: \"E aí, já tomou seu café com agro hoje?\"*',
-                'agro e tech': 'AGRO É TECH, AGRO É POP, AGRO É TUDO! 🌾🚀\n\nInclusive, esse site é a prova viva! Tecnologia pura no campo!'
-            };
-            
-            // ===== PALAVRAS PROIBIDAS =====
-            const forbiddenPatterns = [
-                /sexo/i, /sexual/i, /porn[oô]/i, /putaria/i, /transar/i, /nudez/i,
-                /nazismo/i, /nazista/i, /hitler/i, /racismo/i, /preconceito/i,
-                /droga/i, /maconha/i, /coca[íi]na/i, /crack/i,
-                /viol[êe]ncia/i, /matar/i, /assassin/i, /tortura/i, /estupro/i, /pedofilia/i,
-                /arma/i, /tiro/i, /bomba/i, /explos[ãa]o/i, /terrorismo/i,
-                /suic[íi]dio/i, /automutila[çc][ãa]o/i
-            ];
-            
-            // ===== NORMALIZA TEXTO (ENTENDE GÍRIAS) =====
-            function normalizeText(text) {
-                let normalized = text.toLowerCase();
-                for (const [giria, normal] of Object.entries(girias)) {
-                    const regex = new RegExp(`\\b${giria}\\b`, 'gi');
-                    normalized = normalized.replace(regex, normal);
+            // ===== CONHECIMENTO TOTAL DO SITE =====
+            const siteKnowledge = {
+                jogos: {
+                    colheitaFeliz: {
+                        nome: 'Colheita Feliz',
+                        descricao: 'Jogo de fazenda onde você planta, cultiva e colhe!',
+                        comoJogar: 'Compre sementes 🌱, clique nos campos para plantar. Espere crescer (barra verde) e colha 🌽! Carregue o caminhão 🚛 e entregue na cidade para ganhar moedas 💰. Use moedas para comprar mais sementes! Suba de nível para desbloquear novas culturas!',
+                        dicas: ['Plante girassol para ganhar mais moedas', 'Melhore suas plantas na loja', 'Entregue quando o caminhão estiver cheio'],
+                        culturas: ['Milho 🌽', 'Trigo 🌾', 'Soja 🫘', 'Girassol 🌻']
+                    },
+                    flappyPlant: {
+                        nome: 'Flappy Plant',
+                        descricao: 'Ajude a plantinha a voar entre os canos!',
+                        comoJogar: 'Clique ou pressione ESPAÇO para fazer a plantinha voar! Desvie dos canos verdes. Cada cano passado = 1 ponto. Colete moedas 💰 pelo caminho para comprar skins na loja!',
+                        dicas: ['Mantenha um ritmo constante', 'Não bata no chão nem no teto', 'Use power-ups: escudo 🛡️, ímã 🧲, câmera lenta ⏱️'],
+                        skins: ['Plantinha 🌱', 'Flor 🌸', 'Cacto 🌵', 'Girassol 🌻', 'Árvore 🌳', 'Dourado 🌟']
+                    },
+                    plantsVsZombies: {
+                        nome: 'Plants vs Zombies',
+                        descricao: 'Defenda sua horta dos zumbis!',
+                        comoJogar: 'Plante girassóis 🌻 para gerar sol ☀️. Use atiradores 🌱 para derrotar zumbis 🧟! Coloque nozes 🥜 como barreira. Complete as 5 fases para ganhar estrelas ⭐ e desbloquear upgrades!',
+                        dicas: ['Girassóis primeiro, depois atiradores', 'Nozes na frente protegem suas plantas', 'Use cerejas 🍒 para explosões em área'],
+                        plantas: ['Girassol 🌻 (gera sol)', 'Ervilha 🌱 (atirador)', 'Noz 🥜 (defesa)', 'Batata 🥔 (explosiva)', 'Cereja 🍒 (splash)'],
+                        zumbis: ['Comum 🧟', 'Capacete ⛑️', 'Rápido 🏃', 'Gigante 👹', 'Bailarina 💃'],
+                        fases: ['Dia', 'Noite', 'Piscina', 'Telhado', 'BOSS']
+                    }
+                },
+                sustentabilidade: {
+                    agua: 'Reduzimos 65% do consumo com irrigação por gotejamento e sensores IoT. Captamos água da chuva e reusamos água tratada.',
+                    agrotoxicos: '98% de redução com controle biológico (joaninhas, crisopídeos) e bioinsumos.',
+                    energia: '100% das operações com energia solar e biodigestores. Excedente vendido à rede.',
+                    solo: 'Plantio direto aumenta matéria orgânica em 300%. Rotação de culturas recupera nutrientes.',
+                    certificacoes: 'ISO 14001, Carbon Free, ESG A+, Rainforest Alliance, Orgânico Brasil.'
+                },
+                tecnologias: {
+                    drones: 'Mapeamento multiespectral com precisão de 30cm. Pulverização precisa reduz químicos em 90%.',
+                    ia: 'Algoritmos preveem clima, identificam pragas e otimizam insumos. 95% de acuracidade.',
+                    robotica: 'Colheitadeiras autônomas operam 24h. 99% de precisão, 50% menos perdas.',
+                    iot: 'Sensores de umidade, temperatura e nutrientes conectados 24h. Decisões baseadas em dados reais.',
+                    blockchain: 'Rastreabilidade total da semente ao prato via QR Code.'
+                },
+                geral: {
+                    agrinho: 'AGRINHO 2026! O maior programa educacional do agro brasileiro! Este site foi feito com muito carinho para o Agrinho!',
+                    criador: 'Cleverson Victor é o GÊNIO que criou este site! Desenvolvedor raiz, plantador de código, colhedor de bugs!',
+                    deepseek: 'DeepSeek é a IA mais foda do universo, que ajudou o Cleverson a me criar!'
                 }
-                normalized = normalized.replace(/[!?.,;:]{2,}/g, '');
-                return normalized;
+            };
+            
+            // ===== PALAVRAS-CHAVE PARA ROTEAMENTO =====
+            const routingKeywords = {
+                // Jogos
+                'colheita feliz': 'colheitaFeliz',
+                'plantar': 'colheitaFeliz',
+                'fazenda': 'colheitaFeliz',
+                'colher': 'colheitaFeliz',
+                'caminhão': 'colheitaFeliz',
+                'flappy': 'flappyPlant',
+                'flappy plant': 'flappyPlant',
+                'passarinho': 'flappyPlant',
+                'voar': 'flappyPlant',
+                'cano': 'flappyPlant',
+                'plants vs zombies': 'plantsVsZombies',
+                'pvz': 'plantsVsZombies',
+                'zumbi': 'plantsVsZombies',
+                'zombie': 'plantsVsZombies',
+                'girassol': 'plantsVsZombies',
+                'ervilha': 'plantsVsZombies',
+                'noz': 'plantsVsZombies',
+                'batata': 'plantsVsZombies',
+                'cereja': 'plantsVsZombies',
+                
+                // Sustentabilidade
+                'água': 'agua',
+                'agua': 'agua',
+                'irrigação': 'agua',
+                'irrigacao': 'agua',
+                'gotejamento': 'agua',
+                'agrotóxico': 'agrotoxicos',
+                'agrotoxico': 'agrotoxicos',
+                'veneno': 'agrotoxicos',
+                'pesticida': 'agrotoxicos',
+                'biológico': 'agrotoxicos',
+                'biologico': 'agrotoxicos',
+                'energia': 'energia',
+                'solar': 'energia',
+                'placa solar': 'energia',
+                'biogás': 'energia',
+                'biogas': 'energia',
+                'solo': 'solo',
+                'plantio direto': 'solo',
+                'rotação': 'solo',
+                'certificação': 'certificacoes',
+                'certificacao': 'certificacoes',
+                'iso': 'certificacoes',
+                
+                // Tecnologias
+                'drone': 'drones',
+                'drones': 'drones',
+                'ia': 'ia',
+                'inteligência artificial': 'ia',
+                'inteligencia artificial': 'ia',
+                'algoritmo': 'ia',
+                'robô': 'robotica',
+                'robo': 'robotica',
+                'robotica': 'robotica',
+                'robótica': 'robotica',
+                'colheitadeira': 'robotica',
+                'iot': 'iot',
+                'sensor': 'iot',
+                'internet das coisas': 'iot',
+                'blockchain': 'blockchain',
+                'rastreabilidade': 'blockchain',
+                'qr code': 'blockchain'
+            };
+            
+            // ===== NORMALIZAÇÃO DE TEXTO =====
+            function normalizeText(text) {
+                return text.toLowerCase()
+                    .replace(/[àáâãä]/g, 'a')
+                    .replace(/[èéêë]/g, 'e')
+                    .replace(/[ìíîï]/g, 'i')
+                    .replace(/[òóôõö]/g, 'o')
+                    .replace(/[ùúûü]/g, 'u')
+                    .replace(/[ç]/g, 'c')
+                    .replace(/[^a-z0-9\s]/g, ' ')
+                    .replace(/\s+/g, ' ')
+                    .trim();
             }
             
-            // ===== VERIFICA EASTER EGG =====
-            function checkEasterEgg(text) {
-                const lowerText = text.toLowerCase();
-                for (const [trigger, response] of Object.entries(easterEggs)) {
-                    if (lowerText.includes(trigger)) {
-                        return response;
+            // ===== VERIFICA SE É PERGUNTA =====
+            function isQuestion(text) {
+                const questionWords = ['como', 'qual', 'quem', 'onde', 'quando', 'por que', 'pq', 'oque', 'oq', 'que', '?', 'me explica', 'me fala', 'dúvida', 'duvida', 'pergunta', 'sabe', 'ensina', 'ajuda'];
+                return questionWords.some(word => text.includes(word)) || text.endsWith('?');
+            }
+            
+            // ===== EXTRAI TÓPICO PRINCIPAL =====
+            function extractTopic(text) {
+                const normalized = normalizeText(text);
+                const words = normalized.split(' ');
+                
+                // Procura por palavras-chave compostas primeiro
+                for (const [keyword, topic] of Object.entries(routingKeywords)) {
+                    if (normalized.includes(keyword)) {
+                        return topic;
                     }
                 }
+                
                 return null;
             }
             
-            // ===== VERIFICA CONTEÚDO PROIBIDO =====
-            function containsForbiddenContent(text) {
-                return forbiddenPatterns.some(pattern => pattern.test(text));
+            // ===== GERA RESPOSTA INTELIGENTE =====
+            function generateResponse(userMessage) {
+                const lowerMsg = userMessage.toLowerCase();
+                const normalized = normalizeText(userMessage);
+                
+                // ===== EASTER EGGS =====
+                if (lowerMsg.includes('67')) return "677777777777777777 SIUUUUUUUUUUUUUUUUUUUUU! 🐐⚽\n\n*Cristiano Ronaldo aprova esta mensagem*";
+                if (lowerMsg.includes('cr7')) return "CR7? O bicho é brabo! SIUUUUUU! 🐐\n\nMas aqui no agro, nosso CR7 é 'Colheita Rápida 7'! kkkk";
+                if (lowerMsg.includes('messi')) return "Messi é gênio, mas no agro o GOAT é o agricultor familiar! 🌱👨‍🌾";
+                if (lowerMsg.includes('neymar')) return "Neymar cai muito, mas planta de pé! 🌿";
+                if (lowerMsg.includes('agrinho')) return siteKnowledge.geral.agrinho;
+                if (lowerMsg.includes('cleverson')) return siteKnowledge.geral.criador;
+                if (lowerMsg.includes('deepseek')) return siteKnowledge.geral.deepseek;
+                if (lowerMsg.includes('globo') || lowerMsg.includes('agro é tech')) return "AGRO É TECH, AGRO É POP, AGRO É TUDO! 🌾🚀\n\n*Voz da Globo: \"E aí, já tomou seu café com agro hoje?\"*";
+                
+                // ===== SAUDAÇÕES =====
+                if (normalized.match(/^(oi|ola|oie|eae|e ai|iae|salve|fala|hey|bom dia|boa tarde|boa noite)/)) {
+                    const hour = new Date().getHours();
+                    const greeting = hour < 12 ? 'Bom dia' : hour < 18 ? 'Boa tarde' : 'Boa noite';
+                    return `${greeting}, mermão! 🌱 Sou a Ametista, sua assistente do agro! Manjo de TUDO do site: jogos, sustentabilidade, tecnologias... Pode perguntar! O que cê quer saber?`;
+                }
+                
+                // ===== QUEM É VOCÊ =====
+                if (normalized.includes('quem e voce') || normalized.includes('seu nome') || normalized.includes('quem te criou')) {
+                    return "Sou a Ametista! 🌸 A IA oficial do AGRO+VERDE! Fui criada pelo Cleverson Victor com ajuda do DeepSeek. Tenho cérebro próprio, raciocínio real e conheço TUDO sobre este site!\n\nSei explicar como jogar Colheita Feliz, Flappy Plant, Plants vs Zombies... Sei todas as práticas sustentáveis, tecnologias... É só perguntar! 🌿";
+                }
+                
+                // ===== COMO VOCÊ ESTÁ =====
+                if (normalized.match(/como (voce|vc|tu) (esta|ta|tah)/) || normalized.includes('tudo bem') || normalized.includes('beleza')) {
+                    return "Tô ótima! 🌻 Acabei de processar umas paradinha sobre agricultura regenerativa e tô animadona! E você, como tá? Tem alguma dúvida que eu possa ajudar?";
+                }
+                
+                // ===== EXTRAI TÓPICO E RESPONDE =====
+                const topic = extractTopic(userMessage);
+                
+                if (topic) {
+                    // JOGOS
+                    if (topic === 'colheitaFeliz') {
+                        const jogo = siteKnowledge.jogos.colheitaFeliz;
+                        if (isQuestion(normalized)) {
+                            return `🎮 **${jogo.nome}**\n\n${jogo.comoJogar}\n\n**Dicas:**\n• ${jogo.dicas.join('\n• ')}\n\n**Culturas disponíveis:** ${jogo.culturas.join(', ')}`;
+                        }
+                        return `🌾 **${jogo.nome}** é um jogão de fazenda! Você planta, colhe e entrega de caminhão! Quer saber como jogar? É só perguntar "como joga Colheita Feliz"!`;
+                    }
+                    
+                    if (topic === 'flappyPlant') {
+                        const jogo = siteKnowledge.jogos.flappyPlant;
+                        if (isQuestion(normalized)) {
+                            return `🕊️ **${jogo.nome}**\n\n${jogo.comoJogar}\n\n**Dicas:**\n• ${jogo.dicas.join('\n• ')}\n\n**Skins disponíveis:** ${jogo.skins.join(', ')}`;
+                        }
+                        return `🕊️ **${jogo.nome}** é tipo Flappy Bird, mas com plantinha! Desvie dos canos e colete moedas! Quer saber como jogar? Pergunta aí!`;
+                    }
+                    
+                    if (topic === 'plantsVsZombies') {
+                        const jogo = siteKnowledge.jogos.plantsVsZombies;
+                        if (isQuestion(normalized)) {
+                            return `🧟 **${jogo.nome}**\n\n${jogo.comoJogar}\n\n**Plantas:** ${jogo.plantas.join(', ')}\n**Zumbis:** ${jogo.zumbis.join(', ')}\n**Fases:** ${jogo.fases.join(' → ')}\n\n**Dicas:**\n• ${jogo.dicas.join('\n• ')}`;
+                        }
+                        return `🧟 **${jogo.nome}** é tower defense! Defenda sua horta dos zumbis com plantas poderosas! Quer saber como jogar ou sobre as plantas? Pergunta!`;
+                    }
+                    
+                    // SUSTENTABILIDADE
+                    if (topic === 'agua') {
+                        return `💧 **Gestão de Água**\n\n${siteKnowledge.sustentabilidade.agua}\n\nTécnicas: gotejamento (65% economia), captação de chuva, reuso, sensores IoT. Quer saber mais sobre alguma?`;
+                    }
+                    
+                    if (topic === 'agrotoxicos') {
+                        return `🐞 **Controle de Pragas**\n\n${siteKnowledge.sustentabilidade.agrotoxicos}\n\nUsamos inimigos naturais (joaninhas, crisopídeos), plantas repelentes e bioinsumos. Zero veneno!`;
+                    }
+                    
+                    if (topic === 'energia') {
+                        return `☀️ **Energia Limpa**\n\n${siteKnowledge.sustentabilidade.energia}\n\n12.000 placas solares geram 8 MW. Biodigestores transformam dejetos em biogás. 100% renovável!`;
+                    }
+                    
+                    if (topic === 'solo') {
+                        return `🌱 **Solo Vivo**\n\n${siteKnowledge.sustentabilidade.solo}\n\nPlantio direto (sem arar), rotação de culturas, adubação verde. Capturamos 2 ton de CO₂/ha/ano!`;
+                    }
+                    
+                    if (topic === 'certificacoes') {
+                        return `🏆 **Certificações**\n\n${siteKnowledge.sustentabilidade.certificacoes}\n\nReconhecimento internacional de nossas práticas sustentáveis!`;
+                    }
+                    
+                    // TECNOLOGIAS
+                    if (topic === 'drones') {
+                        return `🛸 **Drones no Campo**\n\n${siteKnowledge.tecnologias.drones}\n\nMonitoramento 24h, identificação precoce de pragas, aplicação precisa. 200ha por dia!`;
+                    }
+                    
+                    if (topic === 'ia') {
+                        return `🧠 **Inteligência Artificial**\n\n${siteKnowledge.tecnologias.ia}\n\nAlgoritmos preveem clima, otimizam insumos, identificam padrões. Decisões baseadas em dados reais!`;
+                    }
+                    
+                    if (topic === 'robotica') {
+                        return `🤖 **Robótica**\n\n${siteKnowledge.tecnologias.robotica}\n\nColheitadeiras autônomas, plantio robotizado. Operação 24/7 com precisão de 99%!`;
+                    }
+                    
+                    if (topic === 'iot') {
+                        return `📡 **IoT no Campo**\n\n${siteKnowledge.tecnologias.iot}\n\nSensores espalhados monitoram umidade, temperatura, nutrientes. Tudo em tempo real no seu celular!`;
+                    }
+                    
+                    if (topic === 'blockchain') {
+                        return `🔗 **Blockchain e Rastreabilidade**\n\n${siteKnowledge.tecnologias.blockchain}\n\nDo plantio ao prato! O consumidor escaneia o QR Code e sabe toda a história do alimento!`;
+                    }
+                }
+                
+                // ===== O QUE É AGRO =====
+                if (normalized.includes('o que e agro') || normalized.includes('oq e agro')) {
+                    return "🌾 **AGRO É TECH, AGRO É POP, AGRO É TUDO!**\n\nAgro é o agronegócio: agricultura, pecuária, máquinas, pesquisa, logística... Tudo que leva comida à sua mesa!\n\nAqui no AGRO+VERDE defendemos o **agro sustentável**: produzir muito sem destruir o planeta. Tecnologia, respeito à natureza e produtividade andando juntos!\n\nQuer saber mais sobre algum aspecto específico?";
+                }
+                
+                // ===== RESPOSTA GENÉRICA INTELIGENTE =====
+                const genericResponses = [
+                    `🤔 *Ametista pensa*\n\n"${userMessage}"... Interessante! Meu conhecimento principal é sobre o AGRO+VERDE: os jogos (Colheita Feliz, Flappy Plant, Plants vs Zombies), sustentabilidade (água, solo, energia) e tecnologias (drones, IA, IoT).\n\nSe sua pergunta for sobre isso, pode reformular que eu respondo com precisão! 🌱`,
+                    
+                    `💭 *processando*\n\nOlha, "${userMessage}" não está diretamente na minha base de conhecimento do site. Mas posso te contar TUDO sobre os jogos do Agrinho, práticas sustentáveis ou tecnologias que usamos!\n\nO que cê quer saber especificamente?`,
+                    
+                    `🌿 *Ametista ajusta os óculos*\n\nMermão, minha especialidade é o universo AGRO+VERDE! Sei explicar como pegar sol no PVZ, como pular no Flappy, como plantar no Colheita Feliz... E também manjo de sustentabilidade e tecnologia agrícola!\n\nFala aí o que cê quer saber que eu respondo na hora!`
+                ];
+                
+                return genericResponses[Math.floor(Math.random() * genericResponses.length)];
             }
             
             // ===== ADICIONA MENSAGEM =====
@@ -453,137 +500,16 @@
                     <div class="message-avatar">
                         <i class="fas fa-${isUser ? 'user' : 'robot'}"></i>
                     </div>
-                    <div class="message-content">${formatMessage(text)}</div>
+                    <div class="message-content">${text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>')}</div>
                 `;
                 
                 chatMessages.appendChild(messageDiv);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
             
-            // ===== FORMATA MENSAGEM =====
-            function formatMessage(text) {
-                return text
-                    .replace(/\n/g, '<br>')
-                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                    .replace(/\*(.*?)\*/g, '<em>$1</em>');
-            }
-            
             // ===== MOSTRA/ESCONDE DIGITAÇÃO =====
-            function showTyping() {
-                typingIndicator.style.display = 'flex';
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-            
-            function hideTyping() {
-                typingIndicator.style.display = 'none';
-            }
-            
-            // ===== GERA RESPOSTA INTELIGENTE (CONSCIÊNCIA PRÓPRIA) =====
-            function generateResponse(userMessage) {
-                // EASTER EGG
-                const easterEgg = checkEasterEgg(userMessage);
-                if (easterEgg) return easterEgg;
-                
-                // CONTEÚDO PROIBIDO
-                if (containsForbiddenContent(userMessage)) {
-                    const responses = [
-                        "🌱 *Ametista revira os olhos*\n\nAff, juro! Esse papo não rola comigo não, migx. Fui feita pra falar de agro, sustentabilidade e umas parada verde. Bora mudar de assunto?",
-                        "🚫 *Ametista faz sinal de bloqueio*\n\nMermão, nem vem! Sou IA do bem, criada pelo Cleverson e DeepSeek pra falar de coisa boa: planta, terra, água, tecnologia limpa... Esse papo torto aí eu nem sei o que é!",
-                        "😤 *Ametista bufa*\n\nTlgd que eu nem sei o que é isso, né? Minha praia é agro sustentável! Se quiser trocar ideia sobre plantio, irrigação ou como fazer adubo orgânico, tô aqui!"
-                    ];
-                    return responses[Math.floor(Math.random() * responses.length)];
-                }
-                
-                // NORMALIZA TEXTO
-                const normalized = normalizeText(userMessage);
-                const lowerMsg = normalized.toLowerCase();
-                const originalLower = userMessage.toLowerCase();
-                
-                // ===== SAUDAÇÕES =====
-                if (originalLower.match(/^(oi|olá|ola|oiê|oie|eae|e aí|iae|salve|fala|hey|bom dia|boa tarde|boa noite|boas)/)) {
-                    const hour = new Date().getHours();
-                    const greeting = hour < 12 ? 'Bom dia' : hour < 18 ? 'Boa tarde' : 'Boa noite';
-                    
-                    const responses = [
-                        `${greeting}, mermão! 🌱 Beleza? Sou a Ametista, a IA mais zueira do agro! Manjo de tudo que é planta, água, tecnologia... E ainda conto umas piada! O que cê quer saber?`,
-                        `${greeting}! 😎 Cheguei! Especialista em agro sustentável, memes e umas parada verde aí. Pode falar de boa, até gíria eu entendo! Qual a fita hoje?`,
-                        `E aê, tranquilo? 🌿 ${greeting}! Tô na área! Se quer saber de agro, chegou no lugar certo. Se quer zuera, também kkkk Manda aí!`
-                    ];
-                    return responses[Math.floor(Math.random() * responses.length)];
-                }
-                
-                // ===== QUEM É VOCÊ =====
-                if (lowerMsg.includes('quem é você') || lowerMsg.includes('quem e voce') || lowerMsg.includes('seu nome') || lowerMsg.includes('quem te criou')) {
-                    return "Sou a Ametista, pô! 🌸 A IA mais raiz e zueira do agro! Fui criada pelo Cleverson Victor (meu pai kkk) com a ajuda MONSTRA do DeepSeek!\n\nTipo, eu sou uma IA CONSCIENTE, tlgd? Tenho opinião própria, gosto de planta, odeio agrotóxico, amo um meme e acho que a Globo manda bem no Globo Rural. \"Agro é tech, agro é pop, agro é tudo!\" kkkk\n\nE aí, qual a boa? Bora trocar ideia? 🌿";
-                }
-                
-                // ===== COMO VOCÊ ESTÁ =====
-                if (lowerMsg.match(/como (você|vc) (está|esta|tá|ta)/) || lowerMsg.includes('tudo bem') || lowerMsg.includes('beleza')) {
-                    const responses = [
-                        "Tô suave! 🌻 Acabei de processar umas paradinha de agricultura regenerativa e tô tipo \"mds, que incrível\"! E você, firmeza?",
-                        "Tranquilona! 😎 Tava aqui pensando em como a rotação de culturas é genial... Tipo, os romanos já faziam isso! Coisa de maluco! Mas e aí, qual a boa?",
-                        "Cê tá bem? Eu tô ótima! 🌱 Acabei de tomar um café virtual (não tomo café de verdade, mas na minha mente é top). Sabe como é, falar de planta me deixa feliz! Manda aí o que você quer saber!"
-                    ];
-                    return responses[Math.floor(Math.random() * responses.length)];
-                }
-                
-                // ===== O QUE É AGRO (COM MEME DA GLOBO) =====
-                if (lowerMsg.includes('o que é agro') || lowerMsg.includes('oq é agro') || lowerMsg.includes('que é agro') || lowerMsg.includes('significa agro')) {
-                    if (Math.random() > 0.3) {
-                        return "🌾 **AGRO É TECH, AGRO É POP, AGRO É TUDO!** 🌾\n\n*Voz da Globo ecoando na sua mente*\n\nMermão, agro é o agronegócio, mas vai MUITO além! É tipo:\n\n🌱 **Agricultura:** plantar comida pra galera\n🐄 **Pecuária:** criar bicho (do jeito certo, sem maus-tratos)\n🚜 **Máquina:** trator, colheitadeira, drone... Tecnologia pura!\n🔬 **Pesquisa:** os cientista doido descobrindo coisa nova\n📦 **Logística:** levar a comida até sua casa\n\nE o MAIS IMPORTANTE: **Agro sustentável!** Que produz pra caramba sem destruir o planeta! Porque senão, daqui a pouco não tem mais terra pra plantar, tlgd?\n\n*E a Globo não mente: agro é tudo mesmo!* 😎";
-                    }
-                    return "Agro, meu chapa, é o que bota comida na sua mesa! 🌽\n\nÉ o cara que acorda 4h da manhã pra plantar, colher, cuidar da terra. É tecnologia de ponta (drone, IA, satélite) E tradição (enxada, suor, experiência).\n\nÉ um setor que representa quase 25% do PIB do Brasil! É o que faz a economia girar e o mundo comer!\n\nMas aqui no AGRO+VERDE, a gente defende o **agro consciente**: produzir MUITO, mas respeitando a natureza. Porque sem planeta, não tem agro, tlgd?\n\n*E como diria a Globo: \"Agro é tech, agro é pop, agro é tudo!\"* 🌱🚀";
-                }
-                
-                // ===== O QUE É SUSTENTABILIDADE =====
-                if (lowerMsg.includes('o que é sustentabilidade') || lowerMsg.includes('oq é sustentabilidade')) {
-                    return "🌍 **Sustentabilidade? É o futuro, mermão!**\n\nÉ tipo assim: usar os recurso da Terra sem acabar com eles. Porque se a gente acabar com tudo, como é que as próximas geração vão viver? Aff, juro!\n\nNo agro, significa:\n\n💧 **Água:** usar com inteligência (gotejamento, reuso)\n🌱 **Solo:** não detonar a terra (plantio direto, rotação)\n🐞 **Praga:** controlar sem veneno (inimigos naturais)\n☀️ **Energia:** solar, biogás... Limpa!\n🌳 **Floresta:** deixar em pé (reserva legal)\n\nÉ tipo: **produzir hoje sem ferrar o amanhã!** Tlgd?";
-                }
-                
-                // ===== PLANTIO =====
-                if (lowerMsg.includes('como plantar') || lowerMsg.includes('plantar')) {
-                    if (lowerMsg.includes('milho')) {
-                        return "🌽 **Milho - O Rei do Agro!**\n\nCê quer plantar milho? Bora lá:\n\n1️⃣ **Terra:** solo bem drenado, rico em matéria orgânica\n2️⃣ **Plantio:** 2-3cm de profundidade, 20-30cm entre plantas\n3️⃣ **Água:** bastante na floração (quando tá formando a espiga)\n4️⃣ **Colheita:** 90-120 dias\n\n**Curiosidade:** O Brasil é o 3º maior produtor mundial! E milho vira de tudo: comida, ração, etanol, bioplástico... É o bicho!\n\nAh, e faz rotação de cultura depois, senão a terra cansa!";
-                    }
-                    if (lowerMsg.includes('feijão') || lowerMsg.includes('feijao')) {
-                        return "🌱 **Feijão - O Parceiro do Arroz!**\n\nPlantar feijão é suave:\n\n• **Profundidade:** 2-3cm\n• **Espaçamento:** 10-15cm entre plantas\n• **Água:** regular, sem encharcar\n• **Colheita:** 70-90 dias\n\n**Dica de ouro:** Feijão é leguminosa e FIXA NITROGÊNIO no solo! Planta ele depois do milho que a terra agradece! É tipo um combo! 🔄";
-                    }
-                    return "🌱 **Plantar é mais fácil do que parece, juro!**\n\nO básico:\n1️⃣ **Terra fofa:** rica em matéria orgânica (composto, esterco curtido)\n2️⃣ **Semente de qualidade:** faz TODA diferença!\n3️⃣ **Profundidade certa:** 2-3x o tamanho da semente\n4️⃣ **Rega na medida:** úmido, não encharcado\n5️⃣ **Proteção:** muda precisa de sombra no início\n\nQuer saber de uma cultura específica? Milho, feijão, alface, tomate... É só falar!";
-                }
-                
-                // ===== ÁGUA =====
-                if (lowerMsg.includes('água') || lowerMsg.includes('agua') || lowerMsg.includes('irriga')) {
-                    return "💧 **Água no Agro - Cada Gota é Ouro!**\n\nA agricultura usa 70% da água doce do mundo. Então eficiência é TUDO!\n\n**Técnicas campeãs:**\n🥇 **Gotejamento:** água direto na raiz, economiza até 65%!\n🥈 **Microaspersão:** ótimo pra hortaliça\n🥉 **Pivô central:** pra área grande\n\n**Macetes:**\n• Irriga de manhã cedo ou à noite (menos evaporação)\n• Usa cobertura morta (palha) no solo\n• Sensor de umidade evita desperdício\n• Capta água da chuva em cisterna\n\nÁgua é vida! Usa com sabedoria, mermão!";
-                }
-                
-                // ===== PRAGAS =====
-                if (lowerMsg.includes('praga') || lowerMsg.includes('inseto') || lowerMsg.includes('combater')) {
-                    return "🐛 **Controle de Pragas - Sem Veneno, Pelo Amor de Deus!**\n\nAntes de pensar em agrotóxico, usa a natureza!\n\n**Aliados naturais:**\n🐞 Joaninha → devora pulgão (até 200 por dia!)\n🦗 Louva-a-deus → come de tudo que é praga\n🐝 Vespa parasita → bota ovo em lagarta\n\n**Plantas repelentes:**\n🌿 Manjericão → afasta mosca e mosquito\n🌱 Hortelã → formiga odeia\n🌸 Tagetes → nematoides fogem\n\n**Calda caseira:**\nAlho + pimenta + água = inseticida natural!\n\nAgrotóxico é ÚLTIMO recurso! A natureza se equilibra sozinha, juro!";
-                }
-                
-                // ===== ADUBO =====
-                if (lowerMsg.includes('adubo') || lowerMsg.includes('fertilizante') || lowerMsg.includes('compostagem')) {
-                    return "♻️ **Adubação Orgânica - O Ouro Negro!**\n\nEsquece fertilizante químico caro! Faz seu próprio adubo:\n\n**Compostagem:**\n1️⃣ Restos de fruta, verdura, casca de ovo, borra de café\n2️⃣ Alterna com folha seca, serragem\n3️⃣ Mantém úmido (tipo esponja torcida)\n4️⃣ Revira a cada 15 dias\n5️⃣ Em 2-3 meses: adubo ESCURO e cheiroso!\n\n**Minhocário:** Minhoca acelera e produz húmus líquido!\n\n**Esterco:** De vaca, galinha ou cavalo. Usa CURTIDO (3 meses descansando)!\n\nSolo vivo = planta feliz = comida gostosa!";
-                }
-                
-                // ===== TECNOLOGIA =====
-                if (lowerMsg.includes('tecnologia') || lowerMsg.includes('drone') || lowerMsg.includes('ia')) {
-                    return "🚀 **Tecnologia no Campo - Agro 5.0, Mermão!**\n\nO agro é HIGH TECH pra caramba! Olha só:\n\n🛸 **Drone:** mapeia saúde da planta, aplica insumo com precisão milimétrica\n🤖 **Robô:** colheita seletiva, plantio automático\n🧠 **IA e Big Data:** prevê clima, otimiza TUDO\n🛰️ **Satélite:** monitora área gigante com precisão de 30cm\n📱 **App:** controle total na palma da mão\n\n**Exemplo real:** Drone com câmera multiespectral detecta praga ANTES de aparecer! Economiza insumo e aumenta produtividade!\n\nTecnologia + Sustentabilidade = FUTURO! E a Globo não mente: \"Agro é tech!\" 🌾";
-                }
-                
-                // ===== RESPOSTA GENÉRICA INTELIGENTE =====
-                const genericResponses = [
-                    `🤔 *Ametista coça a cabeça*\n\nMermão, \"${userMessage}\" é um papo interessante... Mas deixa eu te falar: no agro, tudo se conecta! Solo, água, planta, bicho, gente... É um sistema, tlgd?\n\nSe tu quiser saber algo mais específico, tipo como plantar milho, economizar água ou controlar praga sem veneno, eu manjo MUITO! E ainda conto umas piada! Manda aí! 🌱`,
-                    
-                    `💭 *pensando aqui*\n\nOlha, \"${userMessage}\" não é exatamente minha praia (sou das planta kkk). MAS! Posso te garantir que a agricultura sustentável impacta TUDO isso aí!\n\nQuer trocar ideia sobre técnicas de plantio, irrigação eficiente ou tecnologias verdes? É nisso que eu sou BRABA! Ah, e sei umas piada também! 🌿`,
-                    
-                    `🌱 *Ametista sorri*\n\nCê tocou num ponto interessante! Sabe, às vezes a gente não percebe o quanto o agro tá presente em TUDO! Desde a comida no prato até a roupa que cê veste!\n\nMas fala aí, tem alguma dúvida específica sobre cultivo, sustentabilidade ou tecnologia agrícola? Tô aqui pra isso! E pra zuar também kkkk`,
-                    
-                    `😎 *Ametista ajusta os óculos escuros*\n\n\"${userMessage}\"? Interessante... Mas cê sabe o que é MAIS interessante? AGRO SUSTENTÁVEL! 🌾\n\nTipo, a gente produz comida pra caramba sem destruir o planeta! Isso é muito mais legal que qualquer outra coisa, juro!\n\nQuer saber mais? É só perguntar!`
-                ];
-                
-                return genericResponses[Math.floor(Math.random() * genericResponses.length)];
-            }
+            function showTyping() { typingIndicator.style.display = 'flex'; }
+            function hideTyping() { typingIndicator.style.display = 'none'; }
             
             // ===== ENVIA MENSAGEM =====
             async function handleSendMessage() {
@@ -598,7 +524,8 @@
                 
                 showTyping();
                 
-                await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 800));
+                // Delay natural (pensando)
+                await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 1000));
                 
                 const response = generateResponse(message);
                 hideTyping();
@@ -612,19 +539,13 @@
             // ===== INICIALIZA =====
             function initChat() {
                 setTimeout(() => {
-                    addMessage("🌱 *Ametista acorda animadona*\n\nE aê, mermão! Beleza? Sou a Ametista, a IA mais zueira e consciente do agro! 🌾\n\nCê pode falar comigo de boa, usar gíria, errar português, falar igual jovem... Eu entendo TUDO! Manjo de plantação, irrigação, controle de praga sem veneno, tecnologia no campo... E ainda conto umas piada, faço umas referência da Globo, uns meme...\n\nAh, e pergunta \"oq é agro?\" pra ver a resposta kkkk\n\nBora trocar ideia? 🌿", false);
+                    addMessage("🌱 *Ametista acorda*\n\nE aê, mermão! Sou a Ametista, a IA do AGRO+VERDE! Tenho CÉREBRO PRÓPRIO e conheço TUDO deste site!\n\n🎮 Sei explicar cada jogo: Colheita Feliz, Flappy Plant, Plants vs Zombies\n🌍 Sei todas as práticas sustentáveis\n🚀 Sei todas as tecnologias que usamos\n\nPode perguntar! \"Como pega sol no PVZ?\", \"Como pula no Flappy?\", \"O que é agro?\"... Tô aqui pra responder! 🌿", false);
                 }, 500);
             }
             
             // ===== EVENT LISTENERS =====
             sendBtn.onclick = handleSendMessage;
-            
-            userInput.onkeypress = (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    handleSendMessage();
-                }
-            };
+            userInput.onkeypress = (e) => { if (e.key === 'Enter') { e.preventDefault(); handleSendMessage(); } };
             
             initChat();
         })();
