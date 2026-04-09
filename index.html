@@ -1,1 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Agro Forte · Futuro Sustentável</title>
+    <!-- Font Awesome 6 (gratuito) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- AOS (Animate On Scroll) CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- CSS Principal -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Loader inicial (animação sutil) -->
+    <div class="page-loader">
+        <div class="loader-leaf">
+            <i class="fas fa-leaf"></i>
+        </div>
+    </div>
 
+    <!-- Navbar fixa e responsiva -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <i class="fas fa-tractor"></i>
+                <span>Agro<span class="text-accent">+</span>Verde</span>
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="#home" class="nav-link active">Início</a></li>
+                <li class="nav-item"><a href="#sustentabilidade" class="nav-link">Sustentabilidade</a></li>
+                <li class="nav-item"><a href="#tecnologias" class="nav-link">Tecnologias</a></li>
+                <li class="nav-item"><a href="#equilibrio" class="nav-link">Equilíbrio</a></li>
+                <li class="nav-item"><a href="#contato" class="nav-link">Contato</a></li>
+            </ul>
+            <div class="nav-toggle" id="navToggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo principal -->
+    <main>
+        <!-- Hero Section (Home) -->
+        <section id="home" class="hero">
+            <div class="hero-overlay"></div>
+            <!-- Vídeo de fundo (placeholder fallback com imagem) -->
+            <div class="hero-bg">
+                <img src="https://images.pexels.com/photos/2477632/pexels-photo-2477632.jpeg?auto=compress&cs=tinysrgb&w=1920" alt="Campo sustentável" class="hero-img">
+            </div>
+            <div class="hero-content" data-aos="fade-up" data-aos-duration="1200">
+                <span class="hero-badge"><i class="fas fa-seedling"></i> Futuro Sustentável</span>
+                <h1 class="hero-title">Agro forte, <br><span class="text-gradient">futuro verde</span></h1>
+                <p class="hero-description">Equilíbrio inteligente entre produtividade máxima e respeito ao meio ambiente. Cultivamos alimentos, preservamos o planeta.</p>
+                <div class="hero-buttons">
+                    <a href="#sustentabilidade" class="btn btn-primary">Descubra como <i class="fas fa-arrow-right"></i></a>
+                    <a href="#contato" class="btn btn-outline">Fale conosco</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="45">0</span>
+                        <span class="stat-label">% menos emissões</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="98">0</span>
+                        <span class="stat-label">% de áreas preservadas</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="100">0</span>
+                        <span class="stat-label">% energia renovável</span>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <span>Role para descobrir</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <!-- Sustentabilidade Section -->
+        <section id="sustentabilidade" class="section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-tag"><i class="fas fa-globe-americas"></i> Nosso compromisso</span>
+                    <h2 class="section-title">Produzir sem <span class="text-accent">destruir</span></h2>
+                    <p class="section-subtitle">Integramos práticas agrícolas modernas com conservação ambiental. O resultado? Alimentos de qualidade e ecossistemas vivos.</p>
+                </div>
+                <div class="cards-grid">
+                    <div class="card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="card-icon">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <h3>Água inteligente</h3>
+                        <p>Irrigação por gotejamento e reuso de água reduzem o consumo em até 60% sem comprometer a colheita.</p>
+                        <a href="#" class="card-link">Saiba mais <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="card-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h3>Solo vivo</h3>
+                        <p>Plantio direto, rotação de culturas e adubação verde mantêm a fertilidade e capturam carbono da atmosfera.</p>
+                        <a href="#" class="card-link">Saiba mais <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="card-icon">
+                            <i class="fas fa-tree"></i>
+                        </div>
+                        <h3>Integração Lavoura-Floresta</h3>
+                        <p>Sistemas agroflorestais conciliam árvores nativas com culturas agrícolas, gerando renda e biodiversidade.</p>
+                        <a href="#" class="card-link">Saiba mais <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tecnologias Section (com imagem lateral) -->
+        <section id="tecnologias" class="section section-alt">
+            <div class="container">
+                <div class="split-layout">
+                    <div class="split-content" data-aos="fade-right">
+                        <span class="section-tag"><i class="fas fa-microchip"></i> Inovação no campo</span>
+                        <h2 class="section-title">Tecnologia que <span class="text-accent">protege</span></h2>
+                        <p class="section-subtitle">Sensores, drones e inteligência artificial monitoram cada metro quadrado. Decisões baseadas em dados reduzem insumos e aumentam a eficiência.</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> Agricultura de precisão com GPS</li>
+                            <li><i class="fas fa-check-circle"></i> Bioinsumos e controle biológico</li>
+                            <li><i class="fas fa-check-circle"></i> Energia solar para bombeamento</li>
+                            <li><i class="fas fa-check-circle"></i> Rastreabilidade da semente ao prato</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary btn-lg">Conheça nossos projetos <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="split-image" data-aos="fade-left" data-aos-delay="200">
+                        <div class="image-wrapper">
+                            <img src="https://images.pexels.com/photos/5217916/pexels-photo-5217916.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Drone na agricultura">
+                            <div class="floating-badge">
+                                <i class="fas fa-drone"></i> +40% eficiência
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Equilíbrio (Cards com animações) -->
+        <section id="equilibrio" class="section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-tag"><i class="fas fa-balance-scale"></i> Harmonia real</span>
+                    <h2 class="section-title">Equilíbrio entre <span class="text-accent">produção & natureza</span></h2>
+                    <p class="section-subtitle">Números que comprovam que é possível alimentar o mundo sem esgotar os recursos.</p>
+                </div>
+                <div class="balance-showcase">
+                    <div class="balance-item" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="balance-circle">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4>Produtividade</h4>
+                        <p>+72% na última década com uso de técnicas sustentáveis.</p>
+                    </div>
+                    <div class="balance-item" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="balance-circle">
+                            <i class="fas fa-recycle"></i>
+                        </div>
+                        <h4>Carbono negativo</h4>
+                        <p>Propriedades que sequestram mais CO₂ do que emitem.</p>
+                    </div>
+                    <div class="balance-item" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="balance-circle">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <h4>Preservação</h4>
+                        <p>20% da área total destinada a reserva legal e APPs.</p>
+                    </div>
+                </div>
+                <!-- Citação inspiradora -->
+                <div class="quote-block" data-aos="fade-up">
+                    <i class="fas fa-quote-left"></i>
+                    <p>“A agricultura do futuro é aquela que entende que o agricultor é o maior guardião da terra.”</p>
+                    <span class="quote-author">— Movimento Agro Sustentável</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contato / Newsletter -->
+        <section id="contato" class="section section-dark">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info" data-aos="fade-up">
+                        <h3>Vamos cultivar <br> <span class="text-accent">juntos?</span></h3>
+                        <p>Junte-se à comunidade que acredita no agro forte e sustentável. Receba novidades, cases e convites para eventos.</p>
+                        <div class="contact-details">
+                            <div class="detail">
+                                <i class="fas fa-envelope"></i>
+                                <span>contato@agroverde.com.br</span>
+                            </div>
+                            <div class="detail">
+                                <i class="fas fa-phone-alt"></i>
+                                <span>+55 (11) 4002-8922</span>
+                            </div>
+                            <div class="detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Fazenda Modelo · Brasil</span>
+                            </div>
+                        </div>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                            <a href="#"><i class="fab fa-x-twitter"></i></a>
+                        </div>
+                    </div>
+                    <div class="contact-form-wrapper" data-aos="fade-up" data-aos-delay="200">
+                        <div class="form-card">
+                            <h4>Newsletter Agro Sustentável</h4>
+                            <form id="newsletterForm">
+                                <div class="form-group">
+                                    <input type="text" placeholder="Nome completo" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" placeholder="Seu melhor e-mail" required>
+                                </div>
+                                <div class="form-group">
+                                    <select>
+                                        <option>Produtor rural</option>
+                                        <option>Estudante / Pesquisador</option>
+                                        <option>Empresa do setor</option>
+                                        <option>Interessado no tema</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-block">Inscrever-se <i class="fas fa-paper-plane"></i></button>
+                                <p class="form-note">Respeitamos seu meio ambiente digital. Sem spam.</p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="#" class="footer-logo">
+                        <i class="fas fa-tractor"></i> Agro<span class="text-accent">+</span>Verde
+                    </a>
+                    <p>Equilíbrio entre produção e meio ambiente. Cultivando o futuro.</p>
+                </div>
+                <div class="footer-links">
+                    <h5>Mapa do site</h5>
+                    <ul>
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#sustentabilidade">Sustentabilidade</a></li>
+                        <li><a href="#tecnologias">Tecnologias</a></li>
+                        <li><a href="#equilibrio">Equilíbrio</a></li>
+                    </ul>
+                </div>
+                <div class="footer-news">
+                    <h5>Receba atualizações</h5>
+                    <div class="footer-subscribe">
+                        <input type="email" placeholder="seu@email.com">
+                        <button><i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Agro+Verde. Todos os direitos reservados. Desenvolvido com <i class="fas fa-heart" style="color: #2e7d32;"></i> para um futuro sustentável.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- AOS Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- JS Principal -->
+    <script src="script.js"></script>
+</body>
+</html>
