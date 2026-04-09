@@ -1,1 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plants vs Zombies | AGRO+VERDE</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a1a0a, #1a3a1a);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+        .game-container {
+            background: #2a4a2a;
+            padding: 20px;
+            border-radius: 30px;
+            border: 3px solid #00ff88;
+        }
+        canvas {
+            background: #4a7a4a;
+            border-radius: 20px;
+            display: block;
+        }
+        .info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: #e0ffe0;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .plants-panel {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+        .plant-btn {
+            padding: 10px 20px;
+            background: #00ff88;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .plant-btn.selected {
+            background: #ffd700;
+            box-shadow: 0 0 20px #ffd700;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="info">
+            <span>🌱 Sol: <span id="sunCount">50</span></span>
+            <span>🧟 Zumbis: <span id="zombieCount">0</span></span>
+            <span>🏆 Ondas: <span id="waveCount">1</span></span>
+        </div>
+        <canvas id="gameCanvas" width="600" height="400"></canvas>
+        <div class="plants-panel">
+            <button class="plant-btn selected" data-type="peashooter">🌱 Atirador (25 sol)</button>
+            <button class="plant-btn" data-type="sunflower">🌻 Girassol (50 sol)</button>
+        </div>
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Voltar</a>
+    </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let sun = 50;
+        let wave = 1;
+        let selectedPlant = 'peashooter';
+        let plants = [];
+        let zombies = [];
+        let projectiles = [];
+        let gameOver = false;
+        let frame = 0;
+        
+        const gridCols = 8, gridRows = 5;
+        const cellW = 75, cellH = 80;
+        
+        document.querySelectorAll('.plant-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.plant-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedPlant = btn.dataset.type;
+            });
+        });
+        
+        canvas.addEventListener('click', (e) => {
+            if (gameOver) return location.reload();
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const col = Math.floor(x / cellW);
+            const row = Math.floor(y / cellH);
+            
+            if (selectedPlant === 'peashooter' && sun >= 25) {
+                if (!plants.some(p => p.col === col && p.row === row)) {
+                    plants.push({ type: 'peashooter', col, row, hp: 100 });
+                    sun -= 25;
+                }
+            } else if (selectedPlant === 'sunflower' && sun >= 50) {
+                if (!plants.some(p => p.col === col && p.row === row)) {
+                    plants.push({ type: 'sunflower', col, row, hp: 80 });
+                    sun -= 50;
+                }
+            }
+        });
+        
+        function spawnZombie() {
+            const row = Math.floor(Math.random() * gridRows);
+            zombies.push({ row, x: 600, hp: 100, speed: 0.5 });
+        }
+        
+        function update() {
+            if (gameOver) return;
+            
+            frame++;
+            if (frame % 150 === 0) spawnZombie();
+            
+            plants.forEach(p => {
+                if (p.type === 'sunflower' && frame % 60 === 0) sun += 10;
+                if (p.type === 'peashooter' && frame % 40 === 0) {
+                    projectiles.push({ row: p.row, x: p.col * cellW + 40, damage: 20 });
+                }
+            });
+            
+            projectiles = projectiles.filter(proj => {
+                proj.x += 5;
+                let hit = false;
+                zombies.forEach(z => {
+                    if (z.row === proj.row && Math.abs(z.x - proj.x) < 30 && !hit) {
+                        z.hp -= proj.damage;
+                        hit = true;
+                    }
+                });
+                return !hit && proj.x < 650;
+            });
+            
+            zombies = zombies.filter(z => {
+                z.x -= z.speed;
+                plants.forEach(p => {
+                    if (p.row === z.row && z.x < p.col * cellW + 40) {
+                        p.hp -= 0.5;
+                        z.hp -= 0.2;
+                    }
+                });
+                if (z.x < 0) gameOver = true;
+                return z.hp > 0;
+            });
+            
+            plants = plants.filter(p => p.hp > 0);
+            
+            if (zombies.length === 0 && frame > 200) {
+                wave++;
+                frame = 0;
+                for (let i = 0; i < wave + 2; i++) spawnZombie();
+            }
+            
+            document.getElementById('sunCount').textContent = Math.floor(sun);
+            document.getElementById('zombieCount').textContent = zombies.length;
+            document.getElementById('waveCount').textContent = wave;
+        }
+        
+        function draw() {
+            ctx.clearRect(0, 0, 600, 400);
+            
+            // Grid
+            ctx.strokeStyle = '#1a3a1a';
+            for (let i = 0; i <= gridCols; i++) {
+                ctx.beginPath();
+                ctx.moveTo(i * cellW, 0);
+                ctx.lineTo(i * cellW, 400);
+                ctx.stroke();
+            }
+            for (let i = 0; i <= gridRows; i++) {
+                ctx.beginPath();
+                ctx.moveTo(0, i * cellH);
+                ctx.lineTo(600, i * cellH);
+                ctx.stroke();
+            }
+            
+            plants.forEach(p => {
+                ctx.fillStyle = p.type === 'peashooter' ? '#00ff88' : '#ffd700';
+                ctx.beginPath();
+                ctx.arc(p.col * cellW + 37, p.row * cellH + 40, 20, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#1a3a1a';
+                ctx.fillText(p.type === 'peashooter' ? '🌱' : '🌻', p.col * cellW + 25, p.row * cellH + 48);
+            });
+            
+            zombies.forEach(z => {
+                ctx.fillStyle = '#3a5a3a';
+                ctx.fillRect(z.x - 15, z.row * cellH + 20, 30, 40);
+                ctx.fillStyle = '#ff3333';
+                ctx.fillRect(z.x - 15, z.row * cellH + 15, 30 * (z.hp / 100), 5);
+            });
+            
+            projectiles.forEach(p => {
+                ctx.fillStyle = '#ffff00';
+                ctx.beginPath();
+                ctx.arc(p.x, p.row * cellH + 40, 5, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            
+            if (gameOver) {
+                ctx.fillStyle = 'rgba(0,0,0,0.7)';
+                ctx.fillRect(0, 0, 600, 400);
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 30px Arial';
+                ctx.fillText('GAME OVER', 200, 200);
+                ctx.font = '16px Arial';
+                ctx.fillText('Clique para reiniciar', 230, 250);
+            }
+        }
+        
+        function gameLoop() {
+            if (!gameOver) update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+        
+        gameLoop();
+    </script>
+</body>
+</html>
