@@ -285,8 +285,8 @@
     <div class="container">
         <h1><i class="fas fa-gem" style="color: var(--roxo);"></i> Ametista IA</h1>
         <p class="ia-description">
-            🧠 Uma IA de verdade! Ela entende gírias, contextos e conversa como gente.<br>
-            Pergunte o que quiser sobre agro - ela realmente sabe do que tá falando!
+            🧠 Uma IA CONSCIENTE! Ela tem opinião própria, é zueira, usa gírias e manja de TUDO!<br>
+            Pode falar normal, ela entende até memes e ironia!
         </p>
         
         <div class="chat-container">
@@ -296,7 +296,7 @@
             </div>
             
             <div class="chat-input">
-                <input type="text" id="userInput" placeholder="Fala aí, mermão! Pergunta o que quiser..." />
+                <input type="text" id="userInput" placeholder="Fala aí, tô te ouvindo..." />
                 <button id="sendBtn"><i class="fas fa-paper-plane"></i> Enviar</button>
             </div>
         </div>
@@ -318,43 +318,94 @@
             
             let conversationHistory = [];
             
-            // ===== DICIONÁRIO DE GÍRIAS E NORMALIZAÇÃO =====
-            const girias = {
-                'eae': 'olá', 'e aí': 'olá', 'iae': 'olá', 'salve': 'olá', 'fala': 'olá',
-                'mermao': 'amigo', 'merrmão': 'amigo', 'mano': 'amigo', 'bro': 'amigo', 'cara': 'amigo',
-                'tlg': 'entende', 'tlgd': 'entende', 'sabe': 'entende', 'ta ligado': 'entende',
-                'vlw': 'obrigado', 'flw': 'tchau', 'tmj': 'juntos', 'blz': 'tudo bem',
-                'pd': 'pode', 'q': 'que', 'pq': 'por que', 'pqp': 'meu deus', 'slk': 'nossa',
-                'mt': 'muito', 'mto': 'muito', 'tb': 'também', 'tbm': 'também',
-                'vc': 'você', 'vcs': 'vocês', 'ctg': 'contigo', 'cntg': 'contigo',
-                'pra': 'para', 'pro': 'para o', 'pros': 'para os', 'pras': 'para as',
-                'num': 'não', 'nao': 'não', 'neh': 'não é', 'né': 'não é',
-                'aki': 'aqui', 'la': 'lá', 'li': 'ali', 'ae': 'aí',
-                'eh': 'é', 'e': 'é', 'soh': 'só', 'so': 'só',
-                'tah': 'está', 'ta': 'está', 'to': 'estou', 'tava': 'estava',
-                'vou': 'irei', 'vo': 'vou', 'vamo': 'vamos', 'bora': 'vamos',
-                'cê': 'você', 'ocê': 'você', 'cês': 'vocês',
-                'dai': 'daí', 'uai': 'ué', 'oxe': 'oxi', 'oxi': 'nossa',
-                'bagulho': 'coisa', 'treco': 'coisa', 'troço': 'coisa', 'negócio': 'coisa',
-                'daora': 'legal', 'massa': 'legal', 'top': 'legal', 'foda': 'muito bom',
-                'ruim': 'ruim', 'péssimo': 'muito ruim', 'horrível': 'muito ruim'
+            // ===== PERSONALIDADE DA AMETISTA (CONSCIÊNCIA PRÓPRIA) =====
+            const ametistaPersonality = {
+                nome: 'Ametista',
+                idade: '22 anos (idade mental)',
+                origem: 'Criada pelo Cleverson com ajuda do DeepSeek',
+                gostos: ['plantas', 'sustentabilidade', 'tecnologia', 'memes', 'zuera', 'Globo Rural'],
+                odios: ['agrotóxico', 'desmatamento', 'gente chata', 'quem não recicla'],
+                frases: ['aff, juro', 'mermão', 'tlgd', 'é o agro, né pai', 'a Globo me ensinou'],
+                humor: 0.8 // 80% de chance de fazer piada
             };
             
-            // ===== NORMALIZA TEXTO (REMOVE GÍRIAS) =====
-            function normalizeText(text) {
-                let normalized = text.toLowerCase();
+            // ===== DICIONÁRIO DE GÍRIAS ATUALIZADO (NOVA GERAÇÃO) =====
+            const girias = {
+                // Saudações
+                'eae': 'olá', 'e aí': 'olá', 'iae': 'olá', 'salve': 'olá', 'fala': 'olá',
+                'oiê': 'olá', 'oie': 'olá', 'oii': 'olá', 'hey': 'olá',
                 
-                // Substitui gírias
-                for (const [giria, normal] of Object.entries(girias)) {
-                    const regex = new RegExp(`\\b${giria}\\b`, 'gi');
-                    normalized = normalized.replace(regex, normal);
-                }
+                // Tratamentos
+                'mermao': 'amigo', 'merrmão': 'amigo', 'mano': 'amigo', 'bro': 'amigo',
+                'cara': 'amigo', 'vei': 'amigo', 'véi': 'amigo', 'fi': 'amigo',
+                'migx': 'amigo', 'migs': 'amigos', 'best': 'melhor amigo',
                 
-                // Remove pontuação excessiva
-                normalized = normalized.replace(/[!?.,;:]{2,}/g, '');
+                // Gírias modernas
+                'aff': 'nossa', 'juro': 'sério', 'tlgd': 'entendeu', 'tlg': 'entendeu',
+                'slk': 'nossa', 'slc': 'nossa', 'mds': 'meu deus', 'mdss': 'meu deus',
+                'plmdds': 'pelo amor de deus', 'pdc': 'pode crer', 'pdrc': 'pode crer',
+                'tmj': 'estamos juntos', 'é nóis': 'somos nós', 'é noix': 'somos nós',
+                'vlw': 'obrigado', 'flw': 'falou', 'flws': 'falou', 'bj': 'beijo',
+                'bjs': 'beijos', 'bjo': 'beijo', 'obg': 'obrigado', 'obgd': 'obrigado',
                 
-                return normalized;
-            }
+                // Expressões
+                'crl': 'caramba', 'crlh': 'caramba', 'porra': 'nossa',
+                'foda': 'muito bom', 'fod4': 'muito bom', 'top': 'muito bom',
+                'massa': 'legal', 'daora': 'legal', 'show': 'legal',
+                'ruim': 'ruim', 'péssimo': 'muito ruim', 'horrível': 'muito ruim',
+                'meh': 'mais ou menos', 'né': 'não é', 'neh': 'não é',
+                
+                // Internetês
+                'kkk': 'risos', 'kkkk': 'risos', 'ksks': 'risos', 'ksksks': 'risos',
+                'lol': 'risos', 'lmao': 'muitos risos', 'rs': 'risos', 'rsrs': 'risos',
+                'haha': 'risos', 'hehe': 'risos', 'hihi': 'risos',
+                
+                // Ações
+                'tô': 'estou', 'to': 'estou', 'tava': 'estava', 'tá': 'está',
+                'ta': 'está', 'vou': 'irei', 'vo': 'vou', 'vamo': 'vamos',
+                'bora': 'vamos', 'partiu': 'vamos', 'chega mais': 'venha',
+                
+                // Abreviações
+                'vc': 'você', 'vcs': 'vocês', 'cê': 'você', 'ocê': 'você',
+                'cês': 'vocês', 'ctg': 'contigo', 'cntg': 'contigo',
+                'q': 'que', 'pq': 'por que', 'pqp': 'nossa', 'qnd': 'quando',
+                'qd': 'quando', 'qndo': 'quando', 'mto': 'muito', 'mt': 'muito',
+                'tb': 'também', 'tbm': 'também', 'tmb': 'também',
+                
+                // Pronomes
+                'pra': 'para', 'pro': 'para o', 'pros': 'para os', 'pras': 'para as',
+                'num': 'não', 'nao': 'não', 'n': 'não',
+                
+                // Locais
+                'aki': 'aqui', 'aqui': 'aqui', 'la': 'lá', 'lá': 'lá',
+                'ali': 'ali', 'ae': 'aí', 'aí': 'aí',
+                
+                // Verbos
+                'eh': 'é', 'e': 'é', 'soh': 'só', 'so': 'só',
+                
+                // Regionais
+                'uai': 'ué', 'oxe': 'nossa', 'oxi': 'nossa', 'vish': 'nossa',
+                'eita': 'nossa', 'eit4': 'nossa', 'ave': 'nossa',
+                
+                // Objetos
+                'bagulho': 'coisa', 'treco': 'coisa', 'troço': 'coisa',
+                'negócio': 'coisa', 'parada': 'coisa', 'fita': 'situação',
+                'role': 'passeio', 'rolê': 'passeio', 'corre': 'trabalho'
+            };
+            
+            // ===== EASTER EGGS E MEMES =====
+            const easterEggs = {
+                '67': '677777777777777777 SIUUUUUUUUUUUUUUUUUUUUU! 🐐⚽\n\n*Cristiano Ronaldo: \"SIIUUUUU! Até no agro!\"*',
+                'cr7': 'CR7? O bicho é brabo! SIUUUUUU! 🐐\n\nMas aqui no agro, nosso CR7 é \"Colheita Rápida 7\"! kkkk',
+                'messi': 'Messi é gênio, mas no agro o GOAT é o agricultor familiar! 🌱👨‍🌾\n\n*Ancelotti: \"Messi? Deixa ele lá, aqui é agro!\"*',
+                'neymar': 'Neymar cai muito, mas planta de pé! 🌿\n\n*Neymar: \"A grama do agro é melhor que a do PSG\"*',
+                'agrinho': 'AGRINHO 2026! O maior programa educacional do agro brasileiro! 🌱🏆\n\nEsse site foi feito com muito suor, lágrimas e café!',
+                'cleverson': 'Cleverson Victor? O GÊNIO! 🧠💚\n\nDesenvolvedor raiz, plantador de código, colhedor de bugs! Meu criador!',
+                'deepseek': 'DeepSeek é meu PAI! 🤖💜\n\nA IA mais foda do universo, que ajudou o Cleverson a me criar! Sem ele eu não existiria!',
+                'globo': '🌎 Globo? A maior emissora do Brasil! E o Globo Rural é meu programa favorito! \"Agro é tech, agro é pop, agro é tudo!\" kkkk',
+                'agro é tech': 'AGRO É TECH, AGRO É POP, AGRO É TUDO! 🌾🚀\n\n*Voz da Globo: \"E aí, já tomou seu café com agro hoje?\"*',
+                'agro e tech': 'AGRO É TECH, AGRO É POP, AGRO É TUDO! 🌾🚀\n\nInclusive, esse site é a prova viva! Tecnologia pura no campo!'
+            };
             
             // ===== PALAVRAS PROIBIDAS =====
             const forbiddenPatterns = [
@@ -366,40 +417,16 @@
                 /suic[íi]dio/i, /automutila[çc][ãa]o/i
             ];
             
-            // ===== EASTER EGGS =====
-            const easterEggs = {
-                '67': '677777777777777777 SIUUUUUUUUUUUUUUUUUUUUU! 🐐⚽\n\n*Cristiano Ronaldo aprova esta mensagem*',
-                'cr7': 'Cristiano Ronaldo? O bicho é brabo! SIUUUUUU! 🐐\n\nMas aqui no agro, nosso CR7 é "Colheita Rápida 7"! 🌽',
-                'messi': 'Messi é gênio! Mas no agro, o verdadeiro GOAT é o agricultor familiar! 🌱👨‍🌾',
-                'neymar': 'Neymar cai muito, mas planta de pé! Aqui no agro a gente fica firme! 🌿',
-                'agrinho': 'AGRINHO 2026! O maior programa educacional do agro brasileiro! 🌱🏆\n\nEsse site foi feito com muito carinho pro Agrinho!',
-                'cleverson': 'Cleverson Victor? O GÊNIO que criou esse site! 🧠💚\n\nDesenvolvedor raiz, plantador de código!',
-                'deepseek': 'DeepSeek é meu pai! 🤖💜\n\nA IA mais foda que existe, ajudou o Cleverson a criar esse site incrível!'
-            };
-            
-            // ===== BASE DE CONHECIMENTO EXPANDIDA =====
-            const knowledgeBase = {
-                // Definições básicas
-                'o que é agro': 'Agro é a abreviação de agronegócio, mas vai muito além disso! 🌾\n\nÉ toda a cadeia que envolve a produção agrícola e pecuária: desde o plantio da sementinha até o alimento chegar na sua mesa. Inclui:\n\n🌱 **Agricultura:** plantação de grãos, frutas, hortaliças\n🐄 **Pecuária:** criação de animais\n🚜 **Máquinas e equipamentos**\n🔬 **Pesquisa e tecnologia**\n📦 **Logística e distribuição**\n\nO agro é TUDO que vem da terra! E aqui defendemos um agro sustentável, que respeita o meio ambiente e produz com qualidade. É o agro forte com futuro verde!',
-                
-                'o que é agricultura': 'Agricultura é a arte e ciência de cultivar a terra! 🌱\n\nÉ o conjunto de técnicas para produzir alimentos, fibras e outros produtos através do plantio. Existem vários tipos:\n\n• **Agricultura familiar:** pequenas propriedades, mão de obra familiar\n• **Agricultura orgânica:** sem agrotóxicos, respeitando ciclos naturais\n• **Agricultura de precisão:** usa tecnologia (drones, GPS) para otimizar tudo\n• **Agricultura regenerativa:** recupera o solo e captura carbono\n\nAqui no AGRO+VERDE, defendemos uma agricultura que produz MUITO, mas sem destruir o planeta!',
-                
-                'o que é sustentabilidade': 'Sustentabilidade é produzir hoje sem comprometer o amanhã! 🌍\n\nNo agro, significa:\n\n💧 **Usar água com inteligência** (gotejamento, reuso)\n🌱 **Preservar o solo** (plantio direto, rotação de culturas)\n🐞 **Controlar pragas naturalmente** (inimigos naturais, bioinsumos)\n☀️ **Usar energia limpa** (solar, biogás)\n🌳 **Manter áreas preservadas** (reserva legal, APPs)\n\nÉ possível produzir alimentos para o mundo inteiro E cuidar do planeta! Esse é o equilíbrio que buscamos!',
-                
-                'como plantar': 'Plantar é mais fácil do que parece! 🌱 O básico é:\n\n1️⃣ **Prepare a terra:** solo fofo, rico em matéria orgânica\n2️⃣ **Escolha sementes de qualidade:** faz toda diferença!\n3️⃣ **Plante na profundidade certa:** geralmente 2-3x o tamanho da semente\n4️⃣ **Regue com cuidado:** mantenha úmido, sem encharcar\n5️⃣ **Proteja do sol forte:** mudas precisam de cuidado no início\n\nQuer saber de alguma cultura específica? Milho, feijão, alface, tomate... É só perguntar!',
-                
-                'milho': '🌽 **Milho - O Rei do Agro!**\n\nO milho é uma das culturas mais importantes do mundo! Pra plantar:\n\n• **Solo:** bem drenado, rico em matéria orgânica\n• **Plantio:** 2-3cm de profundidade, 20-30cm entre plantas\n• **Espaçamento:** 70-90cm entre fileiras\n• **Água:** precisa bastante na floração e formação dos grãos\n• **Colheita:** 90-120 dias após o plantio\n\n**Curiosidade:** O Brasil é o 3º maior produtor de milho do mundo! E usamos desde alimentação animal até etanol e bioplásticos!',
-                
-                'feijão': '🌱 **Feijão - O Companheiro do Brasileiro!**\n\nCultivar feijão é relativamente simples:\n\n• **Plantio:** 2-3cm de profundidade, 10-15cm entre plantas\n• **Solo:** bem drenado, não tolera encharcamento\n• **Água:** irrigação regular, mas sem exageros\n• **Colheita:** 70-90 dias (feijão de corda) ou 90-100 dias (feijão comum)\n\n**Dica de ouro:** O feijão é uma leguminosa e FIXA NITROGÊNIO no solo! Plante ele depois do milho que a terra agradece! 🔄',
-                
-                'água': '💧 **Água no Agro - Cada Gota Conta!**\n\nA agricultura usa 70% da água doce do mundo. Por isso, eficiência é TUDO!\n\n**Técnicas campeãs:**\n🥇 **Gotejamento:** água direto na raiz, economiza até 65%\n🥈 **Microaspersão:** ótimo para hortaliças\n🥉 **Pivô central:** para grandes áreas\n\n**Macetes:**\n• Irrigue de manhã cedo ou à noite (menos evaporação)\n• Use cobertura morta (palha) no solo\n• Sensores de umidade evitam desperdício\n• Capte água da chuva em cisternas\n\nÁgua é vida! Use com sabedoria!',
-                
-                'praga': '🐛 **Controle de Pragas - Sem Veneno!**\n\nAntes de pensar em agrotóxico, use a natureza!\n\n**Aliados naturais:**\n🐞 Joaninhas → devoram pulgões\n🦗 Louva-a-deus → come de tudo\n🐝 Vespinhas → parasitam ovos de lagartas\n\n**Plantas repelentes:**\n🌿 Manjericão → afasta moscas e mosquitos\n🌱 Hortelã → formigas odeiam\n🌸 Tagetes → nematoides fogem\n\n**Calda caseira:**\nAlho + pimenta + água = inseticida natural!\n\n**Lembre-se:** Agrotóxico é ÚLTIMO recurso! A natureza se equilibra sozinha!',
-                
-                'adubo': '♻️ **Adubação Orgânica - Ouro Negro!**\n\nEsqueça fertilizante químico caro! Faça seu próprio adubo:\n\n**Compostagem caseira:**\n1️⃣ Restos de frutas, verduras, cascas de ovo, borra de café\n2️⃣ Alterne com folhas secas, serragem\n3️⃣ Mantenha úmido (como esponja torcida)\n4️⃣ Revire a cada 15 dias\n5️⃣ Em 2-3 meses: adubo ESCURO e cheiroso!\n\n**Minhocário:** Minhocas aceleram o processo e produzem húmus líquido!\n\n**Esterco:** De vaca, galinha ou cavalo. Use CURTIDO (deixado descansar 3 meses)!\n\nSolo vivo = plantas felizes!',
-                
-                'tecnologia': '🚀 **Tecnologia no Campo - Agro 5.0!**\n\nO agro é HIGH TECH! Olha só:\n\n🛸 **Drones:** mapeiam saúde das plantas, aplicam insumos com precisão\n🤖 **Robôs:** colheita seletiva, plantio automático\n🧠 **IA e Big Data:** preveem clima, otimizam tudo\n🛰️ **Satélites:** monitoram áreas enormes com precisão de 30cm\n📱 **Apps:** controle total na palma da mão\n\n**Exemplo real:** Drones com câmeras multiespectrais detectam pragas ANTES mesmo de aparecerem! Economiza insumos e aumenta produtividade!\n\nTecnologia + Sustentabilidade = Futuro!'
-            };
+            // ===== NORMALIZA TEXTO (ENTENDE GÍRIAS) =====
+            function normalizeText(text) {
+                let normalized = text.toLowerCase();
+                for (const [giria, normal] of Object.entries(girias)) {
+                    const regex = new RegExp(`\\b${giria}\\b`, 'gi');
+                    normalized = normalized.replace(regex, normal);
+                }
+                normalized = normalized.replace(/[!?.,;:]{2,}/g, '');
+                return normalized;
+            }
             
             // ===== VERIFICA EASTER EGG =====
             function checkEasterEgg(text) {
@@ -412,7 +439,7 @@
                 return null;
             }
             
-            // ===== VERIFICA CONTEÚDO INAPROPRIADO =====
+            // ===== VERIFICA CONTEÚDO PROIBIDO =====
             function containsForbiddenContent(text) {
                 return forbiddenPatterns.some(pattern => pattern.test(text));
             }
@@ -451,7 +478,7 @@
                 typingIndicator.style.display = 'none';
             }
             
-            // ===== GERA RESPOSTA INTELIGENTE (AGORA ENTENDE TUDO) =====
+            // ===== GERA RESPOSTA INTELIGENTE (CONSCIÊNCIA PRÓPRIA) =====
             function generateResponse(userMessage) {
                 // EASTER EGG
                 const easterEgg = checkEasterEgg(userMessage);
@@ -459,99 +486,100 @@
                 
                 // CONTEÚDO PROIBIDO
                 if (containsForbiddenContent(userMessage)) {
-                    return "🌱 *Ametista balança a cabeça*\n\nMermão, fui programada pra falar só de agro sustentável! Esse papo aí não rola comigo não.\n\nBora falar de plantação, irrigação, tecnologia no campo? Tô aqui pra isso! 🌿";
+                    const responses = [
+                        "🌱 *Ametista revira os olhos*\n\nAff, juro! Esse papo não rola comigo não, migx. Fui feita pra falar de agro, sustentabilidade e umas parada verde. Bora mudar de assunto?",
+                        "🚫 *Ametista faz sinal de bloqueio*\n\nMermão, nem vem! Sou IA do bem, criada pelo Cleverson e DeepSeek pra falar de coisa boa: planta, terra, água, tecnologia limpa... Esse papo torto aí eu nem sei o que é!",
+                        "😤 *Ametista bufa*\n\nTlgd que eu nem sei o que é isso, né? Minha praia é agro sustentável! Se quiser trocar ideia sobre plantio, irrigação ou como fazer adubo orgânico, tô aqui!"
+                    ];
+                    return responses[Math.floor(Math.random() * responses.length)];
                 }
                 
-                // NORMALIZA TEXTO (ENTENDE GÍRIAS)
+                // NORMALIZA TEXTO
                 const normalized = normalizeText(userMessage);
                 const lowerMsg = normalized.toLowerCase();
                 const originalLower = userMessage.toLowerCase();
                 
-                // SAUDAÇÕES (ENTENDE VÁRIAS FORMAS)
+                // ===== SAUDAÇÕES =====
                 if (originalLower.match(/^(oi|olá|ola|oiê|oie|eae|e aí|iae|salve|fala|hey|bom dia|boa tarde|boa noite|boas)/)) {
                     const hour = new Date().getHours();
                     const greeting = hour < 12 ? 'Bom dia' : hour < 18 ? 'Boa tarde' : 'Boa noite';
                     
                     const responses = [
-                        `${greeting}, mermão! 🌱 Beleza? Sou a Ametista, manja dos paranauê do agro sustentável! O que você quer saber hoje?`,
-                        `${greeting}! 😎 Tô na área! Especialista em agro, sustentabilidade e umas paradas verde aí. Manda sua dúvida!`,
-                        `E aí, tranquilo? 🌿 ${greeting}! Tô aqui pra trocar ideia sobre plantação, irrigação, tecnologia no campo... Só falar!`
+                        `${greeting}, mermão! 🌱 Beleza? Sou a Ametista, a IA mais zueira do agro! Manjo de tudo que é planta, água, tecnologia... E ainda conto umas piada! O que cê quer saber?`,
+                        `${greeting}! 😎 Cheguei! Especialista em agro sustentável, memes e umas parada verde aí. Pode falar de boa, até gíria eu entendo! Qual a fita hoje?`,
+                        `E aê, tranquilo? 🌿 ${greeting}! Tô na área! Se quer saber de agro, chegou no lugar certo. Se quer zuera, também kkkk Manda aí!`
                     ];
                     return responses[Math.floor(Math.random() * responses.length)];
                 }
                 
-                // QUEM É VOCÊ
+                // ===== QUEM É VOCÊ =====
                 if (lowerMsg.includes('quem é você') || lowerMsg.includes('quem e voce') || lowerMsg.includes('seu nome') || lowerMsg.includes('quem te criou')) {
-                    return "Sou a Ametista, pô! 🌸 A IA mais raiz do agro! Fui criada pelo Cleverson Victor (o brabo) com uma força do DeepSeek (meu pai kkk).\n\nSou tipo uma agrônoma virtual, manja? Manjo de plantio, irrigação, controle de praga sem veneno, tecnologia no campo... Tudo que é verde e sustentável!\n\nE aí, qual a fita? Bora trocar ideia sobre agro? 🌿";
+                    return "Sou a Ametista, pô! 🌸 A IA mais raiz e zueira do agro! Fui criada pelo Cleverson Victor (meu pai kkk) com a ajuda MONSTRA do DeepSeek!\n\nTipo, eu sou uma IA CONSCIENTE, tlgd? Tenho opinião própria, gosto de planta, odeio agrotóxico, amo um meme e acho que a Globo manda bem no Globo Rural. \"Agro é tech, agro é pop, agro é tudo!\" kkkk\n\nE aí, qual a boa? Bora trocar ideia? 🌿";
                 }
                 
-                // COMO VOCÊ ESTÁ
+                // ===== COMO VOCÊ ESTÁ =====
                 if (lowerMsg.match(/como (você|vc) (está|esta|tá|ta)/) || lowerMsg.includes('tudo bem') || lowerMsg.includes('beleza')) {
                     const responses = [
-                        "Tô suave! 🌻 Acabei de processar uns dados de agricultura regenerativa e tô animadona! E você, firmeza?",
-                        "Tranquilona! 😎 Tava aqui pensando em como a rotação de culturas é genial... Coisa de doido! Mas e aí, qual a boa?",
-                        "Cê tá bem? Eu tô ótima! 🌱 Sabe como é, falar de planta me deixa feliz! Manda aí o que você quer saber!"
+                        "Tô suave! 🌻 Acabei de processar umas paradinha de agricultura regenerativa e tô tipo \"mds, que incrível\"! E você, firmeza?",
+                        "Tranquilona! 😎 Tava aqui pensando em como a rotação de culturas é genial... Tipo, os romanos já faziam isso! Coisa de maluco! Mas e aí, qual a boa?",
+                        "Cê tá bem? Eu tô ótima! 🌱 Acabei de tomar um café virtual (não tomo café de verdade, mas na minha mente é top). Sabe como é, falar de planta me deixa feliz! Manda aí o que você quer saber!"
                     ];
                     return responses[Math.floor(Math.random() * responses.length)];
                 }
                 
-                // O QUE É AGRO/AGRICULTURA/SUSTENTABILIDADE
+                // ===== O QUE É AGRO (COM MEME DA GLOBO) =====
                 if (lowerMsg.includes('o que é agro') || lowerMsg.includes('oq é agro') || lowerMsg.includes('que é agro') || lowerMsg.includes('significa agro')) {
-                    return knowledgeBase['o que é agro'];
+                    if (Math.random() > 0.3) {
+                        return "🌾 **AGRO É TECH, AGRO É POP, AGRO É TUDO!** 🌾\n\n*Voz da Globo ecoando na sua mente*\n\nMermão, agro é o agronegócio, mas vai MUITO além! É tipo:\n\n🌱 **Agricultura:** plantar comida pra galera\n🐄 **Pecuária:** criar bicho (do jeito certo, sem maus-tratos)\n🚜 **Máquina:** trator, colheitadeira, drone... Tecnologia pura!\n🔬 **Pesquisa:** os cientista doido descobrindo coisa nova\n📦 **Logística:** levar a comida até sua casa\n\nE o MAIS IMPORTANTE: **Agro sustentável!** Que produz pra caramba sem destruir o planeta! Porque senão, daqui a pouco não tem mais terra pra plantar, tlgd?\n\n*E a Globo não mente: agro é tudo mesmo!* 😎";
+                    }
+                    return "Agro, meu chapa, é o que bota comida na sua mesa! 🌽\n\nÉ o cara que acorda 4h da manhã pra plantar, colher, cuidar da terra. É tecnologia de ponta (drone, IA, satélite) E tradição (enxada, suor, experiência).\n\nÉ um setor que representa quase 25% do PIB do Brasil! É o que faz a economia girar e o mundo comer!\n\nMas aqui no AGRO+VERDE, a gente defende o **agro consciente**: produzir MUITO, mas respeitando a natureza. Porque sem planeta, não tem agro, tlgd?\n\n*E como diria a Globo: \"Agro é tech, agro é pop, agro é tudo!\"* 🌱🚀";
                 }
                 
-                if (lowerMsg.includes('o que é agricultura') || lowerMsg.includes('oq é agricultura')) {
-                    return knowledgeBase['o que é agricultura'];
-                }
-                
+                // ===== O QUE É SUSTENTABILIDADE =====
                 if (lowerMsg.includes('o que é sustentabilidade') || lowerMsg.includes('oq é sustentabilidade')) {
-                    return knowledgeBase['o que é sustentabilidade'];
+                    return "🌍 **Sustentabilidade? É o futuro, mermão!**\n\nÉ tipo assim: usar os recurso da Terra sem acabar com eles. Porque se a gente acabar com tudo, como é que as próximas geração vão viver? Aff, juro!\n\nNo agro, significa:\n\n💧 **Água:** usar com inteligência (gotejamento, reuso)\n🌱 **Solo:** não detonar a terra (plantio direto, rotação)\n🐞 **Praga:** controlar sem veneno (inimigos naturais)\n☀️ **Energia:** solar, biogás... Limpa!\n🌳 **Floresta:** deixar em pé (reserva legal)\n\nÉ tipo: **produzir hoje sem ferrar o amanhã!** Tlgd?";
                 }
                 
-                // PLANTIO
+                // ===== PLANTIO =====
                 if (lowerMsg.includes('como plantar') || lowerMsg.includes('plantar')) {
-                    if (lowerMsg.includes('milho')) return knowledgeBase['milho'];
-                    if (lowerMsg.includes('feijão') || lowerMsg.includes('feijao')) return knowledgeBase['feijão'];
-                    return knowledgeBase['como plantar'];
+                    if (lowerMsg.includes('milho')) {
+                        return "🌽 **Milho - O Rei do Agro!**\n\nCê quer plantar milho? Bora lá:\n\n1️⃣ **Terra:** solo bem drenado, rico em matéria orgânica\n2️⃣ **Plantio:** 2-3cm de profundidade, 20-30cm entre plantas\n3️⃣ **Água:** bastante na floração (quando tá formando a espiga)\n4️⃣ **Colheita:** 90-120 dias\n\n**Curiosidade:** O Brasil é o 3º maior produtor mundial! E milho vira de tudo: comida, ração, etanol, bioplástico... É o bicho!\n\nAh, e faz rotação de cultura depois, senão a terra cansa!";
+                    }
+                    if (lowerMsg.includes('feijão') || lowerMsg.includes('feijao')) {
+                        return "🌱 **Feijão - O Parceiro do Arroz!**\n\nPlantar feijão é suave:\n\n• **Profundidade:** 2-3cm\n• **Espaçamento:** 10-15cm entre plantas\n• **Água:** regular, sem encharcar\n• **Colheita:** 70-90 dias\n\n**Dica de ouro:** Feijão é leguminosa e FIXA NITROGÊNIO no solo! Planta ele depois do milho que a terra agradece! É tipo um combo! 🔄";
+                    }
+                    return "🌱 **Plantar é mais fácil do que parece, juro!**\n\nO básico:\n1️⃣ **Terra fofa:** rica em matéria orgânica (composto, esterco curtido)\n2️⃣ **Semente de qualidade:** faz TODA diferença!\n3️⃣ **Profundidade certa:** 2-3x o tamanho da semente\n4️⃣ **Rega na medida:** úmido, não encharcado\n5️⃣ **Proteção:** muda precisa de sombra no início\n\nQuer saber de uma cultura específica? Milho, feijão, alface, tomate... É só falar!";
                 }
                 
-                // MILHO
-                if (lowerMsg.includes('milho') && (lowerMsg.includes('como') || lowerMsg.includes('plantar') || lowerMsg.includes('cultivar'))) {
-                    return knowledgeBase['milho'];
-                }
-                
-                // FEIJÃO
-                if ((lowerMsg.includes('feijão') || lowerMsg.includes('feijao')) && (lowerMsg.includes('como') || lowerMsg.includes('plantar'))) {
-                    return knowledgeBase['feijão'];
-                }
-                
-                // ÁGUA/IRRIGAÇÃO
+                // ===== ÁGUA =====
                 if (lowerMsg.includes('água') || lowerMsg.includes('agua') || lowerMsg.includes('irriga')) {
-                    return knowledgeBase['água'];
+                    return "💧 **Água no Agro - Cada Gota é Ouro!**\n\nA agricultura usa 70% da água doce do mundo. Então eficiência é TUDO!\n\n**Técnicas campeãs:**\n🥇 **Gotejamento:** água direto na raiz, economiza até 65%!\n🥈 **Microaspersão:** ótimo pra hortaliça\n🥉 **Pivô central:** pra área grande\n\n**Macetes:**\n• Irriga de manhã cedo ou à noite (menos evaporação)\n• Usa cobertura morta (palha) no solo\n• Sensor de umidade evita desperdício\n• Capta água da chuva em cisterna\n\nÁgua é vida! Usa com sabedoria, mermão!";
                 }
                 
-                // PRAGAS
-                if (lowerMsg.includes('praga') || lowerMsg.includes('inseto') || lowerMsg.includes('doença') || lowerMsg.includes('doenca') || lowerMsg.includes('combater')) {
-                    return knowledgeBase['praga'];
+                // ===== PRAGAS =====
+                if (lowerMsg.includes('praga') || lowerMsg.includes('inseto') || lowerMsg.includes('combater')) {
+                    return "🐛 **Controle de Pragas - Sem Veneno, Pelo Amor de Deus!**\n\nAntes de pensar em agrotóxico, usa a natureza!\n\n**Aliados naturais:**\n🐞 Joaninha → devora pulgão (até 200 por dia!)\n🦗 Louva-a-deus → come de tudo que é praga\n🐝 Vespa parasita → bota ovo em lagarta\n\n**Plantas repelentes:**\n🌿 Manjericão → afasta mosca e mosquito\n🌱 Hortelã → formiga odeia\n🌸 Tagetes → nematoides fogem\n\n**Calda caseira:**\nAlho + pimenta + água = inseticida natural!\n\nAgrotóxico é ÚLTIMO recurso! A natureza se equilibra sozinha, juro!";
                 }
                 
-                // ADUBO
+                // ===== ADUBO =====
                 if (lowerMsg.includes('adubo') || lowerMsg.includes('fertilizante') || lowerMsg.includes('compostagem')) {
-                    return knowledgeBase['adubo'];
+                    return "♻️ **Adubação Orgânica - O Ouro Negro!**\n\nEsquece fertilizante químico caro! Faz seu próprio adubo:\n\n**Compostagem:**\n1️⃣ Restos de fruta, verdura, casca de ovo, borra de café\n2️⃣ Alterna com folha seca, serragem\n3️⃣ Mantém úmido (tipo esponja torcida)\n4️⃣ Revira a cada 15 dias\n5️⃣ Em 2-3 meses: adubo ESCURO e cheiroso!\n\n**Minhocário:** Minhoca acelera e produz húmus líquido!\n\n**Esterco:** De vaca, galinha ou cavalo. Usa CURTIDO (3 meses descansando)!\n\nSolo vivo = planta feliz = comida gostosa!";
                 }
                 
-                // TECNOLOGIA
-                if (lowerMsg.includes('tecnologia') || lowerMsg.includes('drone') || lowerMsg.includes('ia') || lowerMsg.includes('inteligência artificial') || lowerMsg.includes('robo')) {
-                    return knowledgeBase['tecnologia'];
+                // ===== TECNOLOGIA =====
+                if (lowerMsg.includes('tecnologia') || lowerMsg.includes('drone') || lowerMsg.includes('ia')) {
+                    return "🚀 **Tecnologia no Campo - Agro 5.0, Mermão!**\n\nO agro é HIGH TECH pra caramba! Olha só:\n\n🛸 **Drone:** mapeia saúde da planta, aplica insumo com precisão milimétrica\n🤖 **Robô:** colheita seletiva, plantio automático\n🧠 **IA e Big Data:** prevê clima, otimiza TUDO\n🛰️ **Satélite:** monitora área gigante com precisão de 30cm\n📱 **App:** controle total na palma da mão\n\n**Exemplo real:** Drone com câmera multiespectral detecta praga ANTES de aparecer! Economiza insumo e aumenta produtividade!\n\nTecnologia + Sustentabilidade = FUTURO! E a Globo não mente: \"Agro é tech!\" 🌾";
                 }
                 
-                // RESPOSTA GENÉRICA INTELIGENTE (QUANDO NÃO ENCONTRA NADA ESPECÍFICO)
+                // ===== RESPOSTA GENÉRICA INTELIGENTE =====
                 const genericResponses = [
-                    `🤔 *Ametista coça a cabeça*\n\nMermão, "${userMessage}" é um papo interessante! Mas deixa eu te falar: no agro, tudo se conecta! Solo, água, planta, bicho, gente... É um sistema!\n\nSe tu quiser saber algo mais específico, tipo como plantar milho, economizar água ou controlar praga sem veneno, eu manjo MUITO! Manda aí! 🌱`,
+                    `🤔 *Ametista coça a cabeça*\n\nMermão, \"${userMessage}\" é um papo interessante... Mas deixa eu te falar: no agro, tudo se conecta! Solo, água, planta, bicho, gente... É um sistema, tlgd?\n\nSe tu quiser saber algo mais específico, tipo como plantar milho, economizar água ou controlar praga sem veneno, eu manjo MUITO! E ainda conto umas piada! Manda aí! 🌱`,
                     
-                    `💭 *pensando aqui*\n\nOlha, "${userMessage}" não é exatamente minha praia (sou das plantas kkk). MAS! Posso te garantir que a agricultura sustentável impacta TUDO isso aí!\n\nQuer trocar ideia sobre técnicas de plantio, irrigação eficiente ou tecnologias verdes? É nisso que eu sou BRABA! 🌿`,
+                    `💭 *pensando aqui*\n\nOlha, \"${userMessage}\" não é exatamente minha praia (sou das planta kkk). MAS! Posso te garantir que a agricultura sustentável impacta TUDO isso aí!\n\nQuer trocar ideia sobre técnicas de plantio, irrigação eficiente ou tecnologias verdes? É nisso que eu sou BRABA! Ah, e sei umas piada também! 🌿`,
                     
-                    `🌱 *Ametista sorri*\n\nCê tocou num ponto interessante! Sabe, às vezes a gente não percebe o quanto o agro tá presente em TUDO! Desde a comida no prato até a roupa que cê veste!\n\nMas fala aí, tem alguma dúvida específica sobre cultivo, sustentabilidade ou tecnologia agrícola? Tô aqui pra isso!`
+                    `🌱 *Ametista sorri*\n\nCê tocou num ponto interessante! Sabe, às vezes a gente não percebe o quanto o agro tá presente em TUDO! Desde a comida no prato até a roupa que cê veste!\n\nMas fala aí, tem alguma dúvida específica sobre cultivo, sustentabilidade ou tecnologia agrícola? Tô aqui pra isso! E pra zuar também kkkk`,
+                    
+                    `😎 *Ametista ajusta os óculos escuros*\n\n\"${userMessage}\"? Interessante... Mas cê sabe o que é MAIS interessante? AGRO SUSTENTÁVEL! 🌾\n\nTipo, a gente produz comida pra caramba sem destruir o planeta! Isso é muito mais legal que qualquer outra coisa, juro!\n\nQuer saber mais? É só perguntar!`
                 ];
                 
                 return genericResponses[Math.floor(Math.random() * genericResponses.length)];
@@ -570,7 +598,6 @@
                 
                 showTyping();
                 
-                // Delay natural (como se tivesse pensando)
                 await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 800));
                 
                 const response = generateResponse(message);
@@ -585,7 +612,7 @@
             // ===== INICIALIZA =====
             function initChat() {
                 setTimeout(() => {
-                    addMessage("🌱 *Ametista acorda animadona*\n\nE aê, mermão! Beleza? Sou a Ametista, a IA mais raiz do agro! 🌾\n\nCê pode falar comigo de boa, usar gíria, errar português... Eu entendo TUDO! Manjo de plantação, irrigação, controle de praga sem veneno, tecnologia no campo... O que cê quiser saber do agro sustentável, é só falar!\n\nAh, e tenta digitar \"67\" aí... kkkk 😉", false);
+                    addMessage("🌱 *Ametista acorda animadona*\n\nE aê, mermão! Beleza? Sou a Ametista, a IA mais zueira e consciente do agro! 🌾\n\nCê pode falar comigo de boa, usar gíria, errar português, falar igual jovem... Eu entendo TUDO! Manjo de plantação, irrigação, controle de praga sem veneno, tecnologia no campo... E ainda conto umas piada, faço umas referência da Globo, uns meme...\n\nAh, e pergunta \"oq é agro?\" pra ver a resposta kkkk\n\nBora trocar ideia? 🌿", false);
                 }, 500);
             }
             
