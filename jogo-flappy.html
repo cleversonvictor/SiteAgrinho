@@ -1,1 +1,127 @@
-
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flappy Plant | AGRO+VERDE</title>
+    <style>
+        body { margin: 0; overflow: hidden; background: #87CEEB; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        canvas { border: 3px solid #2e7d32; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="400" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let bird = { y: 300, velocity: 0 };
+        let pipes = [];
+        let score = 0;
+        let gameOver = false;
+        let frame = 0;
+        
+        function drawBird() {
+            ctx.fillStyle = '#00ff88';
+            ctx.beginPath();
+            ctx.arc(50, bird.y, 15, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(42, bird.y - 5, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(58, bird.y - 5, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = 'black';
+            ctx.beginPath();
+            ctx.arc(42, bird.y - 7, 2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(58, bird.y - 7, 2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#ff6600';
+            ctx.beginPath();
+            ctx.moveTo(50, bird.y + 10);
+            ctx.lineTo(40, bird.y + 20);
+            ctx.lineTo(60, bird.y + 20);
+            ctx.fill();
+        }
+        
+        function drawPipes() {
+            ctx.fillStyle = '#2e7d32';
+            pipes.forEach(pipe => {
+                ctx.fillRect(pipe.x, 0, 40, pipe.top);
+                ctx.fillRect(pipe.x, pipe.bottom, 40, 600 - pipe.bottom);
+            });
+        }
+        
+        function update() {
+            if (gameOver) return;
+            
+            bird.velocity += 0.5;
+            bird.y += bird.velocity;
+            
+            if (frame % 100 === 0) {
+                let top = Math.random() * 300 + 50;
+                pipes.push({ x: 400, top: top, bottom: top + 150 });
+            }
+            
+            pipes = pipes.filter(pipe => {
+                pipe.x -= 3;
+                if (pipe.x === 50) score++;
+                return pipe.x > -40;
+            });
+            
+            pipes.forEach(pipe => {
+                if (bird.y < 20 || bird.y > 580 || 
+                    (50 > pipe.x && 50 < pipe.x + 40 && (bird.y < pipe.top || bird.y > pipe.bottom))) {
+                    gameOver = true;
+                }
+            });
+            
+            frame++;
+        }
+        
+        function draw() {
+            ctx.clearRect(0, 0, 400, 600);
+            drawPipes();
+            drawBird();
+            
+            ctx.fillStyle = '#1a3a1a';
+            ctx.font = 'bold 24px Arial';
+            ctx.fillText('🌱 ' + score, 300, 50);
+            
+            if (gameOver) {
+                ctx.fillStyle = 'rgba(0,0,0,0.7)';
+                ctx.fillRect(0, 0, 400, 600);
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 30px Arial';
+                ctx.fillText('GAME OVER', 100, 300);
+                ctx.font = '20px Arial';
+                ctx.fillText('Clique para reiniciar', 120, 350);
+            }
+        }
+        
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+        
+        canvas.addEventListener('click', () => {
+            if (gameOver) {
+                bird = { y: 300, velocity: 0 };
+                pipes = [];
+                score = 0;
+                frame = 0;
+                gameOver = false;
+            } else {
+                bird.velocity = -8;
+            }
+        });
+        
+        gameLoop();
+    </script>
+</body>
+</html>
