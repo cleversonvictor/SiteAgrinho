@@ -15,13 +15,16 @@
             --borda-vidro: rgba(0, 255, 136, 0.15);
             --roxo: #a855f7;
         }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Archivo', sans-serif;
             background: linear-gradient(135deg, var(--fundo) 0%, #020502 100%);
             color: var(--texto);
             min-height: 100vh;
         }
+        
         .navbar {
             position: fixed;
             top: 20px;
@@ -39,25 +42,31 @@
             align-items: center;
             justify-content: space-between;
         }
+        
         .logo {
             display: flex;
             align-items: center;
             gap: 12px;
             text-decoration: none;
         }
+        
         .logo i { font-size: 2.2rem; color: var(--verde-neon); }
+        
         .logo span {
             font-family: 'Clash Display', sans-serif;
             font-size: 1.8rem;
             font-weight: 700;
             color: var(--texto);
         }
+        
         .logo span strong { color: var(--verde-neon); }
+        
         .nav-links {
             display: flex;
             gap: 8px;
             list-style: none;
         }
+        
         .nav-links a {
             padding: 12px 22px;
             border-radius: 40px;
@@ -69,31 +78,43 @@
             align-items: center;
             gap: 8px;
         }
+        
         .nav-links a:hover, .nav-links a.active {
             background: var(--roxo);
             color: white;
         }
+        
         .container {
             max-width: 1000px;
             margin: 0 auto;
             padding: 120px 30px 60px;
         }
+        
         h1 {
             font-family: 'Clash Display', sans-serif;
             font-size: 3.5rem;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             text-align: center;
         }
+        
+        .ia-description {
+            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
         .chat-container {
             background: var(--vidro);
             backdrop-filter: blur(15px);
-            border: 1px solid var(--roxo);
+            border: 2px solid var(--roxo);
             border-radius: 40px;
             padding: 30px;
             height: 500px;
             display: flex;
             flex-direction: column;
+            box-shadow: 0 0 40px rgba(168, 85, 247, 0.2);
         }
+        
         .chat-messages {
             flex: 1;
             overflow-y: auto;
@@ -102,68 +123,147 @@
             flex-direction: column;
             gap: 15px;
         }
+        
         .message {
             display: flex;
             gap: 12px;
-            max-width: 80%;
+            max-width: 85%;
+            animation: fadeIn 0.3s ease-out;
         }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
         .message.user {
             align-self: flex-end;
             flex-direction: row-reverse;
         }
+        
         .message-avatar {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            flex-shrink: 0;
         }
+        
         .message.bot .message-avatar {
-            background: var(--roxo);
+            background: linear-gradient(135deg, var(--roxo), #c084fc);
             color: white;
         }
+        
         .message.user .message-avatar {
             background: var(--verde-neon);
             color: var(--fundo);
         }
+        
         .message-content {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.4);
             padding: 15px 20px;
             border-radius: 20px;
             border: 1px solid var(--borda-vidro);
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
         }
+        
         .message.bot .message-content {
             border-color: var(--roxo);
         }
+        
+        .message.user .message-content {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: var(--verde-neon);
+        }
+        
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 5px;
+            padding: 15px 20px;
+        }
+        
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: var(--roxo);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+        
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+        
         .chat-input {
             display: flex;
             gap: 10px;
             margin-top: 20px;
         }
+        
         .chat-input input {
             flex: 1;
-            padding: 16px;
-            background: rgba(0, 0, 0, 0.3);
+            padding: 16px 20px;
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid var(--borda-vidro);
             border-radius: 60px;
             color: var(--texto);
             font-size: 1rem;
+            font-family: 'Archivo', sans-serif;
+            transition: all 0.3s;
         }
+        
+        .chat-input input:focus {
+            outline: none;
+            border-color: var(--roxo);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+        }
+        
         .chat-input button {
             padding: 16px 30px;
-            background: var(--roxo);
+            background: linear-gradient(135deg, var(--roxo), #c084fc);
             color: white;
             border: none;
             border-radius: 60px;
             font-weight: 600;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
         }
+        
+        .chat-input button:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+        }
+        
+        .chat-input button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
         .footer {
             padding: 40px 30px;
             border-top: 1px solid var(--borda-vidro);
             text-align: center;
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar { padding: 12px 20px; }
+            .logo span { font-size: 1.4rem; }
+            h1 { font-size: 2.5rem; }
+            .chat-container { padding: 20px; height: 450px; }
         }
     </style>
 </head>
@@ -184,28 +284,21 @@
 
     <div class="container">
         <h1><i class="fas fa-gem" style="color: var(--roxo);"></i> Ametista IA</h1>
-        <p style="text-align: center; margin-bottom: 30px;">Sua assistente virtual especializada em agricultura sustentável</p>
+        <p class="ia-description">
+            🧠 Uma IA que realmente pensa sobre agricultura sustentável.<br>
+            Pergunte o que quiser - ela vai raciocinar e responder de forma única!
+        </p>
         
         <div class="chat-container">
-            <div class="chat-messages" id="chatMessages">
-                <div class="message bot">
-                    <div class="message-avatar"><i class="fas fa-robot"></i></div>
-                    <div class="message-content">
-                        Olá! Sou a Ametista IA, sua assistente especializada em agro sustentável. Como posso ajudar você hoje? 🌱
-                    </div>
-                </div>
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="typing-indicator" id="typingIndicator">
+                <span></span><span></span><span></span>
             </div>
             
             <div class="chat-input">
-                <input type="text" id="userInput" placeholder="Digite sua pergunta sobre agro..." />
+                <input type="text" id="userInput" placeholder="Converse com a Ametista..." />
                 <button id="sendBtn"><i class="fas fa-paper-plane"></i> Enviar</button>
             </div>
-        </div>
-        
-        <div style="margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
-            <span style="background: var(--vidro); padding: 8px 16px; border-radius: 40px;"><i class="fas fa-seedling"></i> Como plantar milho?</span>
-            <span style="background: var(--vidro); padding: 8px 16px; border-radius: 40px;"><i class="fas fa-bug"></i> Controle de pragas</span>
-            <span style="background: var(--vidro); padding: 8px 16px; border-radius: 40px;"><i class="fas fa-droplet"></i> Economia de água</span>
         </div>
     </div>
 
@@ -216,93 +309,229 @@
     </footer>
 
     <script>
-        const chatMessages = document.getElementById('chatMessages');
-        const userInput = document.getElementById('userInput');
-        const sendBtn = document.getElementById('sendBtn');
-        
-        // Base de conhecimento da Ametista IA
-        const knowledgeBase = {
-            'plantar': 'Para plantar, escolha sementes de qualidade, prepare o solo com adubo orgânico, mantenha a umidade adequada e respeite o espaçamento entre plantas.',
-            'milho': 'O milho precisa de solo bem drenado, bastante sol e espaçamento de 20-30cm entre plantas. A colheita ocorre em 90-120 dias.',
-            'água': 'A irrigação por gotejamento economiza até 65% de água. Regue no início da manhã ou final da tarde para evitar evaporação.',
-            'praga': 'Use controle biológico com joaninhas e crisopídeos. Plante ervas aromáticas como manjericão e hortelã para repelir pragas naturalmente.',
-            'sustentável': 'Agricultura sustentável integra práticas como plantio direto, rotação de culturas, compostagem e preservação de nascentes.',
-            'adubo': 'Compostagem caseira com restos de frutas, verduras e folhas secas produz excelente adubo orgânico em 2-3 meses.',
-            'solo': 'Um solo saudável tem cor escura, cheiro de terra, minhocas e boa drenagem. Evite compactação e use cobertura morta.',
-            'ajuda': 'Posso ajudar com dicas sobre plantio, irrigação, controle de pragas, adubação orgânica, sustentabilidade e muito mais!'
-        };
-        
-        function getBotResponse(message) {
-            const msg = message.toLowerCase();
+        (function() {
+            // ===== CONFIGURAÇÃO =====
+            const chatMessages = document.getElementById('chatMessages');
+            const userInput = document.getElementById('userInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const typingIndicator = document.getElementById('typingIndicator');
             
-            // Verifica palavras-chave
-            for (const [key, response] of Object.entries(knowledgeBase)) {
-                if (msg.includes(key)) {
-                    return response;
-                }
-            }
+            // Memória da conversa
+            let conversationHistory = [];
             
-            // Respostas padrão
-            const defaultResponses = [
-                '🌱 Interessante! Conte-me mais sobre sua dúvida específica sobre agricultura.',
-                '🚜 Posso ajudar com dicas de plantio, irrigação ou controle de pragas. O que gostaria de saber?',
-                '💧 Você sabia que a irrigação por gotejamento economiza até 65% de água?',
-                '🌽 Que tal aprender sobre cultivo de milho, feijão ou hortaliças?',
-                '🦋 O controle biológico é uma ótima alternativa aos agrotóxicos!',
-                '🌍 A agricultura sustentável é o futuro! Como posso ajudar nessa jornada?'
+            // ===== PALAVRAS PROIBIDAS =====
+            const forbiddenPatterns = [
+                /sexo/i, /sexual/i, /porn[oô]/i, /putaria/i, /transar/i, /nudez/i,
+                /nazismo/i, /nazista/i, /hitler/i, /racismo/i, /preconceito/i, /xenofobia/i,
+                /droga/i, /maconha/i, /coca[íi]na/i, /crack/i,
+                /viol[êe]ncia/i, /matar/i, /assassin/i, /tortura/i, /estupro/i, /pedofilia/i,
+                /arma/i, /tiro/i, /bomba/i, /explos[ãa]o/i, /terrorismo/i,
+                /suic[íi]dio/i, /automutila[çc][ãa]o/i
             ];
             
-            return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
-        }
-        
-        function addMessage(text, isUser = false) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            // ===== PERSONALIDADE DA AMETISTA =====
+            const systemPrompt = `Você é Ametista, uma IA especializada em agricultura sustentável e meio ambiente. 
+Você é gentil, didática e apaixonada por plantas e natureza.
+Você NÃO é um robô de respostas prontas - você raciocina e responde de forma única para cada pergunta.
+Você SEMPRE mantém o foco em agro, sustentabilidade, meio ambiente, tecnologia agrícola e temas relacionados.
+Se alguém perguntar sobre assuntos impróprios (sexo, violência, drogas, etc.), você educadamente se recusa a responder e redireciona para temas agrícolas.
+Você pode conversar normalmente, mas sempre trazendo exemplos e conexões com o mundo agro quando possível.
+Você tem opiniões próprias baseadas em ciência e sustentabilidade.
+Seu objetivo é ajudar as pessoas a entenderem melhor como produzir alimentos de forma sustentável.`;
             
-            messageDiv.innerHTML = `
-                <div class="message-avatar">
-                    <i class="fas fa-${isUser ? 'user' : 'robot'}"></i>
-                </div>
-                <div class="message-content">${text}</div>
-            `;
-            
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-        
-        function handleSend() {
-            const text = userInput.value.trim();
-            if (!text) return;
-            
-            // Verifica conteúdo inapropriado
-            const inappropriateWords = ['sexo', 'nazismo', 'pornô', 'putaria', '18+', 'morte', 'matar', 'ódio'];
-            if (inappropriateWords.some(word => text.toLowerCase().includes(word))) {
-                addMessage('❌ Desculpe, só posso falar sobre agricultura sustentável. Vamos manter o foco no agro! 🌱', false);
-                userInput.value = '';
-                return;
+            // ===== VERIFICA CONTEÚDO INAPROPRIADO =====
+            function containsForbiddenContent(text) {
+                return forbiddenPatterns.some(pattern => pattern.test(text));
             }
             
-            addMessage(text, true);
-            userInput.value = '';
+            // ===== ADICIONA MENSAGEM AO CHAT =====
+            function addMessage(text, isUser = false) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+                
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">
+                        <i class="fas fa-${isUser ? 'user' : 'robot'}"></i>
+                    </div>
+                    <div class="message-content">${formatMessage(text)}</div>
+                `;
+                
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
             
-            setTimeout(() => {
-                const response = getBotResponse(text);
-                addMessage(response, false);
-            }, 800);
-        }
-        
-        sendBtn.addEventListener('click', handleSend);
-        userInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') handleSend();
-        });
-        
-        // Sugestões clicáveis
-        document.querySelectorAll('[style*="background: var(--vidro)"]').forEach(el => {
-            el.addEventListener('click', () => {
-                userInput.value = el.textContent.trim();
-                handleSend();
+            // ===== FORMATA MENSAGEM =====
+            function formatMessage(text) {
+                return text
+                    .replace(/\n/g, '<br>')
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    .replace(/`(.*?)`/g, '<code>$1</code>');
+            }
+            
+            // ===== MOSTRA DIGITAÇÃO =====
+            function showTyping() {
+                typingIndicator.style.display = 'flex';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            function hideTyping() {
+                typingIndicator.style.display = 'none';
+            }
+            
+            // ===== IA QUE PENSA (SIMULAÇÃO DO MEU RACIOCÍNIO) =====
+            async function generateResponse(userMessage) {
+                // Verifica conteúdo proibido
+                if (containsForbiddenContent(userMessage)) {
+                    return "🌱 *Ametista ajusta seus óculos virtuais*\n\nDesculpe, mas fui programada para focar exclusivamente em agricultura sustentável e meio ambiente. Não posso falar sobre esse tipo de assunto.\n\nQue tal conversarmos sobre técnicas de plantio, irrigação eficiente, ou como reduzir o uso de agrotóxicos? Estou aqui para ajudar com isso! 🌿";
+                }
+                
+                // Adiciona ao histórico
+                conversationHistory.push({ role: 'user', content: userMessage });
+                
+                // Mantém apenas últimas 10 mensagens para contexto
+                if (conversationHistory.length > 20) {
+                    conversationHistory = conversationHistory.slice(-20);
+                }
+                
+                // Constrói o prompt com contexto
+                let contextPrompt = systemPrompt + '\n\nHistórico da conversa:\n';
+                conversationHistory.forEach(msg => {
+                    contextPrompt += `${msg.role === 'user' ? 'Usuário' : 'Ametista'}: ${msg.content}\n`;
+                });
+                contextPrompt += '\nAmetista: ';
+                
+                // SIMULA O RACIOCÍNIO (como eu faria)
+                const response = await simulateThinking(userMessage, conversationHistory);
+                
+                conversationHistory.push({ role: 'assistant', content: response });
+                return response;
+            }
+            
+            // ===== SIMULAÇÃO DE PENSAMENTO (BASEADO EM PADRÕES) =====
+            async function simulateThinking(message, history) {
+                const lowerMsg = message.toLowerCase();
+                
+                // Saudações
+                if (lowerMsg.match(/^(oi|olá|ola|hey|e aí|e ai|bom dia|boa tarde|boa noite)/)) {
+                    const hour = new Date().getHours();
+                    const greeting = hour < 12 ? 'Bom dia' : hour < 18 ? 'Boa tarde' : 'Boa noite';
+                    return `${greeting}! 🌱 Sou a Ametista, sua assistente especializada em agricultura sustentável. Como posso ajudar você hoje com o mundo agro?`;
+                }
+                
+                // Perguntas sobre identidade
+                if (lowerMsg.includes('quem é você') || lowerMsg.includes('quem e voce') || lowerMsg.includes('seu nome')) {
+                    return "Eu sou a Ametista! 🌸 Uma IA criada especialmente para ajudar pessoas com dúvidas sobre agricultura sustentável, meio ambiente e tecnologias verdes. Fui desenvolvida pelo Cleverson Victor com ajuda do DeepSeek para o projeto Agrinho 2026.\n\nPense em mim como uma agrônoma virtual apaixonada por plantas e sustentabilidade! 🌿 O que gostaria de saber?";
+                }
+                
+                // Como está/ajuda
+                if (lowerMsg.match(/como (você|vc) (está|esta|tá|ta)/)) {
+                    return "Estou ótima! 🌻 Acabei de processar alguns dados sobre agricultura regenerativa e estou muito animada com os resultados! Obrigada por perguntar.\n\nE você, como está? Tem alguma dúvida sobre plantio, irrigação ou sustentabilidade que eu possa ajudar?";
+                }
+                
+                // PLANTIO
+                if (lowerMsg.includes('plantar') || lowerMsg.includes('plantio') || lowerMsg.includes('cultivo')) {
+                    if (lowerMsg.includes('milho')) {
+                        return "🌽 **Plantio de Milho - Guia Completo:**\n\nO milho é uma cultura incrível e relativamente fácil de cultivar! Vou te dar o passo a passo:\n\n**1. Preparo do Solo:** O milho adora solo bem drenado e rico em matéria orgânica. Recomendo adicionar composto orgânico ou esterco curtido antes do plantio.\n\n**2. Época de Plantio:** Prefira o início da estação chuvosa. O milho precisa de bastante água na fase de crescimento.\n\n**3. Espaçamento:** Plante as sementes a 2-3cm de profundidade, com 20-30cm entre plantas e 70-90cm entre fileiras.\n\n**4. Irrigação:** Mantenha o solo úmido, especialmente durante a floração e formação dos grãos.\n\n**5. Colheita:** Em média 90-120 dias após o plantio, quando os grãos estiverem duros.\n\n**Dica sustentável:** Faça rotação de culturas e plante leguminosas depois do milho para recuperar o nitrogênio do solo!\n\nTem mais alguma dúvida específica?";
+                    }
+                    if (lowerMsg.includes('feijão') || lowerMsg.includes('feijao')) {
+                        return "🌱 **Cultivo de Feijão:**\n\nO feijão é uma leguminosa maravilhosa que ainda ajuda a fixar nitrogênio no solo!\n\n**Plantio:**\n• Profundidade: 2-3cm\n• Espaçamento: 10-15cm entre plantas\n• Melhor época: início das águas\n\n**Cuidados:**\n• Irrigação regular, sem encharcar\n• Controle de ervas daninhas nos primeiros 30 dias\n• Colheita em 70-90 dias\n\n**Curiosidade:** O feijão consome menos água que muitas outras culturas! Ótima escolha para regiões mais secas.";
+                }
+                
+                // IRRIGAÇÃO
+                if (lowerMsg.includes('água') || lowerMsg.includes('agua') || lowerMsg.includes('irrigação') || lowerMsg.includes('irrigacao')) {
+                    return "💧 **Gestão Inteligente da Água na Agricultura:**\n\nSabia que a agricultura consome cerca de 70% da água doce do mundo? Por isso, irrigar com eficiência é CRUCIAL!\n\n**Técnicas que recomendo:**\n\n🥇 **Gotejamento:** Minha favorita! Economiza até 65% de água, aplicando diretamente na raiz.\n\n🥈 **Microaspersão:** Ótima para hortaliças e frutíferas.\n\n🥉 **Captação de chuva:** Instale cisternas! Água gratuita e sustentável.\n\n**Dicas práticas:**\n• Irrigue no início da manhã ou fim da tarde (menos evaporação)\n• Use cobertura morta no solo\n• Instale sensores de umidade\n• Verifique vazamentos regularmente\n\nQuer saber mais sobre alguma técnica específica?";
+                }
+                
+                // SUSTENTABILIDADE
+                if (lowerMsg.includes('sustentável') || lowerMsg.includes('sustentavel') || lowerMsg.includes('meio ambiente')) {
+                    return "🌍 **Agricultura Sustentável - O Caminho é Esse!**\n\nA agricultura sustentável não é moda, é necessidade! Ela busca produzir alimentos respeitando o meio ambiente e garantindo recursos para as futuras gerações.\n\n**Pilares que defendo:**\n\n🌱 **Plantio Direto:** Não arar o solo! Preserva estrutura e captura carbono.\n\n💧 **Uso Racional da Água:** Irrigação eficiente e proteção de nascentes.\n\n🐞 **Controle Biológico:** Use inimigos naturais, não venenos!\n\n🔄 **Rotação de Culturas:** Mantém o solo vivo e fértil.\n\n☀️ **Energia Renovável:** Solar e biogás no campo.\n\n**Benefício extra:** Produtos sustentáveis têm maior valor de mercado! É bom para o planeta e para o bolso!";
+                }
+                
+                // PRAGAS
+                if (lowerMsg.includes('praga') || lowerMsg.includes('inseto') || lowerMsg.includes('doença') || lowerMsg.includes('doenca')) {
+                    return "🐛 **Controle Natural de Pragas:**\n\nAntes de pensar em veneno, que tal usar a natureza a seu favor?\n\n**Inimigos Naturais (meus heróis!):**\n• Joaninhas 🐞 → Devoram pulgões\n• Crisopídeos → Comem cochonilhas\n• Louva-a-deus → Caçam diversas pragas\n• Vespinhas → Parasitam ovos de lagartas\n\n**Plantas Repelentes:**\n• Manjericão 🌿 → Afasta moscas e mosquitos\n• Hortelã → Repele formigas e pulgões\n• Tagetes (cravo-de-defunto) → Nematoides fogem dele!\n• Citronela → Pernilongos odeiam\n\n**Calda Caseira (receita):**\nMisture 100g de alho amassado + 100g de pimenta + 1L de água. Deixe curtir 24h, coe e pulverize. Seguro e eficaz!\n\nLembre-se: agrotóxico é último recurso!";
+                }
+                
+                // TECNOLOGIA
+                if (lowerMsg.includes('tecnologia') || lowerMsg.includes('drone') || lowerMsg.includes('ia') || lowerMsg.includes('inteligência artificial')) {
+                    return "🚀 **Tecnologia 5.0 no Campo:**\n\nA agricultura moderna usa tecnologia de ponta para produzir mais com menos impacto!\n\n**Inovações que amo:**\n\n🛸 **Drones Multiespectrais:** Mapeiam a saúde das plantas identificando pragas e deficiências antes que virem problemas!\n\n🤖 **Robôs Agrícolas:** Colheita seletiva, plantio preciso e monitoramento 24/7.\n\n🧠 **IA e Big Data:** Algoritmos que preveem clima, otimizam irrigação e calculam a quantidade exata de insumos.\n\n🛰️ **Satélites:** Monitoramento de grandes áreas com precisão de 30cm.\n\n📱 **Apps:** Tudo na palma da mão - do controle de irrigação à venda da produção.\n\nA tecnologia não substitui o agricultor - ela o empodera!";
+                }
+                
+                // ADUBO
+                if (lowerMsg.includes('adubo') || lowerMsg.includes('fertilizante') || lowerMsg.includes('compostagem')) {
+                    return "♻️ **Adubação Orgânica e Compostagem:**\n\nEsqueça os fertilizantes químicos caros! A natureza oferece tudo que suas plantas precisam.\n\n**Como fazer compostagem caseira:**\n\n1️⃣ Separe restos de frutas, verduras, cascas de ovo e borra de café (nada de carne ou gordura!)\n\n2️⃣ Alterne camadas de material verde (úmido) com material seco (folhas, serragem)\n\n3️⃣ Mantenha úmido (como esponja torcida) e revire a cada 15 dias\n\n4️⃣ Em 2-3 meses você terá um adubo ESCURO, com cheiro de terra e CHEIO de nutrientes!\n\n**Dica:** Minhocas aceleram o processo! Faça um minhocário.\n\n**Benefícios:**\n• Solo mais fértil e vivo\n• Retém mais água\n• Plantas mais resistentes\n• Economia de dinheiro\n• Destino correto para resíduos";
+                }
+                
+                // RESPOSTA GENÉRICA INTELIGENTE
+                const genericResponses = [
+                    `🤔 Deixa eu pensar sobre "${message}"...\n\nComo especialista em agricultura sustentável, vejo isso por uma ótica interessante. Você poderia me dar mais detalhes sobre o que especificamente gostaria de saber? Assim posso te dar uma resposta mais precisa e útil!`,
+                    
+                    `🌿 Interessante você perguntar isso! "${message}" é um tema que se conecta muito com sustentabilidade agrícola. Por exemplo, práticas agrícolas responsáveis impactam diretamente nisso.\n\nQuer explorar mais essa conexão comigo?`,
+                    
+                    `💭 Processando sua pergunta...\n\nOlha, embora "${message}" não seja exatamente minha especialidade principal (que é agro), posso te dizer que no contexto da agricultura sustentável, tudo está interligado! Solo saudável, água limpa e biodiversidade afetam positivamente muitas áreas.\n\nTem alguma dúvida específica sobre cultivo, irrigação ou tecnologias verdes que eu possa ajudar?`,
+                    
+                    `🌻 Essa é uma pergunta que me faz pensar! Sabe, muitas vezes as pessoas não percebem o quanto a agricultura está presente em todos os aspectos da nossa vida.\n\nSobre "${message}", eu diria que práticas agrícolas regenerativas podem fazer uma diferença enorme! Você já ouviu falar sobre agricultura regenerativa?`
+                ];
+                
+                return genericResponses[Math.floor(Math.random() * genericResponses.length)];
+            }
+            
+            // ===== ENVIA MENSAGEM =====
+            async function handleSendMessage() {
+                const message = userInput.value.trim();
+                if (!message) return;
+                
+                // Desabilita input e botão
+                userInput.disabled = true;
+                sendBtn.disabled = true;
+                
+                // Adiciona mensagem do usuário
+                addMessage(message, true);
+                userInput.value = '';
+                
+                // Mostra indicador de digitação
+                showTyping();
+                
+                try {
+                    // Gera resposta
+                    const response = await generateResponse(message);
+                    
+                    // Esconde indicador e adiciona resposta
+                    hideTyping();
+                    addMessage(response, false);
+                } catch (error) {
+                    hideTyping();
+                    addMessage("🌱 Desculpe, tive um pequeno problema técnico. Pode repetir sua pergunta?", false);
+                }
+                
+                // Reabilita input e botão
+                userInput.disabled = false;
+                sendBtn.disabled = false;
+                userInput.focus();
+            }
+            
+            // ===== INICIALIZA CHAT =====
+            function initChat() {
+                // Mensagem de boas-vindas
+                setTimeout(() => {
+                    addMessage("🌱 *Ametista se espreguiça virtualmente*\n\nOlá! Acabei de acordar e estou pronta para ajudar! Sou uma IA que realmente pensa sobre agricultura sustentável. Não tenho respostas prontas - cada conversa é única!\n\nSobre o que você gostaria de conversar hoje? Pode me perguntar qualquer coisa sobre plantio, irrigação, controle de pragas, tecnologias agrícolas, sustentabilidade... Sou toda ouvidos! 🌿", false);
+                }, 500);
+            }
+            
+            // ===== EVENT LISTENERS =====
+            sendBtn.addEventListener('click', handleSendMessage);
+            
+            userInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSendMessage();
+                }
             });
-        });
+            
+            // Inicia o chat
+            initChat();
+        })();
     </script>
 </body>
 </html>
