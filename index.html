@@ -17,12 +17,14 @@
             --verde-medio: #1a3a1a;
             --verde-claro: #66ffb3;
             --dourado: #ffd700;
+            --roxo: #a855f7;
             --texto: #e0ffe0;
             --fundo: #050a05;
             --vidro: rgba(0, 255, 136, 0.05);
             --borda-vidro: rgba(0, 255, 136, 0.15);
             --sombra-neon: 0 0 30px rgba(0, 255, 136, 0.3);
             --sombra-dourada: 0 0 30px rgba(255, 215, 0, 0.3);
+            --sombra-roxa: 0 0 30px rgba(168, 85, 247, 0.3);
         }
 
         * {
@@ -228,7 +230,7 @@
             cursor: pointer;
         }
 
-        /* ===== HERO EXPANDIDA ===== */
+        /* ===== HERO ===== */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -384,6 +386,8 @@
             font-size: 1.1rem;
             position: relative;
             overflow: hidden;
+            border: none;
+            cursor: pointer;
         }
 
         .btn::before {
@@ -418,6 +422,7 @@
         .btn-outline {
             border: 2px solid var(--verde-neon);
             color: var(--verde-neon);
+            background: transparent;
         }
 
         .btn-outline:hover {
@@ -431,10 +436,14 @@
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
         }
 
-        /* ===== SEÇÃO DE IMAGENS/GALERIA ===== */
-        .gallery-section {
+        .btn-game:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.8);
+        }
+
+        /* ===== SEÇÕES ===== */
+        .section {
             padding: 80px 30px;
-            background: linear-gradient(180deg, transparent, var(--vidro));
         }
 
         .container {
@@ -454,6 +463,7 @@
             margin-bottom: 20px;
         }
 
+        /* ===== GALERIA ===== */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -465,10 +475,10 @@
             border-radius: 30px;
             overflow: hidden;
             aspect-ratio: 1;
-            cursor: pointer;
             border: 2px solid var(--borda-vidro);
             transition: all 0.4s;
             animation: fadeInUp 0.8s ease-out;
+            background: var(--vidro);
         }
 
         .gallery-item:hover {
@@ -503,18 +513,7 @@
             opacity: 1;
         }
 
-        .gallery-overlay span {
-            color: white;
-            font-weight: 600;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        /* ===== DASHBOARD DE ESTATÍSTICAS ===== */
-        .stats-dashboard {
-            padding: 80px 30px;
-            background: var(--fundo);
-        }
-
+        /* ===== DASHBOARD ===== */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -576,23 +575,56 @@
             font-size: 1.1rem;
         }
 
-        .stat-trend {
-            margin-top: 15px;
-            color: var(--verde-neon);
-            font-size: 0.9rem;
+        /* ===== JOGOS ===== */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
         }
 
-        /* ===== JORNADA DO CAMPO À MESA ===== */
-        .journey-section {
-            padding: 80px 30px;
-            background: linear-gradient(135deg, var(--vidro), transparent);
+        .game-card {
+            background: var(--vidro);
+            backdrop-filter: blur(15px);
+            border: 2px solid var(--borda-vidro);
+            border-radius: 40px;
+            padding: 50px 30px;
+            text-align: center;
+            transition: all 0.4s;
+            animation: fadeInUp 0.8s ease-out;
+            cursor: pointer;
         }
 
+        .game-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--dourado);
+            box-shadow: var(--sombra-dourada);
+        }
+
+        .game-icon {
+            font-size: 4rem;
+            color: var(--dourado);
+            margin-bottom: 25px;
+            filter: drop-shadow(0 0 20px var(--dourado));
+        }
+
+        .game-card h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--texto);
+        }
+
+        .game-card p {
+            opacity: 0.8;
+            margin-bottom: 25px;
+        }
+
+        /* ===== JORNADA ===== */
         .journey-timeline {
             display: flex;
             justify-content: space-around;
             margin-top: 60px;
             position: relative;
+            flex-wrap: wrap;
         }
 
         .journey-timeline::before {
@@ -612,6 +644,7 @@
             position: relative;
             z-index: 1;
             animation: fadeInUp 0.8s ease-out;
+            padding: 20px;
         }
 
         .step-icon {
@@ -649,77 +682,122 @@
             max-width: 200px;
         }
 
-        /* ===== NOTÍCIAS DO AGRO ===== */
-        .news-section {
-            padding: 80px 30px;
-            background: var(--fundo);
+        /* ===== WIDGET IA ===== */
+        .ia-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9998;
         }
 
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+        .ia-toggle {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--roxo), #c084fc);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 40px rgba(168, 85, 247, 0.5);
+            transition: all 0.3s;
+            border: 2px solid white;
+            animation: pulseGlow 2s infinite;
         }
 
-        .news-card {
-            background: var(--vidro);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--borda-vidro);
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.5); }
+            50% { box-shadow: 0 0 50px rgba(168, 85, 247, 0.8); }
+        }
+
+        .ia-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .ia-chat {
+            position: absolute;
+            bottom: 90px;
+            right: 0;
+            width: 350px;
+            background: rgba(10, 20, 10, 0.98);
+            backdrop-filter: blur(30px);
+            border: 2px solid var(--roxo);
             border-radius: 30px;
-            overflow: hidden;
-            transition: all 0.4s;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .news-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--verde-neon);
-            box-shadow: var(--sombra-neon);
-        }
-
-        .news-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .news-content {
             padding: 25px;
+            display: none;
+            box-shadow: 0 0 50px rgba(168, 85, 247, 0.3);
         }
 
-        .news-date {
-            color: var(--verde-neon);
-            font-size: 0.9rem;
-            margin-bottom: 10px;
+        .ia-chat.active {
+            display: block;
+            animation: slideUp 0.3s ease-out;
         }
 
-        .news-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 15px;
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .news-excerpt {
-            color: var(--texto);
-            opacity: 0.8;
+        .ia-chat h3 {
+            color: var(--roxo);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ia-quick-questions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
             margin-bottom: 20px;
         }
 
-        .news-link {
-            color: var(--verde-neon);
+        .ia-quick-btn {
+            padding: 12px 18px;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 20px;
+            color: var(--texto);
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .ia-quick-btn:hover {
+            background: rgba(168, 85, 247, 0.2);
+            border-color: var(--roxo);
+        }
+
+        .ia-answer {
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            margin: 15px 0;
+            border-left: 3px solid var(--roxo);
+            display: none;
+        }
+
+        .ia-answer.active {
+            display: block;
+        }
+
+        .ia-link {
+            display: block;
+            text-align: center;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--roxo), #c084fc);
+            color: white;
             text-decoration: none;
+            border-radius: 30px;
             font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            margin-top: 15px;
         }
 
         /* ===== DEPOIMENTOS ===== */
-        .testimonials-section {
-            padding: 80px 30px;
-            background: linear-gradient(180deg, transparent, var(--vidro));
-        }
-
         .testimonials-carousel {
             display: flex;
             gap: 30px;
@@ -770,6 +848,12 @@
             height: 60px;
             border-radius: 50%;
             border: 3px solid var(--verde-neon);
+            background: var(--verde-medio);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--verde-neon);
         }
 
         .author-info strong {
@@ -805,8 +889,9 @@
         @media (max-width: 1200px) {
             .gallery-grid { grid-template-columns: repeat(2, 1fr); }
             .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
-            .news-grid { grid-template-columns: repeat(2, 1fr); }
+            .games-grid { grid-template-columns: repeat(2, 1fr); }
             .footer-content { grid-template-columns: 1fr 1fr; }
+            .journey-timeline::before { display: none; }
         }
 
         @media (max-width: 768px) {
@@ -828,11 +913,11 @@
             
             .gallery-grid { grid-template-columns: 1fr; }
             .dashboard-grid { grid-template-columns: 1fr; }
-            .news-grid { grid-template-columns: 1fr; }
+            .games-grid { grid-template-columns: 1fr; }
             .journey-timeline { flex-direction: column; gap: 40px; }
-            .journey-timeline::before { display: none; }
             .testimonial-card { min-width: 100%; }
             .footer-content { grid-template-columns: 1fr; }
+            .ia-chat { width: 300px; }
         }
     </style>
 </head>
@@ -871,7 +956,6 @@
         <li><a href="sustentabilidade.html"><i class="fas fa-globe"></i> Sustentabilidade</a></li>
         <li><a href="tecnologias.html"><i class="fas fa-microchip"></i> Tecnologias</a></li>
         <li><a href="contato.html"><i class="fas fa-envelope"></i> Contato</a></li>
-        <li><a href="ia-ametista.html"><i class="fas fa-robot"></i> Ametista IA</a></li>
     </ul>
 </nav>
 
@@ -900,13 +984,12 @@
         <div class="hero-buttons">
             <a href="sustentabilidade.html" class="btn btn-primary"><i class="fas fa-leaf"></i> Explorar soluções</a>
             <a href="tecnologias.html" class="btn btn-outline"><i class="fas fa-microchip"></i> Tecnologias</a>
-            <a href="ia-ametista.html" class="btn btn-primary"><i class="fas fa-robot"></i> Ametista IA</a>
         </div>
     </div>
 </section>
 
-<!-- GALERIA DE IMAGENS -->
-<section class="gallery-section">
+<!-- GALERIA DE IMAGENS (COM FALLBACK CONFIÁVEL) -->
+<section class="section">
     <div class="container">
         <div class="section-header">
             <h2><span class="gradient-text">Agro em Ação</span> 🌾</h2>
@@ -915,27 +998,27 @@
         
         <div class="gallery-grid">
             <div class="gallery-item">
-                <img src="https://images.pexels.com/photos/2477632/pexels-photo-2477632.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Campo sustentável">
-                <div class="gallery-overlay"><span>Agricultura Regenerativa</span></div>
+                <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&h=600&fit=crop" alt="Campo sustentável" onerror="this.src='https://images.pexels.com/photos/2477632/pexels-photo-2477632.jpeg?auto=compress&cs=tinysrgb&w=600'">
+                <div class="gallery-overlay"><span>🌱 Agricultura Regenerativa</span></div>
             </div>
             <div class="gallery-item">
-                <img src="https://images.pexels.com/photos/5217916/pexels-photo-5217916.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Drone agrícola">
-                <div class="gallery-overlay"><span>Tecnologia 5.0 no Campo</span></div>
+                <img src="https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=600&h=600&fit=crop" alt="Drone agrícola" onerror="this.src='https://images.pexels.com/photos/5217916/pexels-photo-5217916.jpeg?auto=compress&cs=tinysrgb&w=600'">
+                <div class="gallery-overlay"><span>🚁 Tecnologia 5.0 no Campo</span></div>
             </div>
             <div class="gallery-item">
-                <img src="https://images.pexels.com/photos/422218/pexels-photo-422218.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Plantação orgânica">
-                <div class="gallery-overlay"><span>Cultivo Orgânico</span></div>
+                <img src="https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=600&h=600&fit=crop" alt="Plantação orgânica" onerror="this.src='https://images.pexels.com/photos/422218/pexels-photo-422218.jpeg?auto=compress&cs=tinysrgb&w=600'">
+                <div class="gallery-overlay"><span>🌿 Cultivo Orgânico</span></div>
             </div>
             <div class="gallery-item">
-                <img src="https://images.pexels.com/photos/1301856/pexels-photo-1301856.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Energia solar">
-                <div class="gallery-overlay"><span>Energia 100% Limpa</span></div>
+                <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&h=600&fit=crop" alt="Energia solar" onerror="this.src='https://images.pexels.com/photos/1301856/pexels-photo-1301856.jpeg?auto=compress&cs=tinysrgb&w=600'">
+                <div class="gallery-overlay"><span>☀️ Energia 100% Limpa</span></div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- DASHBOARD DE ESTATÍSTICAS -->
-<section class="stats-dashboard">
+<section class="section" style="background: var(--fundo);">
     <div class="container">
         <div class="section-header">
             <h2><span class="gradient-text">Impacto Real</span> 📊</h2>
@@ -947,32 +1030,59 @@
                 <div class="stat-icon"><i class="fas fa-flask"></i></div>
                 <div class="stat-number counter" data-target="98">0</div>
                 <div class="stat-label">Redução de Agrotóxicos</div>
-                <div class="stat-trend"><i class="fas fa-arrow-up"></i> +32% vs. ano anterior</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon"><i class="fas fa-droplet"></i></div>
                 <div class="stat-number counter" data-target="65">0</div>
                 <div class="stat-label">Economia de Água</div>
-                <div class="stat-trend"><i class="fas fa-arrow-up"></i> +18% eficiência</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon"><i class="fas fa-solar-panel"></i></div>
                 <div class="stat-number counter" data-target="100">0</div>
                 <div class="stat-label">Energia Renovável</div>
-                <div class="stat-trend"><i class="fas fa-check-circle"></i> Zero emissões</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon"><i class="fas fa-tree"></i></div>
                 <div class="stat-number counter" data-target="3500000">0</div>
                 <div class="stat-label">Árvores Preservadas</div>
-                <div class="stat-trend"><i class="fas fa-arrow-up"></i> +120% área verde</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- JOGOS (SÓ BOTÕES) -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-gamepad" style="color: var(--dourado);"></i> <span class="gradient-text">Jogos do Agrinho</span></h2>
+            <p style="font-size: 1.2rem; opacity: 0.8;">Aprenda sobre agro se divertindo!</p>
+        </div>
+        
+        <div class="games-grid">
+            <div class="game-card" onclick="location.href='jogo-plantar.html'">
+                <div class="game-icon"><i class="fas fa-tractor"></i></div>
+                <h3>Colheita Feliz</h3>
+                <p>Plante, cultive e colha! Entregue suas colheitas na cidade.</p>
+                <span class="btn btn-game" style="margin-top: 10px;">JOGAR AGORA</span>
+            </div>
+            <div class="game-card" onclick="location.href='jogo-flappy.html'">
+                <div class="game-icon"><i class="fas fa-dove"></i></div>
+                <h3>Flappy Plant</h3>
+                <p>Ajude a plantinha a voar entre os canos! Quanto mais longe, melhor!</p>
+                <span class="btn btn-game" style="margin-top: 10px;">JOGAR AGORA</span>
+            </div>
+            <div class="game-card" onclick="location.href='jogo-pvz.html'">
+                <div class="game-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>Plants vs Zombies</h3>
+                <p>Defenda sua horta dos zumbis! Plante defesas e proteja o agro!</p>
+                <span class="btn btn-game" style="margin-top: 10px;">JOGAR AGORA</span>
             </div>
         </div>
     </div>
 </section>
 
 <!-- JORNADA DO CAMPO À MESA -->
-<section class="journey-section">
+<section class="section" style="background: linear-gradient(135deg, var(--vidro), transparent);">
     <div class="container">
         <div class="section-header">
             <h2><span class="gradient-text">Do Campo à Mesa</span> 🚜➡️🍽️</h2>
@@ -1014,77 +1124,8 @@
     </div>
 </section>
 
-<!-- JOGOS DESTAQUE -->
-<section class="gallery-section">
-    <div class="container">
-        <div class="section-header">
-            <h2><i class="fas fa-gamepad" style="color: var(--dourado);"></i> <span class="gradient-text">Jogos do Agrinho</span></h2>
-            <p style="font-size: 1.2rem; opacity: 0.8;">Aprenda sobre agro se divertindo!</p>
-        </div>
-        
-        <div class="gallery-grid">
-            <div class="gallery-item" onclick="location.href='jogo-plantar.html'">
-                <img src="https://images.pexels.com/photos/1000057/pexels-photo-1000057.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Colheita Feliz">
-                <div class="gallery-overlay"><span>🌽 Colheita Feliz<br>Plante, colha e entregue!</span></div>
-            </div>
-            <div class="gallery-item" onclick="location.href='jogo-flappy.html'">
-                <img src="https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Flappy Plant">
-                <div class="gallery-overlay"><span>🕊️ Flappy Plant<br>Voe entre os canos!</span></div>
-            </div>
-            <div class="gallery-item" onclick="location.href='jogo-pvz.html'">
-                <img src="https://images.pexels.com/photos/450326/pexels-photo-450326.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Plants vs Zombies">
-                <div class="gallery-overlay"><span>🧟 Plants vs Zombies<br>Defenda sua horta!</span></div>
-            </div>
-            <div class="gallery-item" onclick="location.href='ia-ametista.html'">
-                <img src="https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Ametista IA">
-                <div class="gallery-overlay"><span>🤖 Ametista IA<br>Converse com a IA do agro!</span></div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- NOTÍCIAS DO AGRO -->
-<section class="news-section">
-    <div class="container">
-        <div class="section-header">
-            <h2><span class="gradient-text">Notícias do Agro</span> 📰</h2>
-            <p style="font-size: 1.2rem; opacity: 0.8;">Fique por dentro das novidades do setor</p>
-        </div>
-        
-        <div class="news-grid">
-            <div class="news-card">
-                <img src="https://images.pexels.com/photos/422218/pexels-photo-422218.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Notícia 1" class="news-image">
-                <div class="news-content">
-                    <div class="news-date"><i class="far fa-calendar"></i> 09 de Abril, 2026</div>
-                    <div class="news-title">Brasil bate recorde em agricultura sustentável</div>
-                    <div class="news-excerpt">Área com práticas regenerativas cresce 45% em 2026...</div>
-                    <a href="#" class="news-link">Ler mais <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            <div class="news-card">
-                <img src="https://images.pexels.com/photos/5217916/pexels-photo-5217916.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Notícia 2" class="news-image">
-                <div class="news-content">
-                    <div class="news-date"><i class="far fa-calendar"></i> 08 de Abril, 2026</div>
-                    <div class="news-title">Drones com IA aumentam produtividade em 40%</div>
-                    <div class="news-excerpt">Tecnologia reduz uso de insumos e otimiza colheita...</div>
-                    <a href="#" class="news-link">Ler mais <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            <div class="news-card">
-                <img src="https://images.pexels.com/photos/1301856/pexels-photo-1301856.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Notícia 3" class="news-image">
-                <div class="news-content">
-                    <div class="news-date"><i class="far fa-calendar"></i> 07 de Abril, 2026</div>
-                    <div class="news-title">Energia solar no campo cresce 200% em 2 anos</div>
-                    <div class="news-excerpt">Produtores rurais investem em energia limpa...</div>
-                    <a href="#" class="news-link">Ler mais <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- DEPOIMENTOS -->
-<section class="testimonials-section">
+<section class="section">
     <div class="container">
         <div class="section-header">
             <h2><span class="gradient-text">Quem Confia</span> 💬</h2>
@@ -1095,21 +1136,21 @@
             <div class="testimonial-card">
                 <div class="testimonial-text"><i class="fas fa-quote-left"></i> A AGRO+VERDE transformou nossa propriedade! Reduzimos custos e aumentamos a produtividade sem agredir o meio ambiente.</div>
                 <div class="testimonial-author">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="João Silva" class="author-avatar">
+                    <div class="author-avatar"><i class="fas fa-user"></i></div>
                     <div class="author-info"><strong>João Silva</strong><span>Produtor Rural - MT</span></div>
                 </div>
             </div>
             <div class="testimonial-card">
                 <div class="testimonial-text"><i class="fas fa-quote-left"></i> A tecnologia que eles trouxeram mudou tudo! Hoje monitoro minha lavoura pelo celular e economizo 60% de água.</div>
                 <div class="testimonial-author">
-                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Maria Oliveira" class="author-avatar">
+                    <div class="author-avatar"><i class="fas fa-user"></i></div>
                     <div class="author-info"><strong>Maria Oliveira</strong><span>Agricultora - BA</span></div>
                 </div>
             </div>
             <div class="testimonial-card">
                 <div class="testimonial-text"><i class="fas fa-quote-left"></i> Graças às práticas sustentáveis, conseguimos certificação orgânica e exportamos para a Europa com preço premium!</div>
                 <div class="testimonial-author">
-                    <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Carlos Mendes" class="author-avatar">
+                    <div class="author-avatar"><i class="fas fa-user"></i></div>
                     <div class="author-info"><strong>Carlos Mendes</strong><span>Exportador - SP</span></div>
                 </div>
             </div>
@@ -1140,7 +1181,6 @@
                     <li style="margin-bottom: 10px;"><a href="jogo-plantar.html" style="color: var(--texto); text-decoration: none;">Colheita Feliz</a></li>
                     <li style="margin-bottom: 10px;"><a href="jogo-flappy.html" style="color: var(--texto); text-decoration: none;">Flappy Plant</a></li>
                     <li style="margin-bottom: 10px;"><a href="jogo-pvz.html" style="color: var(--texto); text-decoration: none;">Plants vs Zombies</a></li>
-                    <li style="margin-bottom: 10px;"><a href="ia-ametista.html" style="color: var(--texto); text-decoration: none;">Ametista IA</a></li>
                 </ul>
             </div>
             <div>
@@ -1158,6 +1198,28 @@
         </div>
     </div>
 </footer>
+
+<!-- WIDGET IA AMETISTA -->
+<div class="ia-widget">
+    <div class="ia-chat" id="iaChat">
+        <h3><i class="fas fa-gem" style="color: var(--roxo);"></i> Ametista IA</h3>
+        <p style="margin-bottom: 15px; opacity: 0.8;">Olá! Sou a Ametista, sua assistente do agro. Como posso ajudar?</p>
+        
+        <div class="ia-quick-questions">
+            <button class="ia-quick-btn" data-question="plants">🌱 Como jogar Plants vs Zombies?</button>
+            <button class="ia-quick-btn" data-question="flappy">🕊️ Como jogar Flappy Plant?</button>
+            <button class="ia-quick-btn" data-question="colheita">🚜 Como jogar Colheita Feliz?</button>
+            <button class="ia-quick-btn" data-question="agro">🌾 O que é agro sustentável?</button>
+        </div>
+        
+        <div class="ia-answer" id="iaAnswer"></div>
+        
+        <a href="ia-ametista.html" class="ia-link"><i class="fas fa-comments"></i> Falar com Ametista IA</a>
+    </div>
+    <div class="ia-toggle" id="iaToggle">
+        <i class="fas fa-robot"></i>
+    </div>
+</div>
 
 <script>
     // ===== PRELOADER =====
@@ -1204,7 +1266,7 @@
         document.getElementById('navLinks').classList.toggle('active');
     });
     
-    // ===== CONTADORES ANIMADOS =====
+    // ===== CONTADORES =====
     const counters = document.querySelectorAll('.counter');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -1229,6 +1291,41 @@
     }, { threshold: 0.5 });
     
     counters.forEach(counter => observer.observe(counter));
+    
+    // ===== WIDGET IA =====
+    const iaToggle = document.getElementById('iaToggle');
+    const iaChat = document.getElementById('iaChat');
+    const iaAnswer = document.getElementById('iaAnswer');
+    const quickBtns = document.querySelectorAll('.ia-quick-btn');
+    
+    const answers = {
+        plants: '🌱 **Plants vs Zombies:** Clique nos quadrados do gramado para plantar! 🌻 Girassol gera sol ☀️, 🌱 Atirador dispara ervilhas. Defenda sua casa dos zumbis! Quanto mais ondas sobreviver, mais difícil fica! Use o botão "Voltar" para sair.',
+        flappy: '🕊️ **Flappy Plant:** Clique ou pressione ESPAÇO para fazer a plantinha voar! Desvie dos canos verdes. Cada cano passado = 1 ponto. Bata seu recorde! Cuidado para não bater nos canos ou no chão!',
+        colheita: '🚜 **Colheita Feliz:** Compre sementes 🌱, clique nos campos para plantar. Espere crescer (barra verde) e colha 🌽! Carregue o caminhão e entregue na cidade para ganhar moedas 💰. Use as moedas para comprar mais sementes!',
+        agro: '🌾 **Agro Sustentável:** É produzir alimentos respeitando o meio ambiente! Usamos menos água 💧, zero agrotóxicos 🐞, energia limpa ☀️ e preservamos florestas 🌳. O equilíbrio entre produzir MUITO e preservar TUDO!'
+    };
+    
+    iaToggle.addEventListener('click', () => {
+        iaChat.classList.toggle('active');
+        iaAnswer.classList.remove('active');
+    });
+    
+    quickBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const question = btn.dataset.question;
+            iaAnswer.textContent = answers[question];
+            iaAnswer.classList.add('active');
+        });
+    });
+    
+    // Fecha o chat se clicar fora
+    document.addEventListener('click', (e) => {
+        if (!iaWidget.contains(e.target) && iaChat.classList.contains('active')) {
+            iaChat.classList.remove('active');
+        }
+    });
+    
+    const iaWidget = document.querySelector('.ia-widget');
 </script>
 </body>
 </html>
