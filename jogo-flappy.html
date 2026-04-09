@@ -2,420 +2,1129 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flappy Plant | AGRO+VERDE</title>
-    
-    <!-- CORRIGIDO: Carregamento seguro de fontes (HTTPS) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- CORRIGIDO: Font Awesome com HTTPS e fallback local caso falhe -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=no">
+    <title>🕊️ Flappy Plant | AGRO+VERDE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;600;700&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
     <style>
+        :root {
+            --verde-neon: #00ff88;
+            --verde-escuro: #0a1a0a;
+            --dourado: #ffd700;
+            --ceu-dia: linear-gradient(180deg, #87CEEB 0%, #98D8C8 100%);
+            --ceu-noite: linear-gradient(180deg, #1a1a3e 0%, #2d2d6b 100%);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
+            font-family: 'Archivo', sans-serif;
             min-height: 100vh;
-            background: linear-gradient(135deg, #0a1a0a, #1a3a1a);
             display: flex;
-            justify-content: center;
             align-items: center;
-            font-family: 'Plus Jakarta Sans', 'Arial', sans-serif; /* Fonte de fallback */
+            justify-content: center;
+            background: var(--verde-escuro);
             padding: 20px;
         }
-        
+
         .game-wrapper {
-            background: rgba(0, 255, 136, 0.05);
-            backdrop-filter: blur(10px);
-            border: 3px solid #00ff88;
-            border-radius: 30px;
-            padding: 20px 25px 25px;
-            box-shadow: 0 0 50px rgba(0, 255, 136, 0.3);
             max-width: 500px;
             width: 100%;
+            background: rgba(0, 255, 136, 0.03);
+            backdrop-filter: blur(20px);
+            border: 3px solid var(--verde-neon);
+            border-radius: 40px;
+            padding: 25px;
+            box-shadow: 0 0 80px rgba(0, 255, 136, 0.3);
+            position: relative;
+            overflow: hidden;
         }
-        
-        h1 {
-            text-align: center;
-            color: #00ff88;
-            margin-bottom: 15px;
-            font-size: 2rem;
-            text-shadow: 0 0 20px #00ff88;
+
+        /* Partículas de fundo */
+        .particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--verde-neon);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: floatParticle 8s linear infinite;
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(100%) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100%) rotate(360deg); opacity: 0; }
+        }
+
+        /* Header */
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .game-title {
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 10px;
+        }
+
+        .game-title i {
+            font-size: 2rem;
+            color: var(--verde-neon);
+            filter: drop-shadow(0 0 15px var(--verde-neon));
+            animation: flutter 2s ease-in-out infinite;
+        }
+
+        @keyframes flutter {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+
+        .game-title h1 {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--verde-neon), var(--dourado));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .stats-mini {
+            display: flex;
             gap: 15px;
         }
-        
-        canvas {
-            display: block;
-            margin: 0 auto;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 2px solid #00ff88;
-            cursor: pointer;
-            width: 100%; /* Torna responsivo */
-            height: auto;
+
+        .stat-mini {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 6px 12px;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
         }
-        
+
+        .stat-mini i {
+            color: var(--dourado);
+        }
+
+        /* Canvas do jogo */
+        .canvas-container {
+            position: relative;
+            z-index: 10;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            border: 3px solid var(--verde-neon);
+        }
+
+        #gameCanvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
+
+        /* Painel de status */
+        .status-panel {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            position: relative;
+            z-index: 10;
+        }
+
         .score-display {
             text-align: center;
-            margin: 20px 0;
-            color: #ffd700;
-            font-size: 1.5rem;
-            font-weight: bold;
+        }
+
+        .score-label {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .score-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dourado);
+            text-shadow: 0 0 20px var(--dourado);
+        }
+
+        .coins-display {
             display: flex;
-            justify-content: space-around;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 20px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
         }
-        
-        .controls {
-            text-align: center;
-            margin: 15px 0;
-            color: #ccc;
-            font-size: 0.9rem;
+
+        .coins-display i {
+            color: var(--dourado);
+            font-size: 1.5rem;
         }
-        
-        .button-group {
+
+        .coins-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dourado);
+        }
+
+        /* Power-ups ativos */
+        .powerups-active {
             display: flex;
             gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 10;
         }
-        
+
+        .powerup-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(0, 255, 136, 0.1);
+            padding: 5px 12px;
+            border-radius: 30px;
+            border: 1px solid var(--verde-neon);
+            font-size: 0.8rem;
+            animation: pulseGlow 1.5s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 5px var(--verde-neon); }
+            50% { box-shadow: 0 0 15px var(--verde-neon); }
+        }
+
+        .powerup-timer {
+            color: var(--dourado);
+            font-weight: 700;
+        }
+
+        /* Botões de ação */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            position: relative;
+            z-index: 10;
+        }
+
         .btn {
-            display: inline-block;
-            padding: 12px 24px;
+            padding: 14px 20px;
             border-radius: 60px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
+            font-weight: 700;
             border: none;
             cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
             font-size: 1rem;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            font-family: 'Archivo', sans-serif;
+            flex: 1;
         }
-        
+
         .btn-primary {
-            background: #ffd700;
-            color: #0a1a0a;
+            background: linear-gradient(135deg, var(--verde-neon), #00cc6a);
+            color: var(--verde-escuro);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
         }
-        
+
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 0 30px #ffd700;
+            box-shadow: 0 0 50px rgba(0, 255, 136, 0.5);
         }
-        
-        .btn-secondary {
-            background: #00ff88;
-            color: #0a1a0a;
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--dourado), #ffaa00);
+            color: var(--verde-escuro);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
         }
-        
-        .btn-secondary:hover {
+
+        .btn-warning:hover {
             transform: translateY(-3px);
-            box-shadow: 0 0 30px #00ff88;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
         }
-        
-        .btn-outline {
+
+        .btn-secondary {
             background: transparent;
-            color: #00ff88;
-            border: 2px solid #00ff88;
+            color: var(--verde-neon);
+            border: 2px solid var(--verde-neon);
         }
-        
-        .btn-outline:hover {
-            background: #00ff88;
-            color: #0a1a0a;
+
+        .btn-secondary:hover {
+            background: var(--verde-neon);
+            color: var(--verde-escuro);
+        }
+
+        /* Loja */
+        .shop-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .shop-modal.active {
+            display: flex;
+        }
+
+        .shop-content {
+            background: linear-gradient(135deg, #0a1a0a, #1a2a1a);
+            border: 3px solid var(--dourado);
+            border-radius: 40px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .shop-title {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--dourado);
+            text-align: center;
+        }
+
+        .skin-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .skin-item {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .skin-item:hover {
+            border-color: var(--verde-neon);
+            transform: scale(1.05);
+        }
+
+        .skin-item.selected {
+            border-color: var(--dourado);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .skin-item.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .skin-emoji {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .skin-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .skin-price {
+            color: var(--dourado);
+            font-size: 0.9rem;
+        }
+
+        .shop-close {
+            width: 100%;
+            padding: 15px;
+            background: var(--verde-neon);
+            color: var(--verde-escuro);
+            border: none;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* Tela de Game Over */
+        .gameover-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            border-radius: 40px;
+        }
+
+        .gameover-content {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .gameover-title {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 3rem;
+            color: #ff4444;
+            text-shadow: 0 0 30px #ff4444;
+            margin-bottom: 20px;
+        }
+
+        .gameover-score {
+            font-size: 2rem;
+            color: var(--dourado);
+            margin-bottom: 10px;
+        }
+
+        .gameover-coins {
+            font-size: 1.5rem;
+            color: var(--dourado);
+            margin-bottom: 20px;
+        }
+
+        .new-record {
+            color: var(--verde-neon);
+            font-size: 1.5rem;
+            animation: pulse 1s infinite;
+        }
+
+        /* Voltar */
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.3s;
+            position: relative;
+            z-index: 10;
+        }
+
+        .back-link:hover {
+            color: var(--verde-neon);
+        }
+
+        /* Notificação */
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 20, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--verde-neon);
+            border-radius: 60px;
+            padding: 16px 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 600;
+            z-index: 1001;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translate(-50%, 20px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+
+        /* Responsivo */
+        @media (max-width: 500px) {
+            .game-wrapper {
+                padding: 15px;
+            }
+            
+            .game-title h1 {
+                font-size: 1.3rem;
+            }
+            
+            .score-value {
+                font-size: 1.5rem;
+            }
+            
+            .coins-value {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="game-wrapper">
-        <h1>
-            <span>🌱</span> FLAPPY PLANT <span>🕊️</span>
-        </h1>
-        
-        <canvas id="gameCanvas" width="400" height="600"></canvas>
-        
-        <div class="score-display">
-            <span>🌱 Score: <span id="scoreDisplay">0</span></span>
-            <span>🏆 Best: <span id="bestScore">0</span></span>
+        <!-- Partículas -->
+        <div class="particles" id="particles"></div>
+
+        <!-- Header -->
+        <div class="game-header">
+            <div class="game-title">
+                <i class="fas fa-dove"></i>
+                <h1>FLAPPY PLANT</h1>
+            </div>
+            <div class="stats-mini">
+                <div class="stat-mini">
+                    <i class="fas fa-trophy"></i>
+                    <span id="bestScoreMini">0</span>
+                </div>
+            </div>
         </div>
-        
-        <div class="controls">
-            <p><i class="fas fa-mouse"></i> Clique ou pressione ESPAÇO para voar</p>
+
+        <!-- Canvas -->
+        <div class="canvas-container">
+            <canvas id="gameCanvas" width="400" height="600"></canvas>
+            
+            <!-- Game Over -->
+            <div class="gameover-overlay" id="gameoverOverlay">
+                <div class="gameover-content">
+                    <div class="gameover-title">GAME OVER</div>
+                    <div class="gameover-score">🌱 Score: <span id="finalScore">0</span></div>
+                    <div class="gameover-coins">💰 Moedas: <span id="finalCoins">0</span></div>
+                    <div class="new-record" id="newRecordBadge" style="display: none;">🏆 NOVO RECORDE! 🏆</div>
+                    <button class="btn btn-primary" id="restartFromOver" style="margin-top: 20px;">
+                        <i class="fas fa-redo"></i> Jogar Novamente
+                    </button>
+                </div>
+            </div>
         </div>
-        
-        <div class="button-group">
-            <button class="btn btn-primary" id="restartBtn"><i class="fas fa-redo"></i> Reiniciar</button>
-            <a href="index.html" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Voltar ao site</a>
+
+        <!-- Status -->
+        <div class="status-panel">
+            <div class="score-display">
+                <div class="score-label">SCORE</div>
+                <div class="score-value" id="scoreDisplay">0</div>
+            </div>
+            <div class="coins-display">
+                <i class="fas fa-coins"></i>
+                <span class="coins-value" id="coinsDisplay">0</span>
+            </div>
+        </div>
+
+        <!-- Power-ups ativos -->
+        <div class="powerups-active" id="powerupsActive"></div>
+
+        <!-- Botões -->
+        <div class="action-buttons">
+            <button class="btn btn-primary" id="startBtn">
+                <i class="fas fa-play"></i> Jogar
+            </button>
+            <button class="btn btn-warning" id="shopBtn">
+                <i class="fas fa-store"></i> Loja
+            </button>
+            <button class="btn btn-secondary" id="restartBtn">
+                <i class="fas fa-rotate"></i>
+            </button>
+        </div>
+
+        <!-- Voltar -->
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Voltar ao site</a>
+    </div>
+
+    <!-- Loja Modal -->
+    <div class="shop-modal" id="shopModal">
+        <div class="shop-content">
+            <h2 class="shop-title"><i class="fas fa-store"></i> LOJA</h2>
+            <div class="skin-grid" id="skinGrid"></div>
+            <div style="margin: 20px 0; text-align: center;">
+                <p>💰 Suas moedas: <span id="shopCoins" style="color: var(--dourado); font-weight: 700;">0</span></p>
+            </div>
+            <button class="shop-close" id="closeShop">FECHAR</button>
         </div>
     </div>
 
     <script>
-        (function() {
-            // ===== Garantir que o código rode apenas quando a página estiver 100% carregada =====
-            window.addEventListener('load', function() {
+        // ===== CONFIGURAÇÃO =====
+        const CONFIG = {
+            GRAVITY: 0.2,
+            JUMP_FORCE: -4.8,
+            PIPE_SPEED: 2.2,
+            PIPE_WIDTH: 55,
+            PIPE_GAP: 135,
+            COIN_SPAWN_RATE: 0.3,
+            POWERUP_SPAWN_RATE: 0.02
+        };
+
+        // Skins
+        const SKINS = {
+            default: { name: 'Plantinha', emoji: '🌱', price: 0, unlocked: true },
+            flower: { name: 'Flor', emoji: '🌸', price: 100, unlocked: false },
+            cactus: { name: 'Cacto', emoji: '🌵', price: 200, unlocked: false },
+            sunflower: { name: 'Girassol', emoji: '🌻', price: 300, unlocked: false },
+            tree: { name: 'Árvore', emoji: '🌳', price: 500, unlocked: false },
+            golden: { name: 'Dourado', emoji: '🌟', price: 1000, unlocked: false }
+        };
+
+        // ===== ESTADO DO JOGO =====
+        class FlappyPlant {
+            constructor() {
+                this.canvas = document.getElementById('gameCanvas');
+                this.ctx = this.canvas.getContext('2d');
                 
-                // ===== CONFIGURAÇÃO DO JOGO =====
-                const canvas = document.getElementById('gameCanvas');
-                const ctx = canvas.getContext('2d');
-                const scoreDisplay = document.getElementById('scoreDisplay');
-                const bestScoreDisplay = document.getElementById('bestScore');
-                
-                // ===== VARIÁVEIS DO JOGO =====
-                let bird = {
+                this.bird = {
                     y: 300,
                     velocity: 0,
-                    radius: 12,
+                    radius: 14,
                     x: 70
                 };
                 
-                let pipes = [];
-                let score = 0;
-                // CORRIGIDO: Verificação de segurança para localStorage
-                let bestScore = 0;
-                try {
-                    bestScore = localStorage.getItem('flappyBest') || 0;
-                } catch(e) {
-                    console.warn("LocalStorage não está disponível.");
+                this.pipes = [];
+                this.coins = [];
+                this.powerups = [];
+                
+                this.score = 0;
+                this.coins = 0;
+                this.bestScore = localStorage.getItem('flappyBest') || 0;
+                this.totalCoins = parseInt(localStorage.getItem('flappyCoins')) || 0;
+                
+                this.gameStarted = false;
+                this.gameOver = false;
+                this.frameCount = 0;
+                
+                this.currentSkin = localStorage.getItem('flappySkin') || 'default';
+                this.unlockedSkins = JSON.parse(localStorage.getItem('flappyUnlocked')) || ['default'];
+                
+                // Power-ups
+                this.activePowerups = {
+                    shield: 0,
+                    magnet: 0,
+                    slowMotion: 0
+                };
+                
+                this.init();
+            }
+            
+            init() {
+                this.createParticles();
+                this.renderSkins();
+                this.setupEventListeners();
+                this.updateUI();
+                this.gameLoop();
+            }
+            
+            createParticles() {
+                const container = document.getElementById('particles');
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 8 + 's';
+                    particle.style.animationDuration = (6 + Math.random() * 6) + 's';
+                    container.appendChild(particle);
                 }
-                let gameOver = false;
-                let gameStarted = false;
-                let frameCount = 0;
+            }
+            
+            renderSkins() {
+                const grid = document.getElementById('skinGrid');
+                grid.innerHTML = '';
                 
-                // Configurações de física (AJUSTADAS)
-                const GRAVITY = 0.2;
-                const JUMP_FORCE = -5;
-                const PIPE_SPEED = 2;
-                const PIPE_SPACING = 200;
-                const PIPE_WIDTH = 50;
-                const PIPE_GAP = 130;
-                
-                bestScoreDisplay.textContent = bestScore;
-                
-                // ===== CLASSE DO CANO =====
-                class Pipe {
-                    constructor() {
-                        this.x = canvas.width;
-                        this.top = Math.random() * (canvas.height - PIPE_GAP - 100) + 50;
-                        this.bottom = this.top + PIPE_GAP;
-                        this.passed = false;
-                    }
+                Object.entries(SKINS).forEach(([key, skin]) => {
+                    const isUnlocked = this.unlockedSkins.includes(key);
+                    const isSelected = this.currentSkin === key;
                     
-                    update() { this.x -= PIPE_SPEED; }
+                    const item = document.createElement('div');
+                    item.className = `skin-item ${isSelected ? 'selected' : ''} ${!isUnlocked ? 'locked' : ''}`;
+                    item.innerHTML = `
+                        <div class="skin-emoji">${skin.emoji}</div>
+                        <div class="skin-name">${skin.name}</div>
+                        <div class="skin-price">${isUnlocked ? '✅ Desbloqueado' : `💰 ${skin.price}`}</div>
+                    `;
                     
-                    draw() {
-                        ctx.fillStyle = '#2e7d32';
-                        ctx.fillRect(this.x, 0, PIPE_WIDTH, this.top);
-                        ctx.fillStyle = '#1b5e20';
-                        ctx.fillRect(this.x - 3, this.top - 20, PIPE_WIDTH + 6, 20);
-                        ctx.fillStyle = '#2e7d32';
-                        ctx.fillRect(this.x, this.bottom, PIPE_WIDTH, canvas.height - this.bottom);
-                        ctx.fillStyle = '#1b5e20';
-                        ctx.fillRect(this.x - 3, this.bottom, PIPE_WIDTH + 6, 20);
-                    }
-                    
-                    checkCollision(bird) {
-                        if (bird.x + bird.radius > this.x && bird.x - bird.radius < this.x + PIPE_WIDTH) {
-                            if (bird.y - bird.radius < this.top || bird.y + bird.radius > this.bottom) {
-                                return true;
-                            }
+                    item.addEventListener('click', () => {
+                        if (isUnlocked) {
+                            this.currentSkin = key;
+                            localStorage.setItem('flappySkin', key);
+                            this.renderSkins();
+                            this.showNotification(`🌱 Skin ${skin.name} equipada!`, 'success');
+                        } else if (this.totalCoins >= skin.price) {
+                            this.totalCoins -= skin.price;
+                            this.unlockedSkins.push(key);
+                            localStorage.setItem('flappyCoins', this.totalCoins);
+                            localStorage.setItem('flappyUnlocked', JSON.stringify(this.unlockedSkins));
+                            this.currentSkin = key;
+                            localStorage.setItem('flappySkin', key);
+                            this.renderSkins();
+                            this.updateUI();
+                            this.showNotification(`🎉 ${skin.name} desbloqueada!`, 'success');
+                        } else {
+                            this.showNotification(`❌ Moedas insuficientes!`, 'error');
                         }
-                        return false;
+                    });
+                    
+                    grid.appendChild(item);
+                });
+                
+                document.getElementById('shopCoins').textContent = this.totalCoins;
+            }
+            
+            jump() {
+                if (!this.gameStarted && !this.gameOver) {
+                    this.gameStarted = true;
+                }
+                if (!this.gameOver) {
+                    this.bird.velocity = CONFIG.JUMP_FORCE;
+                }
+            }
+            
+            update() {
+                if (!this.gameStarted || this.gameOver) return;
+                
+                this.frameCount++;
+                
+                // Física
+                const gravity = this.activePowerups.slowMotion > 0 ? CONFIG.GRAVITY * 0.5 : CONFIG.GRAVITY;
+                this.bird.velocity += gravity;
+                this.bird.y += this.bird.velocity;
+                
+                // Limites
+                if (this.bird.y + this.bird.radius >= this.canvas.height - 20) {
+                    if (this.activePowerups.shield > 0) {
+                        this.activePowerups.shield = 0;
+                        this.bird.y = this.canvas.height - 20 - this.bird.radius;
+                        this.bird.velocity = 0;
+                        this.showNotification('🛡️ Escudo protegeu você!', 'success');
+                    } else {
+                        this.endGame();
                     }
                 }
-                
-                // ===== DESENHA O PÁSSARO =====
-                function drawBird() {
-                    ctx.fillStyle = '#00ff88';
-                    ctx.shadowColor = '#00ff88';
-                    ctx.shadowBlur = 20;
-                    ctx.beginPath();
-                    ctx.arc(bird.x, bird.y, bird.radius, 0, Math.PI * 2);
-                    ctx.fill();
-                    
-                    ctx.shadowBlur = 0;
-                    ctx.fillStyle = 'white';
-                    ctx.beginPath();
-                    ctx.arc(bird.x - 5, bird.y - 4, 4, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.beginPath();
-                    ctx.arc(bird.x + 5, bird.y - 4, 4, 0, Math.PI * 2);
-                    ctx.fill();
-                    
-                    ctx.fillStyle = '#1a1a1a';
-                    ctx.beginPath();
-                    ctx.arc(bird.x - 5, bird.y - 5, 2, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.beginPath();
-                    ctx.arc(bird.x + 5, bird.y - 5, 2, 0, Math.PI * 2);
-                    ctx.fill();
-                    
-                    ctx.fillStyle = '#ffa500';
-                    ctx.beginPath();
-                    ctx.moveTo(bird.x + 8, bird.y - 2);
-                    ctx.lineTo(bird.x + 18, bird.y);
-                    ctx.lineTo(bird.x + 8, bird.y + 2);
-                    ctx.fill();
-                    
-                    ctx.fillStyle = '#66ffb3';
-                    ctx.beginPath();
-                    ctx.ellipse(bird.x, bird.y - 14, 6, 4, 0.3, 0, Math.PI * 2);
-                    ctx.fill();
+                if (this.bird.y - this.bird.radius <= 0) {
+                    this.endGame();
                 }
                 
-                // ===== DESENHA O FUNDO =====
-                function drawBackground() {
-                    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-                    gradient.addColorStop(0, '#87CEEB');
-                    gradient.addColorStop(1, '#98D8C8');
-                    ctx.fillStyle = gradient;
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    
-                    ctx.fillStyle = '#8B7355';
-                    ctx.fillRect(0, canvas.height - 20, canvas.width, 20);
-                    ctx.fillStyle = '#6B5345';
-                    ctx.fillRect(0, canvas.height - 15, canvas.width, 15);
-                    ctx.fillStyle = '#4caf50';
-                    for (let i = 0; i < canvas.width; i += 20) {
-                        ctx.fillRect(i + (frameCount % 20), canvas.height - 25, 10, 10);
-                    }
-                }
-                
-                // ===== LÓGICA DO JOGO =====
-                function update() {
-                    if (!gameStarted || gameOver) return;
-                    frameCount++;
-                    bird.velocity += GRAVITY;
-                    bird.y += bird.velocity;
-                    
-                    if (bird.y + bird.radius >= canvas.height - 20) {
-                        gameOver = true;
-                        bird.y = canvas.height - 20 - bird.radius;
-                    }
-                    if (bird.y - bird.radius <= 0) {
-                        gameOver = true;
-                        bird.y = bird.radius;
-                    }
-                    
-                    if (frameCount % 90 === 0) pipes.push(new Pipe());
-                    
-                    pipes = pipes.filter(pipe => {
-                        pipe.update();
-                        if (pipe.checkCollision(bird)) gameOver = true;
-                        if (!pipe.passed && pipe.x + PIPE_WIDTH < bird.x) {
-                            pipe.passed = true;
-                            score++;
-                            scoreDisplay.textContent = score;
-                            if (score > bestScore) {
-                                bestScore = score;
-                                bestScoreDisplay.textContent = bestScore;
-                                try { localStorage.setItem('flappyBest', bestScore); } catch(e) {}
-                            }
-                        }
-                        return pipe.x + PIPE_WIDTH > 0;
+                // Spawn de canos
+                if (this.frameCount % 90 === 0) {
+                    this.pipes.push({
+                        x: this.canvas.width,
+                        top: Math.random() * (this.canvas.height - CONFIG.PIPE_GAP - 100) + 50,
+                        bottom: 0,
+                        passed: false
                     });
                 }
                 
-                // ===== DESENHA TUDO =====
-                function draw() {
-                    drawBackground();
-                    pipes.forEach(pipe => pipe.draw());
-                    drawBird();
+                // Spawn de moedas
+                if (Math.random() < CONFIG.COIN_SPAWN_RATE) {
+                    this.coins.push({
+                        x: this.canvas.width,
+                        y: Math.random() * (this.canvas.height - 100) + 50,
+                        collected: false
+                    });
+                }
+                
+                // Spawn de power-ups
+                if (Math.random() < CONFIG.POWERUP_SPAWN_RATE) {
+                    const types = ['shield', 'magnet', 'slowMotion'];
+                    this.powerups.push({
+                        x: this.canvas.width,
+                        y: Math.random() * (this.canvas.height - 100) + 50,
+                        type: types[Math.floor(Math.random() * types.length)],
+                        collected: false
+                    });
+                }
+                
+                // Atualiza canos
+                const speed = this.activePowerups.slowMotion > 0 ? CONFIG.PIPE_SPEED * 0.5 : CONFIG.PIPE_SPEED;
+                this.pipes = this.pipes.filter(pipe => {
+                    pipe.x -= speed;
                     
-                    if (!gameStarted && !gameOver) {
-                        ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-                        ctx.fillRect(0, 0, canvas.width, canvas.height);
-                        ctx.fillStyle = '#00ff88';
-                        ctx.font = 'bold 24px "Plus Jakarta Sans", Arial';
-                        ctx.textAlign = 'center';
-                        ctx.fillText('CLIQUE PARA COMEÇAR', canvas.width / 2, canvas.height / 2);
-                    }
-                    
-                    if (gameOver) {
-                        ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
-                        ctx.fillRect(0, 0, canvas.width, canvas.height);
-                        ctx.fillStyle = '#ff4444';
-                        ctx.font = 'bold 30px "Plus Jakarta Sans", Arial';
-                        ctx.textAlign = 'center';
-                        ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2 - 20);
-                        ctx.fillStyle = '#ffd700';
-                        ctx.font = '20px "Plus Jakarta Sans", Arial';
-                        ctx.fillText('Score: ' + score, canvas.width / 2, canvas.height / 2 + 20);
-                        if (score === bestScore && score > 0) {
-                            ctx.fillStyle = '#00ff88';
-                            ctx.fillText('🏆 NOVO RECORDE! 🏆', canvas.width / 2, canvas.height / 2 + 55);
+                    // Colisão
+                    if (this.checkCollision(pipe)) {
+                        if (this.activePowerups.shield > 0) {
+                            this.activePowerups.shield = 0;
+                            return false;
+                        } else {
+                            this.endGame();
                         }
                     }
                     
-                    if (gameStarted && !gameOver) {
-                        ctx.fillStyle = '#1a1a1a';
-                        ctx.font = 'bold 30px "Plus Jakarta Sans", Arial';
-                        ctx.textAlign = 'center';
-                        ctx.fillText(score, canvas.width / 2, 50);
-                        ctx.fillStyle = '#00ff88';
-                        ctx.fillText(score, canvas.width / 2 - 2, 48);
+                    // Pontuação
+                    if (!pipe.passed && pipe.x + CONFIG.PIPE_WIDTH < this.bird.x) {
+                        pipe.passed = true;
+                        this.score++;
+                        this.updateUI();
                     }
-                }
-                
-                // ===== LOOP PRINCIPAL =====
-                function gameLoop() {
-                    update();
-                    draw();
-                    requestAnimationFrame(gameLoop);
-                }
-                
-                // ===== REINICIA O JOGO =====
-                function restart() {
-                    bird = { y: 300, velocity: 0, radius: 12, x: 70 };
-                    pipes = [];
-                    score = 0;
-                    gameOver = false;
-                    gameStarted = false;
-                    frameCount = 0;
-                    scoreDisplay.textContent = '0';
-                }
-                
-                // ===== CONTROLES =====
-                function jump() {
-                    if (!gameStarted && !gameOver) gameStarted = true;
-                    if (!gameOver) bird.velocity = JUMP_FORCE;
-                }
-                
-                // CORRIGIDO: Garantir que os botões existem antes de adicionar eventos
-                const restartBtn = document.getElementById('restartBtn');
-                if (restartBtn) {
-                    restartBtn.addEventListener('click', restart);
-                }
-                
-                canvas.addEventListener('click', () => {
-                    if (gameOver) restart();
-                    else jump();
+                    
+                    return pipe.x + CONFIG.PIPE_WIDTH > 0;
                 });
                 
+                // Atualiza moedas
+                this.coins = this.coins.filter(coin => {
+                    coin.x -= speed;
+                    
+                    // Coleta (com ímã)
+                    const magnetRange = this.activePowerups.magnet > 0 ? 80 : 20;
+                    if (!coin.collected && Math.abs(coin.x - this.bird.x) < magnetRange && 
+                        Math.abs(coin.y - this.bird.y) < magnetRange) {
+                        coin.collected = true;
+                        this.totalCoins += 10;
+                        this.updateUI();
+                        return false;
+                    }
+                    
+                    return coin.x > -20;
+                });
+                
+                // Atualiza power-ups
+                this.powerups = this.powerups.filter(powerup => {
+                    powerup.x -= speed;
+                    
+                    if (!powerup.collected && this.checkPowerupCollision(powerup)) {
+                        powerup.collected = true;
+                        this.activePowerups[powerup.type] = 300; // 5 segundos
+                        this.showNotification(`✨ ${this.getPowerupName(powerup.type)} ativado!`, 'success');
+                        return false;
+                    }
+                    
+                    return powerup.x > -20;
+                });
+                
+                // Atualiza timers de power-ups
+                Object.keys(this.activePowerups).forEach(key => {
+                    if (this.activePowerups[key] > 0) {
+                        this.activePowerups[key]--;
+                    }
+                });
+                
+                this.updatePowerupsDisplay();
+            }
+            
+            checkCollision(pipe) {
+                if (this.bird.x + this.bird.radius > pipe.x && 
+                    this.bird.x - this.bird.radius < pipe.x + CONFIG.PIPE_WIDTH) {
+                    const bottomPipe = pipe.top + CONFIG.PIPE_GAP;
+                    if (this.bird.y - this.bird.radius < pipe.top || 
+                        this.bird.y + this.bird.radius > bottomPipe) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            
+            checkPowerupCollision(powerup) {
+                return Math.abs(powerup.x - this.bird.x) < 25 && 
+                       Math.abs(powerup.y - this.bird.y) < 25;
+            }
+            
+            getPowerupName(type) {
+                const names = { shield: 'Escudo', magnet: 'Ímã de Moedas', slowMotion: 'Câmera Lenta' };
+                return names[type] || type;
+            }
+            
+            draw() {
+                // Fundo dinâmico
+                const hour = new Date().getHours();
+                const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
+                
+                if (hour >= 6 && hour < 18) {
+                    gradient.addColorStop(0, '#87CEEB');
+                    gradient.addColorStop(1, '#98D8C8');
+                } else {
+                    gradient.addColorStop(0, '#1a1a3e');
+                    gradient.addColorStop(1, '#2d2d6b');
+                }
+                
+                this.ctx.fillStyle = gradient;
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Nuvens/Estrelas
+                if (hour >= 6 && hour < 18) {
+                    this.drawClouds();
+                } else {
+                    this.drawStars();
+                }
+                
+                // Canos
+                this.pipes.forEach(pipe => {
+                    const bottomPipe = pipe.top + CONFIG.PIPE_GAP;
+                    
+                    // Cano superior
+                    this.ctx.fillStyle = '#2e7d32';
+                    this.ctx.fillRect(pipe.x, 0, CONFIG.PIPE_WIDTH, pipe.top);
+                    this.ctx.fillStyle = '#1b5e20';
+                    this.ctx.fillRect(pipe.x - 4, pipe.top - 25, CONFIG.PIPE_WIDTH + 8, 25);
+                    
+                    // Cano inferior
+                    this.ctx.fillStyle = '#2e7d32';
+                    this.ctx.fillRect(pipe.x, bottomPipe, CONFIG.PIPE_WIDTH, this.canvas.height - bottomPipe);
+                    this.ctx.fillStyle = '#1b5e20';
+                    this.ctx.fillRect(pipe.x - 4, bottomPipe, CONFIG.PIPE_WIDTH + 8, 25);
+                });
+                
+                // Moedas
+                this.coins.forEach(coin => {
+                    this.ctx.fillStyle = '#ffd700';
+                    this.ctx.shadowColor = '#ffd700';
+                    this.ctx.shadowBlur = 15;
+                    this.ctx.beginPath();
+                    this.ctx.arc(coin.x, coin.y, 8, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    this.ctx.fillStyle = '#fff7b0';
+                    this.ctx.beginPath();
+                    this.ctx.arc(coin.x - 2, coin.y - 2, 3, 0, Math.PI * 2);
+                    this.ctx.fill();
+                });
+                
+                // Power-ups
+                this.powerups.forEach(powerup => {
+                    const colors = { shield: '#4fc3f7', magnet: '#ce93d8', slowMotion: '#ffab91' };
+                    const icons = { shield: '🛡️', magnet: '🧲', slowMotion: '⏱️' };
+                    
+                    this.ctx.shadowBlur = 20;
+                    this.ctx.shadowColor = colors[powerup.type];
+                    this.ctx.fillStyle = colors[powerup.type];
+                    this.ctx.beginPath();
+                    this.ctx.arc(powerup.x, powerup.y, 12, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    
+                    this.ctx.shadowBlur = 0;
+                    this.ctx.font = '16px Arial';
+                    this.ctx.textAlign = 'center';
+                    this.ctx.textBaseline = 'middle';
+                    this.ctx.fillText(icons[powerup.type], powerup.x, powerup.y);
+                });
+                
+                // Chão
+                this.ctx.fillStyle = '#8B7355';
+                this.ctx.fillRect(0, this.canvas.height - 20, this.canvas.width, 20);
+                this.ctx.fillStyle = '#4caf50';
+                for (let i = 0; i < this.canvas.width; i += 15) {
+                    this.ctx.fillRect(i + (this.frameCount % 15), this.canvas.height - 25, 8, 10);
+                }
+                
+                // Pássaro (Plantinha)
+                this.ctx.shadowBlur = this.activePowerups.shield > 0 ? 30 : 20;
+                this.ctx.shadowColor = this.activePowerups.shield > 0 ? '#4fc3f7' : '#00ff88';
+                
+                // Escudo
+                if (this.activePowerups.shield > 0) {
+                    this.ctx.strokeStyle = '#4fc3f7';
+                    this.ctx.lineWidth = 3;
+                    this.ctx.beginPath();
+                    this.ctx.arc(this.bird.x, this.bird.y, this.bird.radius + 5, 0, Math.PI * 2);
+                    this.ctx.stroke();
+                }
+                
+                // Corpo
+                this.ctx.fillStyle = '#00ff88';
+                this.ctx.beginPath();
+                this.ctx.arc(this.bird.x, this.bird.y, this.bird.radius, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                // Skin
+                this.ctx.shadowBlur = 0;
+                this.ctx.font = '20px Arial';
+                this.ctx.textAlign = 'center';
+                this.ctx.textBaseline = 'middle';
+                this.ctx.fillText(SKINS[this.currentSkin].emoji, this.bird.x, this.bird.y);
+                
+                // Olhos
+                this.ctx.fillStyle = 'white';
+                this.ctx.beginPath();
+                this.ctx.arc(this.bird.x - 5, this.bird.y - 4, 4, 0, Math.PI * 2);
+                this.ctx.fill();
+                this.ctx.beginPath();
+                this.ctx.arc(this.bird.x + 5, this.bird.y - 4, 4, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                this.ctx.fillStyle = '#1a1a1a';
+                this.ctx.beginPath();
+                this.ctx.arc(this.bird.x - 5, this.bird.y - 5, 2, 0, Math.PI * 2);
+                this.ctx.fill();
+                this.ctx.beginPath();
+                this.ctx.arc(this.bird.x + 5, this.bird.y - 5, 2, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                // Bico
+                this.ctx.fillStyle = '#ffa500';
+                this.ctx.beginPath();
+                this.ctx.moveTo(this.bird.x + 8, this.bird.y - 2);
+                this.ctx.lineTo(this.bird.x + 18, this.bird.y);
+                this.ctx.lineTo(this.bird.x + 8, this.bird.y + 2);
+                this.ctx.fill();
+                
+                // Tela inicial
+                if (!this.gameStarted && !this.gameOver) {
+                    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+                    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                    this.ctx.fillStyle = '#00ff88';
+                    this.ctx.font = 'bold 22px Archivo';
+                    this.ctx.textAlign = 'center';
+                    this.ctx.fillText('🌱 CLIQUE PARA JOGAR 🌱', this.canvas.width / 2, this.canvas.height / 2);
+                    this.ctx.font = '16px Archivo';
+                    this.ctx.fillStyle = '#ccc';
+                    this.ctx.fillText('Toque na tela ou pressione ESPAÇO', this.canvas.width / 2, this.canvas.height / 2 + 40);
+                }
+                
+                // Score
+                if (this.gameStarted && !this.gameOver) {
+                    this.ctx.fillStyle = '#1a1a1a';
+                    this.ctx.font = 'bold 35px Clash Display';
+                    this.ctx.textAlign = 'center';
+                    this.ctx.fillText(this.score, this.canvas.width / 2, 50);
+                    this.ctx.fillStyle = '#00ff88';
+                    this.ctx.fillText(this.score, this.canvas.width / 2 - 2, 48);
+                }
+            }
+            
+            drawClouds() {
+                this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                this.ctx.beginPath();
+                this.ctx.arc(50 + (this.frameCount * 0.2) % 200, 70, 20, 0, Math.PI * 2);
+                this.ctx.arc(80 + (this.frameCount * 0.2) % 200, 60, 18, 0, Math.PI * 2);
+                this.ctx.fill();
+            }
+            
+            drawStars() {
+                this.ctx.fillStyle = 'white';
+                for (let i = 0; i < 10; i++) {
+                    this.ctx.beginPath();
+                    this.ctx.arc((i * 40 + this.frameCount) % this.canvas.width, (i * 30) % 100, 2, 0, Math.PI * 2);
+                    this.ctx.fill();
+                }
+            }
+            
+            endGame() {
+                this.gameOver = true;
+                this.gameStarted = false;
+                
+                if (this.score > this.bestScore) {
+                    this.bestScore = this.score;
+                    localStorage.setItem('flappyBest', this.bestScore);
+                    document.getElementById('newRecordBadge').style.display = 'block';
+                }
+                
+                localStorage.setItem('flappyCoins', this.totalCoins);
+                
+                document.getElementById('finalScore').textContent = this.score;
+                document.getElementById('finalCoins').textContent = this.totalCoins;
+                document.getElementById('gameoverOverlay').style.display = 'flex';
+                
+                this.updateUI();
+            }
+            
+            restart() {
+                this.bird = { y: 300, velocity: 0, radius: 14, x: 70 };
+                this.pipes = [];
+                this.coins = [];
+                this.powerups = [];
+                this.score = 0;
+                this.gameOver = false;
+                this.gameStarted = false;
+                this.frameCount = 0;
+                this.activePowerups = { shield: 0, magnet: 0, slowMotion: 0 };
+                
+                document.getElementById('gameoverOverlay').style.display = 'none';
+                document.getElementById('newRecordBadge').style.display = 'none';
+                this.updateUI();
+            }
+            
+            updateUI() {
+                document.getElementById('scoreDisplay').textContent = this.score;
+                document.getElementById('coinsDisplay').textContent = this.totalCoins;
+                document.getElementById('bestScoreMini').textContent = this.bestScore;
+                document.getElementById('shopCoins').textContent = this.totalCoins;
+            }
+            
+            updatePowerupsDisplay() {
+                const container = document.getElementById('powerupsActive');
+                container.innerHTML = '';
+                
+                Object.entries(this.activePowerups).forEach(([type, time]) => {
+                    if (time > 0) {
+                        const badge = document.createElement('div');
+                        badge.className = 'powerup-badge';
+                        const icons = { shield: '🛡️', magnet: '🧲', slowMotion: '⏱️' };
+                        badge.innerHTML = `${icons[type]} ${this.getPowerupName(type)} <span class="powerup-timer">${Math.ceil(time / 60)}s</span>`;
+                        container.appendChild(badge);
+                    }
+                });
+            }
+            
+            showNotification(text, type = 'info') {
+                const existing = document.querySelector('.notification');
+                if (existing) existing.remove();
+                
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'times-circle' : 'info-circle'}"></i> ${text}`;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    notification.style.transform = 'translate(-50%, 20px)';
+                    notification.style.transition = 'all 0.3s';
+                    setTimeout(() => notification.remove(), 300);
+                }, 2000);
+            }
+            
+            gameLoop() {
+                this.update();
+                this.draw();
+                requestAnimationFrame(() => this.gameLoop());
+            }
+            
+            setupEventListeners() {
+                // Controles
+                this.canvas.addEventListener('click', () => this.jump());
                 document.addEventListener('keydown', (e) => {
                     if (e.code === 'Space') {
                         e.preventDefault();
-                        if (gameOver) restart();
-                        else jump();
+                        this.jump();
                     }
-                    if (e.code === 'KeyR') restart();
                 });
                 
-                window.addEventListener('keydown', (e) => {
-                    if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'ArrowDown') e.preventDefault();
-                }, false);
+                // Botões
+                document.getElementById('startBtn').addEventListener('click', () => this.jump());
+                document.getElementById('restartBtn').addEventListener('click', () => this.restart());
+                document.getElementById('restartFromOver').addEventListener('click', () => this.restart());
                 
-                // Inicia o jogo
-                gameLoop();
-            });
-        })();
+                // Loja
+                document.getElementById('shopBtn').addEventListener('click', () => {
+                    document.getElementById('shopModal').classList.add('active');
+                    this.renderSkins();
+                });
+                
+                document.getElementById('closeShop').addEventListener('click', () => {
+                    document.getElementById('shopModal').classList.remove('active');
+                });
+                
+                // Previne scroll com espaço
+                window.addEventListener('keydown', (e) => {
+                    if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'ArrowDown') {
+                        e.preventDefault();
+                    }
+                });
+            }
+        }
+        
+        // Inicializa o jogo
+        const game = new FlappyPlant();
     </script>
 </body>
 </html>
