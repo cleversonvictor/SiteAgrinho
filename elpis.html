@@ -103,10 +103,40 @@
             font-size: 0.8rem;
             opacity: 0.3;
         }
+        
+        /* Controle de música escondido */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            color: #333;
+            font-size: 0.8rem;
+            opacity: 0.3;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        
+        .music-control:hover {
+            opacity: 0.8;
+            color: #00ff88;
+        }
     </style>
 </head>
 <body>
     <div class="bug-overlay"></div>
+    
+    <!-- Player de áudio escondido (loop infinito) -->
+    <audio id="bgMusic" loop autoplay style="display: none;">
+        <source src="https://files.catbox.moe/0q7h3x.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- Fallback: tenta carregar de outra fonte se a primeira falhar -->
+    <audio id="bgMusicFallback" loop style="display: none;">
+        <source src="https://cdn.jsdelivr.net/gh/cleversonvictor/agrinho-assets@main/resident-evil-2-save-room.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- YouTube iframe escondido (método alternativo) -->
+    <div id="youtube-player" style="display: none;"></div>
     
     <div class="glitch-container">
         <div class="main-message">
@@ -128,7 +158,16 @@
     
     <div class="timer" id="timer">00:00</div>
     
+    <!-- Controle de música (botão sutil para ativar o som) -->
+    <div class="music-control" id="musicControl" title="Clique para ativar a música">
+        <i class="fas fa-volume-mute"></i> <span id="musicStatus">Música desativada</span>
+    </div>
+    
+    <!-- Font Awesome para o ícone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
     <script>
+        // ===== TIMER =====
         let seconds = 0;
         setInterval(() => {
             seconds++;
@@ -137,6 +176,169 @@
             document.getElementById('timer').textContent = 
                 `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         }, 1000);
+        
+        // ===== SISTEMA DE MÚSICA EM LOOP =====
+        let musicPlaying = false;
+        let audioElement = null;
+        let youtubePlayer = null;
+        
+        // Tenta criar o player de áudio nativo
+        function initAudio() {
+            // Cria elemento de áudio dinamicamente
+            audioElement = new Audio();
+            audioElement.loop = true;
+            audioElement.volume = 0.3; // Volume moderado
+            
+            // Tenta carregar de múltiplas fontes
+            const sources = [
+                'https://files.catbox.moe/0q7h3x.mp3',
+                'https://cdn.jsdelivr.net/gh/cleversonvictor/agrinho-assets@main/resident-evil-2-save-room.mp3',
+                'https://ia800500.us.archive.org/35/items/resident-evil-2-save-room/Resident%20Evil%202%20-%20Save%20Room.mp3'
+            ];
+            
+            let sourceIndex = 0;
+            
+            function tryNextSource() {
+                if (sourceIndex < sources.length) {
+                    audioElement.src = sources[sourceIndex];
+                    audioElement.play().catch(() => {
+                        sourceIndex++;
+                        tryNextSource();
+                    });
+                } else {
+                    // Se todas as fontes de áudio falharem, tenta YouTube
+                    initYouTubePlayer();
+                }
+            }
+            
+            audioElement.addEventListener('canplay', () => {
+                if (musicPlaying) {
+                    audioElement.play();
+                }
+            });
+            
+            audioElement.addEventListener('error', () => {
+                sourceIndex++;
+                tryNextSource();
+            });
+            
+            tryNextSource();
+        }
+        
+        // Fallback: YouTube Player API
+        function initYouTubePlayer() {
+            // Carrega a API do YouTube
+            const tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            
+            window.onYouTubeIframeAPIReady = function() {
+                youtubePlayer = new YT.Player('youtube-player', {
+                    height: '0',
+                    width: '0',
+                    videoId: '53aDI5K49F4',
+                    playerVars: {
+                        'autoplay': 1,
+                        'controls': 0,
+                        'loop': 1,
+                        'playlist': '53aDI5K49F4',
+                        'mute': 0,
+                        'volume': 30
+                    },
+                    events: {
+                        'onReady': function(event) {
+                            event.target.setVolume(30);
+                            event.target.playVideo();
+                            musicPlaying = true;
+                            updateMusicButton();
+                        }
+                    }
+                });
+            };
+        }
+        
+        // Atualiza o botão de música
+        function updateMusicButton() {
+            const icon = document.querySelector('#musicControl i');
+            const status = document.getElementById('musicStatus');
+            
+            if (musicPlaying) {
+                icon.className = 'fas fa-volume-up';
+                status.textContent = 'Música tocando';
+            } else {
+                icon.className = 'fas fa-volume-mute';
+                status.textContent = 'Música desativada';
+            }
+        }
+        
+        // Toggle de música
+        function toggleMusic() {
+            musicPlaying = !musicPlaying;
+            
+            if (audioElement) {
+                if (musicPlaying) {
+                    audioElement.play().catch(() => {
+                        initYouTubePlayer();
+                    });
+                } else {
+                    audioElement.pause();
+                }
+            }
+            
+            if (youtubePlayer) {
+                if (musicPlaying) {
+                    youtubePlayer.playVideo();
+                } else {
+                    youtubePlayer.pauseVideo();
+                }
+            }
+            
+            updateMusicButton();
+            
+            // Se nada foi inicializado ainda
+            if (!audioElement && !youtubePlayer) {
+                initAudio();
+                musicPlaying = true;
+                updateMusicButton();
+            }
+        }
+        
+        // Inicializa quando o usuário interagir com a página
+        document.addEventListener('click', function initOnInteraction() {
+            if (!musicPlaying) {
+                toggleMusic();
+            }
+            document.removeEventListener('click', initOnInteraction);
+        }, { once: false });
+        
+        // Controle de música
+        document.getElementById('musicControl').addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleMusic();
+        });
+        
+        // Tenta iniciar a música automaticamente (navegadores bloqueiam autoplay sem interação)
+        window.addEventListener('load', () => {
+            // A maioria dos navegadores bloqueia autoplay sem interação do usuário
+            // Então vamos mostrar o botão de música para o usuário ativar
+            setTimeout(() => {
+                if (!musicPlaying) {
+                    document.getElementById('musicStatus').textContent = 'Clique para ativar';
+                }
+            }, 1000);
+        });
+        
+        // Se o usuário pressionar qualquer tecla, tenta tocar a música
+        document.addEventListener('keydown', function onFirstKey() {
+            if (!musicPlaying) {
+                toggleMusic();
+            }
+            document.removeEventListener('keydown', onFirstKey);
+        }, { once: false });
+        
+        // Inicializa o áudio
+        initAudio();
     </script>
 </body>
 </html>
